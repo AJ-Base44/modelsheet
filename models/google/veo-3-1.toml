@@ -1,0 +1,45 @@
+schema_version = 1
+
+[model]
+id = "google/veo-3-1"
+name = "Veo 3.1"
+lab = "Google"
+modality = "video"
+status = "unknown"
+source_ids = ["vertex-docs", "gemini-docs"]
+
+[verification]
+state = "unverified"
+
+[[capability_profiles]]
+id = "text-to-video"
+task = "text_to_video"
+source_ids = ["vertex-docs", "gemini-docs"]
+
+[pricing]
+state = "unknown"
+source_ids = ["pricing"]
+
+[[conflicts]]
+path = "api_identifiers, capability_profiles.text-to-video.native_audio"
+summary = "The Vertex model page publishes a GA -001 identifier and says sound generation is unsupported, while the Gemini API page publishes a Preview identifier and says the model generates native audio."
+handling = "Omit API identifiers and the native-audio claim until a human reconciles the two official service surfaces."
+source_ids = ["vertex-docs", "gemini-docs"]
+
+[[sources]]
+id = "vertex-docs"
+kind = "documentation"
+url = "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/veo/3-1-generate"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "gemini-docs"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/video"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://cloud.google.com/vertex-ai/generative-ai/pricing"
+retrieved_on = 2026-08-09
