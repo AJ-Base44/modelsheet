@@ -1,0 +1,33 @@
+schema_version = 1
+
+[model]
+id = "google/lyria-3-pro-preview"
+name = "Lyria 3 Pro Preview"
+lab = "Google"
+modality = "audio"
+status = "preview"
+source_ids = ["docs"]
+
+[verification]
+state = "unverified"
+
+[[capability_profiles]]
+id = "music-generation"
+task = "music_generation"
+source_ids = ["docs"]
+
+[pricing]
+state = "unknown"
+source_ids = ["pricing"]
+
+[[sources]]
+id = "docs"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/music-generation"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://ai.google.dev/gemini-api/docs/pricing"
+retrieved_on = 2026-08-09
