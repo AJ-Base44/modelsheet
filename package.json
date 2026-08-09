@@ -1,0 +1,21 @@
+{
+  "name": "modelsheet",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Source data and tooling for the Modelsheet generative media model registry.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test",
+    "check": "npm run validate && npm test && npm run build"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}

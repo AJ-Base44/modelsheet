@@ -8,6 +8,7 @@ The primary entity is the model. A file represents one officially named model, n
 
 - Store one UTF-8 TOML file at `models/<lab-slug>/<model-slug>.toml`.
 - `model.name` is the lab's official published name. Colloquial or display names belong in `model.aliases`; API request values belong in `api_identifiers`.
+- Every new record includes `[verification]` with `state = "unverified"`. The three seed records predate this process field and are the only allowed omissions.
 - Do not write an empty array to mean unknown. Omit a non-applicable optional collection, or use a claim table with an explicit state when the distinction matters.
 - A registry `model.id`, capability-profile `id`, pricing-charge `id`, and source `id` is stable identity. Presentation changes must not silently replace those IDs.
 - All dates are TOML local dates in `YYYY-MM-DD` form.
@@ -28,6 +29,7 @@ When `state` is `unknown`, `unsupported`, or `not_applicable`, value fields such
 `model.status` is a separate lifecycle claim. The current records use:
 
 - `available`: an official source explicitly says the model is generally available or available through the lab API.
+- `preview`: an official source explicitly labels the model Preview or pre-GA.
 - `unknown`: no official lifecycle term can be mapped safely.
 
 Do not translate marketing badges such as “Default” into a lifecycle status.
@@ -59,6 +61,16 @@ Only first-party lab or provider pages are valid capability and pricing sources.
 | `model.modality` | string | Primary output modality: `video`, `image`, or `audio`. |
 | `model.status` | string | Source-backed lifecycle status described above. |
 | `model.source_ids` | string array | Sources for identity, aliases, modality, and lifecycle. |
+
+### `[verification]`
+
+Verification is process metadata, not a capability claim, so it does not carry `source_ids`.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `state` | string | `unverified` for every new record. It means the citations are present but a human has not compared every stated value with the live pages. Automated tooling must never assign `verified`. |
+
+The validator permits this table to be absent only on the three seed records that predate the field: `black-forest-labs/flux-3-video`, `openai/gpt-image-2`, and `elevenlabs/eleven-v3`.
 
 ### `[[api_identifiers]]`
 
@@ -317,6 +329,7 @@ Each `[[pricing.charges]]` is one atomic published charge or one explicit unknow
 | `denomination` | string | Exact billing denomination, such as `USD` or `image_output_token`. Never convert credits or tokens to currency unless the lab publishes that charge in currency. |
 | `per` | positive integer | Number of `unit` items covered by `amount`. |
 | `unit` | string | Atomic meter, such as `output_second`, `input_character`, or `image_output_token`. |
+| `profile_id` | string | Optional exact `capability_profiles.id` scoped by the charge. When present, it must resolve inside the same record. |
 | `applies_when` | string array | Conjunctive `key=value` conditions; every listed condition must match. Alternatives are separate charge rows. |
 | `qualifier` | string | Necessary source-backed interpretation, such as “included” or “output-only estimate; inputs additional.” |
 | `source_ids` | string array | Official source for this exact charge or unknown gap. |
@@ -350,3 +363,4 @@ The Stage 3 validator should enforce these schema-derived rules:
 10. A supported `text_input` has a positive `max` and unit; supported timing metadata has at least one endpoint, delivery-profile reference, and metadata key, and every referenced delivery ID exists in the same capability profile.
 11. Every `audio_format_access.format_ids` value occurs in at least one delivery profile in the same capability profile.
 12. Limitation IDs are unique within a record, and each limitation has a non-empty summary plus at least one resolvable source.
+13. Every non-seed record has `verification.state = "unverified"`; no schema-valid value promotes a record to verified.

@@ -1,0 +1,1621 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://modelsheet.dev/schema/source-v1.schema.json",
+  "title": "Modelsheet source record v1",
+  "description": "Machine-readable contract for one model-first Modelsheet TOML record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "model",
+    "capability_profiles",
+    "pricing",
+    "sources"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "model": {
+      "$ref": "#/$defs/model"
+    },
+    "verification": {
+      "$ref": "#/$defs/verification"
+    },
+    "api_identifiers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/apiIdentifier"
+      }
+    },
+    "language_support": {
+      "$ref": "#/$defs/languageSupport"
+    },
+    "capability_profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/capabilityProfile"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/limitation"
+      }
+    },
+    "pricing": {
+      "$ref": "#/$defs/pricing"
+    },
+    "conflicts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/conflict"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "claimState": {
+      "enum": [
+        "supported",
+        "unsupported",
+        "not_applicable",
+        "unknown"
+      ]
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "lab",
+        "modality",
+        "status",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*/[a-z0-9][a-z0-9-]*$"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "aliases": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "lab": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "modality": {
+          "enum": [
+            "image",
+            "video",
+            "audio"
+          ]
+        },
+        "status": {
+          "enum": [
+            "available",
+            "preview",
+            "unknown"
+          ]
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state"
+      ],
+      "properties": {
+        "state": {
+          "const": "unverified"
+        }
+      }
+    },
+    "apiIdentifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value",
+        "source_ids"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "model_id",
+            "snapshot_id",
+            "version_selector"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "resolves_to": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      }
+    },
+    "language": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "code": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "languageSupport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "scope",
+        "source_ids"
+      ],
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "scope": {
+          "enum": [
+            "native_audio",
+            "speech_output",
+            "prompt_input"
+          ]
+        },
+        "published_label": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "listed_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "list_completeness": {
+          "const": "non_exhaustive"
+        },
+        "languages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/language"
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "not": {
+                  "const": "supported"
+                }
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "published_label"
+                  ]
+                },
+                {
+                  "required": [
+                    "listed_count"
+                  ]
+                },
+                {
+                  "required": [
+                    "list_completeness"
+                  ]
+                },
+                {
+                  "required": [
+                    "languages"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "capabilityProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "task",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "task": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "endpoint": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "api_mode": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "api_mode_aliases": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "variants": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        },
+        "duration": {
+          "$ref": "#/$defs/duration"
+        },
+        "text_input": {
+          "$ref": "#/$defs/textInput"
+        },
+        "frame_rate": {
+          "$ref": "#/$defs/frameRate"
+        },
+        "size": {
+          "$ref": "#/$defs/size"
+        },
+        "native_audio": {
+          "$ref": "#/$defs/nativeAudio"
+        },
+        "audio_formats": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/audioFormat"
+          }
+        },
+        "audio_format_access": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/audioFormatAccess"
+          }
+        },
+        "reference_inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/referenceInput"
+          }
+        },
+        "delivery_profiles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/deliveryProfile"
+          }
+        },
+        "controls": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/control"
+          }
+        },
+        "timing": {
+          "$ref": "#/$defs/timing"
+        }
+      }
+    },
+    "duration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "mode": {
+          "const": "range"
+        },
+        "unit": {
+          "const": "second"
+        },
+        "min": {
+          "type": "number",
+          "minimum": 0
+        },
+        "max": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "step": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "automatic": {
+          "type": "boolean"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "supported"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "mode",
+              "unit",
+              "min",
+              "max"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "mode"
+                  ]
+                },
+                {
+                  "required": [
+                    "unit"
+                  ]
+                },
+                {
+                  "required": [
+                    "min"
+                  ]
+                },
+                {
+                  "required": [
+                    "max"
+                  ]
+                },
+                {
+                  "required": [
+                    "step"
+                  ]
+                },
+                {
+                  "required": [
+                    "automatic"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "textInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "unit": {
+          "const": "character"
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "supported"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "unit",
+              "max"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "unit"
+                  ]
+                },
+                {
+                  "required": [
+                    "max"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "frameRate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "mode": {
+          "const": "exact_set"
+        },
+        "unit": {
+          "const": "frame_per_second"
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "supported"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "mode",
+              "unit",
+              "values"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "mode"
+                  ]
+                },
+                {
+                  "required": [
+                    "unit"
+                  ]
+                },
+                {
+                  "required": [
+                    "values"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "dimensionExample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width",
+        "height",
+        "unit",
+        "aspect_ratio",
+        "source_ids"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unit": {
+          "const": "pixel"
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "pattern": "^[^:]+:[^:]+$"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      }
+    },
+    "sizeOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "label": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "max_megapixels": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "render_modes": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "aspect_ratios": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[^:]+:[^:]+$"
+          }
+        },
+        "examples": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/dimensionExample"
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      }
+    },
+    "size": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "mode": {
+          "enum": [
+            "exact_set",
+            "range"
+          ]
+        },
+        "unit": {
+          "enum": [
+            "resolution_tier",
+            "pixel"
+          ]
+        },
+        "automatic": {
+          "type": "boolean"
+        },
+        "default": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "edge_multiple": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_edge": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "min_total_pixels": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_total_pixels": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "experimental_above_total_pixels": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_long_to_short_ratio": {
+          "type": "number",
+          "minimum": 1
+        },
+        "options": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/sizeOption"
+          }
+        },
+        "examples": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/dimensionExample"
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "supported"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "mode",
+              "unit"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "mode"
+                  ]
+                },
+                {
+                  "required": [
+                    "unit"
+                  ]
+                },
+                {
+                  "required": [
+                    "automatic"
+                  ]
+                },
+                {
+                  "required": [
+                    "default"
+                  ]
+                },
+                {
+                  "required": [
+                    "edge_multiple"
+                  ]
+                },
+                {
+                  "required": [
+                    "max_edge"
+                  ]
+                },
+                {
+                  "required": [
+                    "min_total_pixels"
+                  ]
+                },
+                {
+                  "required": [
+                    "max_total_pixels"
+                  ]
+                },
+                {
+                  "required": [
+                    "experimental_above_total_pixels"
+                  ]
+                },
+                {
+                  "required": [
+                    "max_long_to_short_ratio"
+                  ]
+                },
+                {
+                  "required": [
+                    "options"
+                  ]
+                },
+                {
+                  "required": [
+                    "examples"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "supported"
+              },
+              "mode": {
+                "const": "exact_set"
+              }
+            },
+            "required": [
+              "state",
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "options"
+            ]
+          }
+        }
+      ]
+    },
+    "nativeAudio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "default": {
+          "type": "boolean"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "not": {
+                  "const": "supported"
+                }
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "default"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "audioFormat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family",
+        "sample_rate_mode",
+        "sample_rate_unit",
+        "sample_rates",
+        "source_ids"
+      ],
+      "properties": {
+        "family": {
+          "enum": [
+            "mp3",
+            "pcm",
+            "wav",
+            "opus",
+            "ulaw",
+            "alaw"
+          ]
+        },
+        "encoding": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sample_rate_mode": {
+          "const": "exact_set"
+        },
+        "sample_rate_unit": {
+          "const": "hertz"
+        },
+        "sample_rates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "bitrate_mode": {
+          "const": "exact_set"
+        },
+        "bitrate_unit": {
+          "const": "kilobit_per_second"
+        },
+        "bitrates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "bit_depth_unit": {
+          "const": "bit"
+        },
+        "bit_depths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "bitrates"
+            ]
+          },
+          "then": {
+            "required": [
+              "bitrate_mode",
+              "bitrate_unit"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "bit_depths"
+            ]
+          },
+          "then": {
+            "required": [
+              "bit_depth_unit"
+            ]
+          }
+        }
+      ]
+    },
+    "audioFormatAccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format_ids",
+        "minimum_plan",
+        "source_ids"
+      ],
+      "properties": {
+        "format_ids": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "minimum_plan": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      }
+    },
+    "referenceInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "media_type",
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "media_type": {
+          "enum": [
+            "image",
+            "video",
+            "audio",
+            "image_mask",
+            "voice_id",
+            "binary"
+          ]
+        },
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "min_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_count_state": {
+          "const": "unknown"
+        },
+        "demonstrated_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "count_scope": {
+          "const": "unique"
+        },
+        "position_roles": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "max_duration": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "duration_unit": {
+          "const": "second"
+        },
+        "formats": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "encodings": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "constraints": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "max_count",
+              "max_count_state"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "max_duration"
+            ]
+          },
+          "then": {
+            "required": [
+              "duration_unit"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "not": {
+                  "const": "supported"
+                }
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "min_count"
+                  ]
+                },
+                {
+                  "required": [
+                    "max_count"
+                  ]
+                },
+                {
+                  "required": [
+                    "max_count_state"
+                  ]
+                },
+                {
+                  "required": [
+                    "demonstrated_count"
+                  ]
+                },
+                {
+                  "required": [
+                    "count_scope"
+                  ]
+                },
+                {
+                  "required": [
+                    "position_roles"
+                  ]
+                },
+                {
+                  "required": [
+                    "max_duration"
+                  ]
+                },
+                {
+                  "required": [
+                    "duration_unit"
+                  ]
+                },
+                {
+                  "required": [
+                    "formats"
+                  ]
+                },
+                {
+                  "required": [
+                    "encodings"
+                  ]
+                },
+                {
+                  "required": [
+                    "constraints"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "deliveryProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "state",
+        "transport",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "transport": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "endpoint": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "formats": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "default_format": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "max_partial_outputs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      }
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "mode": {
+          "enum": [
+            "exact_set",
+            "range"
+          ]
+        },
+        "values": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "unsupported_values": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "default": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "step": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unit": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "formats": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "supported"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "mode"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "mode"
+                  ]
+                },
+                {
+                  "required": [
+                    "values"
+                  ]
+                },
+                {
+                  "required": [
+                    "unsupported_values"
+                  ]
+                },
+                {
+                  "required": [
+                    "default"
+                  ]
+                },
+                {
+                  "required": [
+                    "min"
+                  ]
+                },
+                {
+                  "required": [
+                    "max"
+                  ]
+                },
+                {
+                  "required": [
+                    "step"
+                  ]
+                },
+                {
+                  "required": [
+                    "unit"
+                  ]
+                },
+                {
+                  "required": [
+                    "formats"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "exact_set"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "values"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "range"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "min",
+              "max"
+            ]
+          }
+        }
+      ]
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/claimState"
+        },
+        "granularity": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "delivery_profile_ids": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "endpoints": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "metadata": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "supported"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "granularity",
+              "delivery_profile_ids",
+              "endpoints",
+              "metadata"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "granularity"
+                  ]
+                },
+                {
+                  "required": [
+                    "delivery_profile_ids"
+                  ]
+                },
+                {
+                  "required": [
+                    "endpoints"
+                  ]
+                },
+                {
+                  "required": [
+                    "metadata"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "limitation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "summary",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "known",
+            "partial",
+            "unknown"
+          ]
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        },
+        "charges": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/charge"
+          }
+        }
+      }
+    },
+    "charge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "state",
+        "source_ids"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "state": {
+          "enum": [
+            "known",
+            "unknown"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "metered",
+            "estimate",
+            "usage_increment"
+          ]
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "denomination": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "per": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unit": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "profile_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "applies_when": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "qualifier": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "known"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "kind",
+              "amount",
+              "denomination",
+              "per",
+              "unit"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "kind"
+                  ]
+                },
+                {
+                  "required": [
+                    "amount"
+                  ]
+                },
+                {
+                  "required": [
+                    "denomination"
+                  ]
+                },
+                {
+                  "required": [
+                    "per"
+                  ]
+                },
+                {
+                  "required": [
+                    "unit"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "summary",
+        "handling",
+        "source_ids"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "handling": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/sourceIds"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "url",
+        "retrieved_on"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "kind": {
+          "enum": [
+            "documentation",
+            "api_reference",
+            "api_schema",
+            "pricing",
+            "release_note",
+            "changelog"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "retrieved_on": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}

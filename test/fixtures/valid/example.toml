@@ -1,0 +1,49 @@
+schema_version = 1
+
+[model]
+id = "example-lab/example-image"
+name = "Example Image"
+lab = "Example Lab"
+modality = "image"
+status = "available"
+source_ids = ["official-docs"]
+
+[[capability_profiles]]
+id = "text-to-image"
+task = "text_to_image"
+source_ids = ["official-docs"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["official-docs"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["official-docs"]
+
+[capability_profiles.size]
+state = "unknown"
+source_ids = ["official-docs"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["official-docs"]
+
+[pricing]
+state = "unknown"
+source_ids = ["official-pricing"]
+
+[verification]
+state = "unverified"
+
+[[sources]]
+id = "official-docs"
+kind = "documentation"
+url = "https://example.com/lab/docs/example-image"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "official-pricing"
+kind = "pricing"
+url = "https://example.com/lab/pricing"
+retrieved_on = 2026-08-09

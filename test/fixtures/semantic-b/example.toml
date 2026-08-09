@@ -1,0 +1,52 @@
+schema_version=1
+
+[model]
+source_ids=[ "official-docs" ]
+status="available"
+modality="audio"
+lab="Example Lab"
+aliases=[
+  "Semantic Example",
+]
+name="Semantic Model"
+id="example-lab/semantic-model"
+
+[[capability_profiles]]
+source_ids=["official-docs"]
+task="text_to_speech"
+id="text-to-speech"
+
+[capability_profiles.native_audio]
+source_ids=["official-docs"]
+state="not_applicable"
+
+[capability_profiles.size]
+source_ids=["official-docs"]
+state="not_applicable"
+
+[capability_profiles.frame_rate]
+source_ids=["official-docs"]
+state="not_applicable"
+
+[capability_profiles.duration]
+source_ids=["official-docs"]
+state="unknown"
+
+[verification]
+state="unverified"
+
+[pricing]
+source_ids=["official-pricing"]
+state="unknown"
+
+[[sources]]
+retrieved_on=2026-08-09
+url="https://example.com/lab/docs/semantic-model"
+kind="documentation"
+id="official-docs"
+
+[[sources]]
+retrieved_on=2026-08-09
+url="https://example.com/lab/pricing"
+kind="pricing"
+id="official-pricing"
