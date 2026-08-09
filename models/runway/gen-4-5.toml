@@ -1,0 +1,33 @@
+schema_version = 1
+
+[model]
+id = "runway/gen-4-5"
+name = "Gen-4.5"
+lab = "Runway"
+modality = "video"
+status = "unknown"
+source_ids = ["docs"]
+
+[verification]
+state = "unverified"
+
+[[capability_profiles]]
+id = "video-generation"
+task = "video_generation"
+source_ids = ["docs"]
+
+[pricing]
+state = "unknown"
+source_ids = ["pricing"]
+
+[[sources]]
+id = "docs"
+kind = "documentation"
+url = "https://docs.dev.runwayml.com/guides/models/"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://docs.dev.runwayml.com/guides/pricing/"
+retrieved_on = 2026-08-09

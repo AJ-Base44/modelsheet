@@ -1,0 +1,33 @@
+schema_version = 1
+
+[model]
+id = "runway/aleph-2-0"
+name = "Aleph 2.0"
+lab = "Runway"
+modality = "video"
+status = "unknown"
+source_ids = ["docs"]
+
+[verification]
+state = "unverified"
+
+[[capability_profiles]]
+id = "video-edit"
+task = "video_edit"
+source_ids = ["docs"]
+
+[pricing]
+state = "unknown"
+source_ids = ["pricing"]
+
+[[sources]]
+id = "docs"
+kind = "documentation"
+url = "https://docs.dev.runwayml.com/guides/models/"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://docs.dev.runwayml.com/guides/pricing/"
+retrieved_on = 2026-08-09
