@@ -25,10 +25,8 @@ id = "docs"
 kind = "documentation"
 url = "https://docs.byteplus.com/en/docs/ModelArk/2168087"
 retrieved_on = 2026-08-09
-
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://docs.byteplus.com/en/docs/ModelArk/1544106"
 retrieved_on = 2026-08-09
-
