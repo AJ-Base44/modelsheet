@@ -121,4 +121,3 @@ These models met the source bar but are not part of the ten batches in this run.
 | `data/batch-08` | Eleven Flash v2.5; Eleven Flash v2; Sound Effects v2; Eleven Music v2; MiniMax Speech 2.8 HD |
 | `data/batch-09` | MiniMax Speech 2.8 Turbo; MiniMax Music 2.6; Gemini 3.1 Flash TTS Preview; Gemini 2.5 Flash Preview TTS; Gemini 2.5 Pro Preview TTS |
 | `data/batch-10` | Lyria 3 Clip Preview; Lyria 3 Pro Preview; Stable Audio 3.0; Stable Audio 2.5; Seed Audio 1.0 |
-
