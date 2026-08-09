@@ -1,0 +1,33 @@
+schema_version = 1
+
+[model]
+id = "minimax/minimax-music-2-6"
+name = "MiniMax Music 2.6"
+lab = "MiniMax"
+modality = "audio"
+status = "unknown"
+source_ids = ["docs"]
+
+[verification]
+state = "unverified"
+
+[[capability_profiles]]
+id = "music-generation"
+task = "music_generation"
+source_ids = ["docs"]
+
+[pricing]
+state = "unknown"
+source_ids = ["pricing"]
+
+[[sources]]
+id = "docs"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/api-overview"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://platform.minimax.io/docs/guides/pricing-paygo"
+retrieved_on = 2026-08-09
