@@ -1,0 +1,613 @@
+schema_version = 1
+
+[model]
+id = "elevenlabs/eleven-v3"
+name = "Eleven v3"
+aliases = ["ElevenLabs v3"]
+lab = "ElevenLabs"
+modality = "audio"
+status = "available"
+source_ids = ["models", "ga-blog", "ga-changelog", "alias-usage"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "eleven_v3"
+source_ids = ["models", "api-release"]
+
+[language_support]
+state = "supported"
+scope = "speech_output"
+published_label = "70+ languages"
+listed_count = 74
+list_completeness = "non_exhaustive"
+languages = [
+  { name = "Afrikaans", code = "afr" },
+  { name = "Arabic", code = "ara" },
+  { name = "Armenian", code = "hye" },
+  { name = "Assamese", code = "asm" },
+  { name = "Azerbaijani", code = "aze" },
+  { name = "Belarusian", code = "bel" },
+  { name = "Bengali", code = "ben" },
+  { name = "Bosnian", code = "bos" },
+  { name = "Bulgarian", code = "bul" },
+  { name = "Catalan", code = "cat" },
+  { name = "Cebuano", code = "ceb" },
+  { name = "Chichewa", code = "nya" },
+  { name = "Croatian", code = "hrv" },
+  { name = "Czech", code = "ces" },
+  { name = "Danish", code = "dan" },
+  { name = "Dutch", code = "nld" },
+  { name = "English", code = "eng" },
+  { name = "Estonian", code = "est" },
+  { name = "Filipino", code = "fil" },
+  { name = "Finnish", code = "fin" },
+  { name = "French", code = "fra" },
+  { name = "Galician", code = "glg" },
+  { name = "Georgian", code = "kat" },
+  { name = "German", code = "deu" },
+  { name = "Greek", code = "ell" },
+  { name = "Gujarati", code = "guj" },
+  { name = "Hausa", code = "hau" },
+  { name = "Hebrew", code = "heb" },
+  { name = "Hindi", code = "hin" },
+  { name = "Hungarian", code = "hun" },
+  { name = "Icelandic", code = "isl" },
+  { name = "Indonesian", code = "ind" },
+  { name = "Irish", code = "gle" },
+  { name = "Italian", code = "ita" },
+  { name = "Japanese", code = "jpn" },
+  { name = "Javanese", code = "jav" },
+  { name = "Kannada", code = "kan" },
+  { name = "Kazakh", code = "kaz" },
+  { name = "Kirghiz", code = "kir" },
+  { name = "Korean", code = "kor" },
+  { name = "Latvian", code = "lav" },
+  { name = "Lingala", code = "lin" },
+  { name = "Lithuanian", code = "lit" },
+  { name = "Luxembourgish", code = "ltz" },
+  { name = "Macedonian", code = "mkd" },
+  { name = "Malay", code = "msa" },
+  { name = "Malayalam", code = "mal" },
+  { name = "Mandarin Chinese", code = "cmn" },
+  { name = "Marathi", code = "mar" },
+  { name = "Nepali", code = "nep" },
+  { name = "Norwegian", code = "nor" },
+  { name = "Pashto", code = "pus" },
+  { name = "Persian", code = "fas" },
+  { name = "Polish", code = "pol" },
+  { name = "Portuguese", code = "por" },
+  { name = "Punjabi", code = "pan" },
+  { name = "Romanian", code = "ron" },
+  { name = "Russian", code = "rus" },
+  { name = "Serbian", code = "srp" },
+  { name = "Sindhi", code = "snd" },
+  { name = "Slovak", code = "slk" },
+  { name = "Slovenian", code = "slv" },
+  { name = "Somali", code = "som" },
+  { name = "Spanish", code = "spa" },
+  { name = "Swahili", code = "swa" },
+  { name = "Swedish", code = "swe" },
+  { name = "Tamil", code = "tam" },
+  { name = "Telugu", code = "tel" },
+  { name = "Thai", code = "tha" },
+  { name = "Turkish", code = "tur" },
+  { name = "Ukrainian", code = "ukr" },
+  { name = "Urdu", code = "urd" },
+  { name = "Vietnamese", code = "vie" },
+  { name = "Welsh", code = "cym" },
+]
+source_ids = ["models"]
+
+[[capability_profiles]]
+id = "text-to-speech"
+task = "text_to_speech"
+endpoint = "POST /v1/text-to-speech/{voice_id}"
+source_ids = ["tts-reference"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["models"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 5000
+source_ids = ["models"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["models"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["models"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["models"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [22050]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32]
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [24000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [48]
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+encoding = "s16le"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100, 48000]
+bit_depth_unit = "bit"
+bit_depths = [16]
+source_ids = ["tts-reference", "dialogue-overview"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100, 48000]
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [48000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "ulaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "alaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_format_access]]
+format_ids = ["mp3_44100_192"]
+minimum_plan = "Creator"
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_format_access]]
+format_ids = ["pcm_44100", "wav_44100"]
+minimum_plan = "Pro"
+source_ids = ["tts-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice"
+media_type = "voice_id"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["tts-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["tts-reference", "openapi"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "not_applicable"
+source_ids = ["models"]
+
+[[capability_profiles.delivery_profiles]]
+id = "buffered-http"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v1/text-to-speech/{voice_id}"
+formats = [
+  "mp3_22050_32", "mp3_24000_48", "mp3_44100_32", "mp3_44100_64",
+  "mp3_44100_96", "mp3_44100_128", "mp3_44100_192",
+  "pcm_8000", "pcm_16000", "pcm_22050", "pcm_24000", "pcm_32000",
+  "pcm_44100", "pcm_48000",
+  "wav_8000", "wav_16000", "wav_22050", "wav_24000", "wav_32000",
+  "wav_44100", "wav_48000",
+  "opus_48000_32", "opus_48000_64", "opus_48000_96", "opus_48000_128",
+  "opus_48000_192", "ulaw_8000", "alaw_8000",
+]
+default_format = "mp3_44100_128"
+source_ids = ["tts-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "streaming-http"
+state = "supported"
+transport = "http_chunked"
+endpoint = "POST /v1/text-to-speech/{voice_id}/stream"
+formats = [
+  "mp3_22050_32", "mp3_24000_48", "mp3_44100_32", "mp3_44100_64",
+  "mp3_44100_96", "mp3_44100_128", "mp3_44100_192",
+  "pcm_8000", "pcm_16000", "pcm_22050", "pcm_24000", "pcm_32000",
+  "pcm_44100", "pcm_48000",
+  "opus_48000_32", "opus_48000_64", "opus_48000_96", "opus_48000_128",
+  "opus_48000_192", "ulaw_8000", "alaw_8000",
+]
+default_format = "mp3_44100_128"
+source_ids = ["tts-stream-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "websocket-input"
+state = "unsupported"
+transport = "websocket"
+source_ids = ["tts-websocket-guide"]
+
+[capability_profiles.timing]
+state = "supported"
+granularity = "character"
+delivery_profile_ids = ["buffered-http", "streaming-http"]
+endpoints = [
+  "POST /v1/text-to-speech/{voice_id}/with-timestamps",
+  "POST /v1/text-to-speech/{voice_id}/stream/with-timestamps",
+]
+metadata = ["alignment", "normalized_alignment"]
+source_ids = ["tts-timing-reference", "tts-stream-timing-reference"]
+
+[[capability_profiles]]
+id = "text-to-dialogue"
+task = "text_to_dialogue"
+endpoint = "POST /v1/text-to-dialogue"
+source_ids = ["dialogue-overview", "dialogue-reference"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["dialogue-reference"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["models"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["models"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["models"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [22050]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32]
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [24000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [48]
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+encoding = "s16le"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100, 48000]
+bit_depth_unit = "bit"
+bit_depths = [16]
+source_ids = ["dialogue-reference", "dialogue-overview"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100, 48000]
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [48000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "ulaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "alaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.audio_format_access]]
+format_ids = ["mp3_44100_192"]
+minimum_plan = "Creator"
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.audio_format_access]]
+format_ids = ["pcm_44100", "wav_44100"]
+minimum_plan = "Pro"
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice"
+media_type = "voice_id"
+state = "supported"
+min_count = 1
+max_count = 10
+count_scope = "unique"
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["dialogue-reference", "openapi"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "not_applicable"
+source_ids = ["models"]
+
+[[capability_profiles.delivery_profiles]]
+id = "buffered-http"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v1/text-to-dialogue"
+formats = [
+  "mp3_22050_32", "mp3_24000_48", "mp3_44100_32", "mp3_44100_64",
+  "mp3_44100_96", "mp3_44100_128", "mp3_44100_192",
+  "pcm_8000", "pcm_16000", "pcm_22050", "pcm_24000", "pcm_32000",
+  "pcm_44100", "pcm_48000",
+  "wav_8000", "wav_16000", "wav_22050", "wav_24000", "wav_32000",
+  "wav_44100", "wav_48000",
+  "opus_48000_32", "opus_48000_64", "opus_48000_96", "opus_48000_128",
+  "opus_48000_192", "ulaw_8000", "alaw_8000",
+]
+default_format = "mp3_44100_128"
+source_ids = ["dialogue-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "streaming-http"
+state = "supported"
+transport = "http_chunked"
+endpoint = "POST /v1/text-to-dialogue/stream"
+formats = [
+  "mp3_22050_32", "mp3_24000_48", "mp3_44100_32", "mp3_44100_64",
+  "mp3_44100_96", "mp3_44100_128", "mp3_44100_192",
+  "pcm_8000", "pcm_16000", "pcm_22050", "pcm_24000", "pcm_32000",
+  "pcm_44100", "pcm_48000",
+  "opus_48000_32", "opus_48000_64", "opus_48000_96", "opus_48000_128",
+  "opus_48000_192", "ulaw_8000", "alaw_8000",
+]
+default_format = "mp3_44100_128"
+source_ids = ["dialogue-stream-reference"]
+
+[capability_profiles.timing]
+state = "supported"
+granularity = "character"
+delivery_profile_ids = ["buffered-http", "streaming-http"]
+endpoints = [
+  "POST /v1/text-to-dialogue/with-timestamps",
+  "POST /v1/text-to-dialogue/stream/with-timestamps",
+]
+metadata = ["alignment", "normalized_alignment", "voice_segments"]
+source_ids = ["dialogue-timing-reference", "dialogue-stream-timing-reference"]
+
+[pricing]
+state = "partial"
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "tts-api-input"
+state = "known"
+kind = "metered"
+amount = 0.10
+denomination = "USD"
+per = 1000
+unit = "input_character"
+applies_when = ["task=text_to_speech"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "dialogue-api-input"
+state = "unknown"
+applies_when = ["task=text_to_dialogue"]
+source_ids = ["pricing"]
+
+[[conflicts]]
+path = "capability_profiles.text-to-speech.text_input.max"
+summary = "Official pages publish 5,000, 3,000, and grouped 40,000-character limits, and the anonymous runtime model catalog could not resolve them."
+handling = "Use 5,000 from the model-specific reference, retain the differently scoped product-card claims as conflicts, and keep the separate output-duration range unknown."
+source_ids = ["models", "tts-product", "pricing", "openapi"]
+
+[[conflicts]]
+path = "language_support"
+summary = "The model reference says 70+ languages and lists 74; the grouped API pricing card says 32."
+handling = "Use the model-specific published list and retain the grouped pricing claim as conflicting provenance."
+source_ids = ["models", "pricing"]
+
+[[conflicts]]
+path = "capability_profiles.text-to-dialogue.reference_inputs.voice.max_count"
+summary = "The endpoint schema caps unique voice IDs at ten; the dialogue overview FAQ says there is no speaker limit."
+handling = "Use ten for API selection because it is the callable request constraint."
+source_ids = ["dialogue-reference", "dialogue-overview"]
+
+[[conflicts]]
+path = "model.status"
+summary = "Dated February 2026 sources say generally available and out of alpha, while some best-practices copy still says research preview."
+handling = "Use available from the dated GA sources."
+source_ids = ["ga-blog", "ga-changelog", "best-practices"]
+
+[[conflicts]]
+path = "capability_profiles.*.delivery_profiles.*.formats"
+summary = "The prose PCM description is internally inconsistent with the endpoint format enums."
+handling = "Use the exact endpoint enums."
+source_ids = ["dialogue-overview", "tts-reference", "dialogue-reference"]
+
+[[sources]]
+id = "models"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/overview/models"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "ga-blog"
+kind = "release_note"
+url = "https://elevenlabs.io/blog/eleven-v3-is-now-generally-available"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "ga-changelog"
+kind = "changelog"
+url = "https://elevenlabs.io/docs/changelog/2026/2/2"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "alias-usage"
+kind = "documentation"
+url = "https://elevenlabs.io/blog/introducing-the-elevenlabs-app"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "api-release"
+kind = "changelog"
+url = "https://elevenlabs.io/docs/changelog/2025/8/20"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "tts-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-speech/convert.md"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "tts-stream-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-speech/stream.md"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "tts-timing-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-speech/convert-with-timestamps"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "tts-stream-timing-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-speech/stream-with-timestamps"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "dialogue-overview"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/overview/capabilities/text-to-dialogue"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "dialogue-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert.md"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "dialogue-stream-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-dialogue/stream.md"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "dialogue-timing-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert-with-timestamps"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "dialogue-stream-timing-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-dialogue/stream-with-timestamps"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "tts-websocket-guide"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/eleven-api/guides/how-to/websockets/realtime-tts"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "tts-product"
+kind = "documentation"
+url = "https://elevenlabs.io/text-to-speech-api"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://elevenlabs.io/pricing/api"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "openapi"
+kind = "api_schema"
+url = "https://api.elevenlabs.io/openapi.json"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "best-practices"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/overview/capabilities/text-to-speech/best-practices"
+retrieved_on = 2026-08-09

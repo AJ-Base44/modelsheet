@@ -1,0 +1,602 @@
+schema_version = 1
+
+[model]
+id = "black-forest-labs/flux-3-video"
+name = "FLUX 3 Video"
+lab = "Black Forest Labs"
+modality = "video"
+status = "available"
+source_ids = ["launch", "model-page"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "flux-3-video"
+source_ids = ["openapi"]
+
+[[api_identifiers]]
+kind = "version_selector"
+value = "latest"
+source_ids = ["openapi"]
+
+[language_support]
+state = "supported"
+scope = "native_audio"
+published_label = "multilingual; thirteen languages are named and more are claimed"
+listed_count = 13
+list_completeness = "non_exhaustive"
+languages = [
+  { name = "English" },
+  { name = "Chinese" },
+  { name = "Spanish" },
+  { name = "French" },
+  { name = "German" },
+  { name = "Japanese" },
+  { name = "Portuguese" },
+  { name = "Russian" },
+  { name = "Italian" },
+  { name = "Indonesian" },
+  { name = "Turkish" },
+  { name = "Hindi" },
+  { name = "Punjabi" },
+]
+source_ids = ["launch"]
+
+[[capability_profiles]]
+id = "text-to-video"
+task = "text_to_video"
+endpoint = "POST /v1/flux-3-video"
+api_mode = "t2v"
+api_mode_aliases = ["text-to-video"]
+variants = ["standard", "draft"]
+source_ids = ["openapi", "api-reference"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 20
+step = 1
+automatic = true
+source_ids = ["openapi"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["overview"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+automatic = true
+default = "auto"
+source_ids = ["overview", "openapi"]
+
+[[capability_profiles.size.options]]
+id = "hd"
+label = "HD / 720p"
+max_megapixels = 1
+render_modes = ["standard", "draft"]
+aspect_ratios = ["21:9", "2:1", "16:9", "4:3", "1:1", "3:4", "9:16"]
+source_ids = ["model-page", "overview", "openapi"]
+
+[[capability_profiles.size.options]]
+id = "fhd"
+label = "Full HD / 1080p"
+max_megapixels = 2
+render_modes = ["standard"]
+aspect_ratios = ["21:9", "2:1", "16:9", "4:3", "1:1", "3:4", "9:16"]
+source_ids = ["model-page", "overview", "openapi"]
+
+[[capability_profiles.size.options.examples]]
+width = 1920
+height = 1088
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["overview"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["model-page", "openapi"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["overview", "openapi"]
+
+[[capability_profiles.delivery_profiles]]
+id = "signed-url"
+state = "supported"
+transport = "signed_url"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["video-guide"]
+
+[[capability_profiles]]
+id = "image-to-video"
+task = "image_to_video"
+endpoint = "POST /v1/flux-3-video"
+api_mode = "i2v"
+api_mode_aliases = ["image-continuation"]
+variants = ["standard", "draft"]
+source_ids = ["openapi", "api-reference"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 20
+step = 1
+automatic = true
+source_ids = ["openapi"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["overview"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+automatic = true
+default = "auto"
+source_ids = ["overview", "openapi"]
+
+[[capability_profiles.size.options]]
+id = "hd"
+label = "HD / 720p"
+max_megapixels = 1
+render_modes = ["standard", "draft"]
+aspect_ratios = ["21:9", "2:1", "16:9", "4:3", "1:1", "3:4", "9:16"]
+source_ids = ["model-page", "overview", "openapi"]
+
+[[capability_profiles.size.options]]
+id = "fhd"
+label = "Full HD / 1080p"
+max_megapixels = 2
+render_modes = ["standard"]
+aspect_ratios = ["21:9", "2:1", "16:9", "4:3", "1:1", "3:4", "9:16"]
+source_ids = ["model-page", "overview", "openapi"]
+
+[[capability_profiles.size.options.examples]]
+width = 1920
+height = 1088
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["overview"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["model-page", "openapi"]
+
+[[capability_profiles.reference_inputs]]
+role = "keyframe_sequence"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 10
+position_roles = ["start_image", "intermediate_keyframe", "end_image"]
+encodings = ["https_url", "base64"]
+source_ids = ["openapi", "video-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["overview", "openapi"]
+
+[[capability_profiles.delivery_profiles]]
+id = "signed-url"
+state = "supported"
+transport = "signed_url"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["video-guide"]
+
+[[capability_profiles]]
+id = "video-continuation"
+task = "video_continuation"
+endpoint = "POST /v1/flux-3-video"
+api_mode = "v2v"
+api_mode_aliases = ["video-continuation"]
+variants = ["standard", "draft"]
+source_ids = ["openapi", "api-reference"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 20
+step = 1
+automatic = true
+source_ids = ["openapi"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["overview"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+automatic = true
+default = "auto"
+source_ids = ["overview", "openapi"]
+
+[[capability_profiles.size.options]]
+id = "hd"
+label = "HD / 720p"
+max_megapixels = 1
+render_modes = ["standard", "draft"]
+aspect_ratios = ["21:9", "2:1", "16:9", "4:3", "1:1", "3:4", "9:16"]
+source_ids = ["model-page", "overview", "openapi"]
+
+[[capability_profiles.size.options]]
+id = "fhd"
+label = "Full HD / 1080p"
+max_megapixels = 2
+render_modes = ["standard"]
+aspect_ratios = ["21:9", "2:1", "16:9", "4:3", "1:1", "3:4", "9:16"]
+source_ids = ["model-page", "overview", "openapi"]
+
+[[capability_profiles.size.options.examples]]
+width = 1920
+height = 1088
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["overview"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["model-page", "openapi"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_video"
+media_type = "video"
+state = "supported"
+min_count = 1
+max_count = 1
+max_duration = 4
+duration_unit = "second"
+formats = ["mp4"]
+encodings = ["https_url", "base64"]
+source_ids = ["launch", "openapi"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["overview", "openapi"]
+
+[[capability_profiles.delivery_profiles]]
+id = "signed-url"
+state = "supported"
+transport = "signed_url"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["video-guide"]
+
+[[capability_profiles]]
+id = "draft-enhancement"
+task = "draft_enhancement"
+endpoint = "POST /v1/flux-3-video"
+api_mode = "draft_enhance"
+api_mode_aliases = ["draft-enhance"]
+source_ids = ["openapi", "model-page"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 20
+step = 1
+source_ids = ["openapi", "model-page"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["overview"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "fhd"
+source_ids = ["openapi"]
+
+[[capability_profiles.size.options]]
+id = "hd"
+label = "HD / 720p"
+max_megapixels = 1
+source_ids = ["model-page", "overview", "openapi"]
+
+[[capability_profiles.size.options]]
+id = "fhd"
+label = "Full HD / 1080p"
+max_megapixels = 2
+source_ids = ["model-page", "overview", "openapi"]
+
+[[capability_profiles.size.options.examples]]
+width = 1920
+height = 1088
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["overview"]
+
+[capability_profiles.native_audio]
+state = "unknown"
+source_ids = ["openapi", "model-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "draft_cache"
+media_type = "binary"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["bin"]
+encodings = ["https_url", "base64"]
+source_ids = ["openapi", "model-page"]
+
+[[capability_profiles.delivery_profiles]]
+id = "signed-url"
+state = "supported"
+transport = "signed_url"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["video-guide"]
+
+[pricing]
+state = "partial"
+source_ids = ["pricing", "model-page", "docs-pricing"]
+
+[[pricing.charges]]
+id = "t2v-draft-hd"
+state = "known"
+kind = "metered"
+amount = 0.06
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=text_to_video", "render=draft", "size=hd"]
+source_ids = ["pricing", "model-page"]
+
+[[pricing.charges]]
+id = "i2v-draft-hd"
+state = "known"
+kind = "metered"
+amount = 0.06
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=image_to_video", "render=draft", "size=hd"]
+source_ids = ["pricing", "model-page"]
+
+[[pricing.charges]]
+id = "t2v-standard-hd"
+state = "known"
+kind = "metered"
+amount = 0.17
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=text_to_video", "render=standard", "size=hd"]
+source_ids = ["pricing", "model-page"]
+
+[[pricing.charges]]
+id = "i2v-standard-hd"
+state = "known"
+kind = "metered"
+amount = 0.17
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=image_to_video", "render=standard", "size=hd"]
+source_ids = ["pricing", "model-page"]
+
+[[pricing.charges]]
+id = "t2v-standard-fhd"
+state = "known"
+kind = "metered"
+amount = 0.29
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=text_to_video", "render=standard", "size=fhd"]
+source_ids = ["pricing", "model-page"]
+
+[[pricing.charges]]
+id = "i2v-standard-fhd"
+state = "known"
+kind = "metered"
+amount = 0.29
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=image_to_video", "render=standard", "size=fhd"]
+source_ids = ["pricing", "model-page"]
+
+[[pricing.charges]]
+id = "v2v-draft-hd"
+state = "known"
+kind = "metered"
+amount = 0.12
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=video_continuation", "render=draft", "size=hd"]
+source_ids = ["pricing", "model-page"]
+
+[[pricing.charges]]
+id = "v2v-standard-hd"
+state = "known"
+kind = "metered"
+amount = 0.41
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=video_continuation", "render=standard", "size=hd"]
+source_ids = ["pricing", "model-page"]
+
+[[pricing.charges]]
+id = "v2v-standard-fhd"
+state = "known"
+kind = "metered"
+amount = 0.53
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=video_continuation", "render=standard", "size=fhd"]
+source_ids = ["pricing", "model-page"]
+
+[[pricing.charges]]
+id = "draft-enhance-from-t2v-fhd"
+state = "known"
+kind = "metered"
+amount = 0.29
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=draft_enhancement", "origin_task=text_to_video", "size=fhd"]
+source_ids = ["model-page"]
+
+[[pricing.charges]]
+id = "draft-enhance-from-i2v-fhd"
+state = "known"
+kind = "metered"
+amount = 0.29
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=draft_enhancement", "origin_task=image_to_video", "size=fhd"]
+source_ids = ["model-page"]
+
+[[pricing.charges]]
+id = "draft-enhance-from-v2v-fhd"
+state = "known"
+kind = "metered"
+amount = 0.53
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["task=draft_enhancement", "origin_task=video_continuation", "size=fhd"]
+source_ids = ["model-page"]
+
+[[pricing.charges]]
+id = "draft-enhance-hd"
+state = "unknown"
+applies_when = ["task=draft_enhancement", "size=hd"]
+source_ids = ["openapi", "model-page"]
+
+[[pricing.charges]]
+id = "native-audio"
+state = "known"
+kind = "metered"
+amount = 0.0
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["native_audio=true"]
+qualifier = "included"
+source_ids = ["model-page"]
+
+[[conflicts]]
+path = "model.name"
+summary = "BFL uses FLUX 3 for the multimodal family heading and FLUX 3 Video for the released video product and API capability."
+handling = "Use FLUX 3 Video for this video-model record; do not collapse future FLUX 3 modality releases into it without new source review."
+source_ids = ["launch", "model-page"]
+
+[[conflicts]]
+path = "model.status"
+summary = "The dated launch announcement says generally available; the undated overview still says preview."
+handling = "Use available from the dated 2026-08-04 launch and retain both sources."
+source_ids = ["launch", "overview"]
+
+[[conflicts]]
+path = "capability_profiles.video-continuation.duration.max"
+summary = "The live OpenAPI allows 5-20 seconds; the overview table says 5-15 seconds."
+handling = "Use 20 from the callable API contract and keep the overview as conflicting provenance."
+source_ids = ["openapi", "overview"]
+
+[[conflicts]]
+path = "pricing.charges.v2v-standard-hd,pricing.charges.v2v-standard-fhd"
+summary = "The main pricing page and model FAQ publish USD 0.41/0.53 per second; the docs pricing table publishes USD 0.43/0.54."
+handling = "Use the matching values from the current calculator and model FAQ."
+source_ids = ["pricing", "model-page", "docs-pricing"]
+
+[[conflicts]]
+path = "capability_profiles.*.size.options.fhd"
+summary = "BFL labels the tier Full HD / 1080p but its exact 16:9 example is 1920x1088."
+handling = "Preserve both the published tier label and the exact example; do not normalize it to 1920x1080."
+source_ids = ["overview"]
+
+[[conflicts]]
+path = "pricing.charges.draft-enhance-hd"
+summary = "The API permits HD or FHD enhancement, while the model FAQ only states the corresponding standard FHD price."
+handling = "Keep HD enhancement pricing unknown."
+source_ids = ["openapi", "model-page"]
+
+[[sources]]
+id = "launch"
+kind = "release_note"
+url = "https://bfl.ai/blog/flux-3-video"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "model-page"
+kind = "documentation"
+url = "https://bfl.ai/models/flux-3"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "overview"
+kind = "documentation"
+url = "https://docs.bfl.ai/flux_3/flux3_overview"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "video-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/flux_3/flux3_video"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "api-reference"
+kind = "api_reference"
+url = "https://docs.bfl.ai/api-reference/utility/generate-a-video-with-flux-3"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "openapi"
+kind = "api_schema"
+url = "https://api.bfl.ai/openapi.json"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://bfl.ai/pricing"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "docs-pricing"
+kind = "pricing"
+url = "https://docs.bfl.ai/quick_start/pricing"
+retrieved_on = 2026-08-09

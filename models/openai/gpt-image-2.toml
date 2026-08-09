@@ -1,0 +1,661 @@
+schema_version = 1
+
+[model]
+id = "openai/gpt-image-2"
+name = "GPT Image 2"
+lab = "OpenAI"
+modality = "image"
+status = "unknown"
+source_ids = ["model-page"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "gpt-image-2"
+resolves_to = "gpt-image-2-2026-04-21"
+source_ids = ["model-page"]
+
+[[api_identifiers]]
+kind = "snapshot_id"
+value = "gpt-image-2-2026-04-21"
+source_ids = ["model-page"]
+
+[language_support]
+state = "unknown"
+scope = "prompt_input"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles]]
+id = "text-to-image"
+task = "text_to_image"
+endpoint = "POST /v1/images/generations"
+source_ids = ["image-guide", "generation-reference"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 32000
+source_ids = ["generation-reference"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+automatic = true
+default = "auto"
+edge_multiple = 16
+max_edge = 3840
+min_total_pixels = 655360
+max_total_pixels = 8294400
+experimental_above_total_pixels = 3686400
+max_long_to_short_ratio = 3.0
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 1536
+height = 1024
+unit = "pixel"
+aspect_ratio = "3:2"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1536
+unit = "pixel"
+aspect_ratio = "2:3"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 1152
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 3840
+height = 2160
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 2160
+height = 3840
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["model-page"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-response"
+state = "supported"
+transport = "base64_in_response"
+formats = ["png", "jpeg", "webp"]
+default_format = "png"
+source_ids = ["image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "partial-images"
+state = "supported"
+transport = "streamed_events"
+formats = ["png", "jpeg", "webp"]
+max_partial_outputs = 3
+source_ids = ["image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "url-response"
+state = "unsupported"
+transport = "url"
+source_ids = ["images-reference"]
+
+[[capability_profiles.controls]]
+name = "quality"
+state = "supported"
+mode = "exact_set"
+values = ["auto", "low", "medium", "high"]
+default = "auto"
+source_ids = ["image-guide"]
+
+[[capability_profiles.controls]]
+name = "background"
+state = "supported"
+mode = "exact_set"
+values = ["auto", "opaque"]
+unsupported_values = ["transparent"]
+default = "auto"
+source_ids = ["image-guide"]
+
+[[capability_profiles.controls]]
+name = "moderation"
+state = "supported"
+mode = "exact_set"
+values = ["auto", "low"]
+default = "auto"
+source_ids = ["image-guide"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 10
+step = 1
+default = 1
+unit = "image"
+source_ids = ["image-guide", "generation-reference"]
+
+[[capability_profiles.controls]]
+name = "output_compression"
+state = "supported"
+mode = "range"
+min = 0
+max = 100
+step = 1
+default = 100
+unit = "percent"
+formats = ["jpeg", "webp"]
+source_ids = ["image-guide", "generation-reference"]
+
+[[capability_profiles]]
+id = "image-edit"
+task = "image_edit"
+endpoint = "POST /v1/images/edits"
+source_ids = ["image-guide", "edit-reference"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+automatic = true
+default = "auto"
+edge_multiple = 16
+max_edge = 3840
+min_total_pixels = 655360
+max_total_pixels = 8294400
+experimental_above_total_pixels = 3686400
+max_long_to_short_ratio = 3.0
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 1536
+height = 1024
+unit = "pixel"
+aspect_ratio = "3:2"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1536
+unit = "pixel"
+aspect_ratio = "2:3"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 1152
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 3840
+height = 2160
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 2160
+height = 3840
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count_state = "unknown"
+demonstrated_count = 4
+constraints = ["input_fidelity=fixed_high"]
+source_ids = ["image-guide", "edit-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "edit_mask"
+media_type = "image_mask"
+state = "supported"
+min_count = 0
+max_count = 1
+constraints = [
+  "applies_to=first_image_reference",
+  "same_format_as=image_reference",
+  "same_dimensions_as=image_reference",
+  "alpha_channel_required=true",
+]
+source_ids = ["image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["model-page"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-response"
+state = "supported"
+transport = "base64_in_response"
+formats = ["png", "jpeg", "webp"]
+default_format = "png"
+source_ids = ["image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "partial-images"
+state = "supported"
+transport = "streamed_events"
+formats = ["png", "jpeg", "webp"]
+max_partial_outputs = 3
+source_ids = ["image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "url-response"
+state = "unsupported"
+transport = "url"
+source_ids = ["images-reference"]
+
+[[capability_profiles.controls]]
+name = "quality"
+state = "supported"
+mode = "exact_set"
+values = ["auto", "low", "medium", "high"]
+default = "auto"
+source_ids = ["image-guide"]
+
+[[capability_profiles.controls]]
+name = "background"
+state = "supported"
+mode = "exact_set"
+values = ["auto", "opaque"]
+unsupported_values = ["transparent"]
+default = "auto"
+source_ids = ["image-guide"]
+
+[[capability_profiles.controls]]
+name = "moderation"
+state = "supported"
+mode = "exact_set"
+values = ["auto", "low"]
+default = "auto"
+source_ids = ["image-guide"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 10
+step = 1
+default = 1
+unit = "image"
+source_ids = ["image-guide", "edit-reference"]
+
+[[capability_profiles.controls]]
+name = "output_compression"
+state = "supported"
+mode = "range"
+min = 0
+max = 100
+step = 1
+unit = "percent"
+formats = ["jpeg", "webp"]
+source_ids = ["image-guide", "edit-reference"]
+
+[pricing]
+state = "known"
+source_ids = ["pricing", "image-guide"]
+
+[[pricing.charges]]
+id = "standard-text-input"
+state = "known"
+kind = "metered"
+amount = 5.0
+denomination = "USD"
+per = 1000000
+unit = "text_input_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-cached-text-input"
+state = "known"
+kind = "metered"
+amount = 1.25
+denomination = "USD"
+per = 1000000
+unit = "cached_text_input_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-image-input"
+state = "known"
+kind = "metered"
+amount = 8.0
+denomination = "USD"
+per = 1000000
+unit = "image_input_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-cached-image-input"
+state = "known"
+kind = "metered"
+amount = 2.0
+denomination = "USD"
+per = 1000000
+unit = "cached_image_input_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-image-output"
+state = "known"
+kind = "metered"
+amount = 30.0
+denomination = "USD"
+per = 1000000
+unit = "image_output_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-text-input"
+state = "known"
+kind = "metered"
+amount = 2.5
+denomination = "USD"
+per = 1000000
+unit = "text_input_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-cached-text-input"
+state = "known"
+kind = "metered"
+amount = 0.625
+denomination = "USD"
+per = 1000000
+unit = "cached_text_input_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-image-input"
+state = "known"
+kind = "metered"
+amount = 4.0
+denomination = "USD"
+per = 1000000
+unit = "image_input_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-cached-image-input"
+state = "known"
+kind = "metered"
+amount = 1.0
+denomination = "USD"
+per = 1000000
+unit = "cached_image_input_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-image-output"
+state = "known"
+kind = "metered"
+amount = 15.0
+denomination = "USD"
+per = 1000000
+unit = "image_output_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "partial-image-usage"
+state = "known"
+kind = "usage_increment"
+amount = 100
+denomination = "image_output_token"
+per = 1
+unit = "partial_image"
+applies_when = ["delivery=partial-images"]
+source_ids = ["image-guide"]
+
+[[pricing.charges]]
+id = "estimated-low-1024x1024"
+state = "known"
+kind = "estimate"
+amount = 0.006
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "quality=low", "size=1024x1024"]
+qualifier = "output_only_estimate; input token charges are additional"
+source_ids = ["image-guide"]
+
+[[pricing.charges]]
+id = "estimated-low-1024x1536"
+state = "known"
+kind = "estimate"
+amount = 0.005
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "quality=low", "size=1024x1536"]
+qualifier = "output_only_estimate; input token charges are additional"
+source_ids = ["image-guide"]
+
+[[pricing.charges]]
+id = "estimated-low-1536x1024"
+state = "known"
+kind = "estimate"
+amount = 0.005
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "quality=low", "size=1536x1024"]
+qualifier = "output_only_estimate; input token charges are additional"
+source_ids = ["image-guide"]
+
+[[pricing.charges]]
+id = "estimated-medium-1024x1024"
+state = "known"
+kind = "estimate"
+amount = 0.053
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "quality=medium", "size=1024x1024"]
+qualifier = "output_only_estimate; input token charges are additional"
+source_ids = ["image-guide"]
+
+[[pricing.charges]]
+id = "estimated-medium-1024x1536"
+state = "known"
+kind = "estimate"
+amount = 0.041
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "quality=medium", "size=1024x1536"]
+qualifier = "output_only_estimate; input token charges are additional"
+source_ids = ["image-guide"]
+
+[[pricing.charges]]
+id = "estimated-medium-1536x1024"
+state = "known"
+kind = "estimate"
+amount = 0.041
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "quality=medium", "size=1536x1024"]
+qualifier = "output_only_estimate; input token charges are additional"
+source_ids = ["image-guide"]
+
+[[pricing.charges]]
+id = "estimated-high-1024x1024"
+state = "known"
+kind = "estimate"
+amount = 0.211
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "quality=high", "size=1024x1024"]
+qualifier = "output_only_estimate; input token charges are additional"
+source_ids = ["image-guide"]
+
+[[pricing.charges]]
+id = "estimated-high-1024x1536"
+state = "known"
+kind = "estimate"
+amount = 0.165
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "quality=high", "size=1024x1536"]
+qualifier = "output_only_estimate; input token charges are additional"
+source_ids = ["image-guide"]
+
+[[pricing.charges]]
+id = "estimated-high-1536x1024"
+state = "known"
+kind = "estimate"
+amount = 0.165
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "quality=high", "size=1536x1024"]
+qualifier = "output_only_estimate; input token charges are additional"
+source_ids = ["image-guide"]
+
+[[conflicts]]
+path = "model.status"
+summary = "The model page marks GPT Image 2 as Default but does not publish a GA, preview, deprecated, or discontinued lifecycle term."
+handling = "Keep registry status unknown instead of translating Default into a lifecycle claim."
+source_ids = ["model-page"]
+
+[[conflicts]]
+path = "capability_profiles.*.delivery_profiles.partial-images"
+summary = "The model page says streaming is not supported, while the image guide gives direct GPT Image 2 Image API streaming examples."
+handling = "Record endpoint-level partial-image streaming as supported and retain the broader catalog conflict."
+source_ids = ["model-page", "image-guide"]
+
+[[conflicts]]
+path = "capability_profiles.image-edit.reference_inputs.image_reference.max_count"
+summary = "The generic edit reference says GPT image models accept up to sixteen images but currently omits GPT Image 2 from its model enum; the current guide demonstrates four GPT Image 2 inputs."
+handling = "Keep the model-specific maximum unknown and record four only as a demonstrated count."
+source_ids = ["image-guide", "edit-reference"]
+
+[[conflicts]]
+path = "capability_profiles.*.size"
+summary = "The generated reference calls 3840x2160 the maximum, while the guide also lists 2160x3840."
+handling = "Store the orientation-neutral edge, divisibility, pixel-count, and ratio constraints from the model guide."
+source_ids = ["image-guide", "generation-reference"]
+
+[[sources]]
+id = "model-page"
+kind = "documentation"
+url = "https://developers.openai.com/api/docs/models/gpt-image-2"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "image-guide"
+kind = "documentation"
+url = "https://developers.openai.com/api/docs/guides/image-generation"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://developers.openai.com/api/docs/pricing"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "generation-reference"
+kind = "api_reference"
+url = "https://developers.openai.com/api/reference/resources/images/methods/generate"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "edit-reference"
+kind = "api_reference"
+url = "https://developers.openai.com/api/reference/resources/images/methods/edit"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "images-reference"
+kind = "api_reference"
+url = "https://developers.openai.com/api/reference/resources/images"
+retrieved_on = 2026-08-09
