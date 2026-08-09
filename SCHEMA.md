@@ -285,6 +285,18 @@ Each `[[capability_profiles.controls]]` is a source-published caller control. It
 | `metadata` | string array | Exact published response keys: `alignment`, `normalized_alignment`, and, for dialogue, `voice_segments`. |
 | `source_ids` | string array | API references for the timing endpoints and returned metadata. |
 
+## Documented limitations
+
+Each `[[limitations]]` entry is a first-party limitation published by the model's lab. It records source-backed constraints or weaknesses, not community reception or Modelsheet's opinion.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `id` | string | Stable file-local limitation ID. |
+| `summary` | string | Concise faithful paraphrase of the lab's published limitation. |
+| `source_ids` | string array | Official lab documentation containing the limitation. |
+
+Limitations must remain dated through their referenced `[[sources]]` entries. Community assessments, benchmark interpretations, and inferred weaknesses do not belong here.
+
 ## Pricing
 
 `[pricing]` deliberately contains only a state and a flat `charges` list. It is not a billing engine.
@@ -337,3 +349,4 @@ The Stage 3 validator should enforce these schema-derived rules:
 9. Every alias is distinct from the official name and every API identifier; names and request identifiers stay separate.
 10. A supported `text_input` has a positive `max` and unit; supported timing metadata has at least one endpoint, delivery-profile reference, and metadata key, and every referenced delivery ID exists in the same capability profile.
 11. Every `audio_format_access.format_ids` value occurs in at least one delivery profile in the same capability profile.
+12. Limitation IDs are unique within a record, and each limitation has a non-empty summary plus at least one resolvable source.

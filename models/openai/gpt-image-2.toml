@@ -182,7 +182,6 @@ mode = "range"
 min = 0
 max = 100
 step = 1
-default = 100
 unit = "percent"
 formats = ["jpeg", "webp"]
 source_ids = ["image-guide", "generation-reference"]
@@ -288,6 +287,7 @@ constraints = [
   "applies_to=first_image_reference",
   "same_format_as=image_reference",
   "same_dimensions_as=image_reference",
+  "image_and_mask_file_size_less_than=50MB",
   "alpha_channel_required=true",
 ]
 source_ids = ["image-guide"]
@@ -366,6 +366,26 @@ step = 1
 unit = "percent"
 formats = ["jpeg", "webp"]
 source_ids = ["image-guide", "edit-reference"]
+
+[[limitations]]
+id = "latency"
+summary = "Complex prompts may require as much as two minutes of processing."
+source_ids = ["image-guide"]
+
+[[limitations]]
+id = "text-placement"
+summary = "Precise text placement and clarity can remain difficult."
+source_ids = ["image-guide"]
+
+[[limitations]]
+id = "character-consistency"
+summary = "Recurring characters or brand elements may not remain visually consistent across generations."
+source_ids = ["image-guide"]
+
+[[limitations]]
+id = "composition-control"
+summary = "Precisely placing elements in structured or layout-sensitive compositions may be difficult."
+source_ids = ["image-guide"]
 
 [pricing]
 state = "known"
@@ -623,6 +643,12 @@ path = "capability_profiles.*.size"
 summary = "The generated reference calls 3840x2160 the maximum, while the guide also lists 2160x3840."
 handling = "Store the orientation-neutral edge, divisibility, pixel-count, and ratio constraints from the model guide."
 source_ids = ["image-guide", "generation-reference"]
+
+[[conflicts]]
+path = "capability_profiles.*.controls.output_compression.default"
+summary = "The generation reference states a default of 100, while the edit reference omits a default for the same parameter."
+handling = "Omit the default from both profiles until the endpoint references agree."
+source_ids = ["generation-reference", "edit-reference"]
 
 [[sources]]
 id = "model-page"
