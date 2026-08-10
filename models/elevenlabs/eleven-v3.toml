@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "documented"
 [model]
 id = "elevenlabs/eleven-v3"
 name = "Eleven v3"

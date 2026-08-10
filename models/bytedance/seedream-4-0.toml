@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "bytedance/seedream-4-0"
 name = "Seedream 4.0"

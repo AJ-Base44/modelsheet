@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "minimax/minimax-speech-2-8-turbo"
 name = "MiniMax Speech 2.8 Turbo"

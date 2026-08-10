@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "xai/grok-imagine-image-quality"
 name = "Grok Imagine Image Quality"

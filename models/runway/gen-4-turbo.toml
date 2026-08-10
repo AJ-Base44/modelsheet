@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "runway/gen-4-turbo"
 name = "Gen-4 Turbo"

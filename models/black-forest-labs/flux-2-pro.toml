@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "black-forest-labs/flux-2-pro"
 name = "FLUX.2 [pro]"

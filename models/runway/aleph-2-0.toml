@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "runway/aleph-2-0"
 name = "Aleph 2.0"

@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "bytedance/dreamina-seedance-2-0"
 name = "Dreamina Seedance 2.0"

@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "bytedance/seedance-2-5"
 name = "Seedance 2.5"
@@ -23,5 +24,5 @@ source_ids = ["docs"]
 [[sources]]
 id = "docs"
 kind = "documentation"
-url = "https://www.byteplus.com/en/contact-us/ai-seedance2-5-official"
-retrieved_on = 2026-08-09
+url = "https://seed.bytedance.com/en/seedance2_5"
+retrieved_on = 2026-08-10

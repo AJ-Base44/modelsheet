@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "ideogram/ideogram-3-0"
 name = "Ideogram 3.0"

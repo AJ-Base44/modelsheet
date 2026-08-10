@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "minimax/minimax-music-2-6"
 name = "MiniMax Music 2.6"

@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "google/gemini-2-5-flash-image"
 name = "Gemini 2.5 Flash Image"

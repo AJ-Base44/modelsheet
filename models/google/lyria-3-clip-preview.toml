@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "google/lyria-3-clip-preview"
 name = "Lyria 3 Clip Preview"

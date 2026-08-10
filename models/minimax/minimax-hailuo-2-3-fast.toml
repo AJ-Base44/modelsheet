@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "minimax/minimax-hailuo-2-3-fast"
 name = "MiniMax Hailuo 2.3 Fast"

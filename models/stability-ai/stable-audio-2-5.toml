@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "stability-ai/stable-audio-2-5"
 name = "Stable Audio 2.5"

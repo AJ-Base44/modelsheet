@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "documented"
 [model]
 id = "black-forest-labs/flux-3-video"
 name = "FLUX 3 Video"

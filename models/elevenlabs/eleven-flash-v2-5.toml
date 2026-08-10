@@ -1,5 +1,6 @@
 schema_version = 1
 
+documentation_state = "indexed"
 [model]
 id = "elevenlabs/eleven-flash-v2-5"
 name = "Eleven Flash v2.5"
