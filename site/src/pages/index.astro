@@ -1,13 +1,11 @@
 ---
 import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
+import path from "node:path";
 
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { getVerificationPresentation, JOB_PRESETS } from "../lib/filters.mjs";
 
-const artifactPath = fileURLToPath(
-  new URL("../../../artifacts/api.json", import.meta.url),
-);
+const artifactPath = path.resolve(process.cwd(), "../artifacts/api.json");
 const registry = JSON.parse(await readFile(artifactPath, "utf8"));
 const models = registry.models ?? [];
 const serializedRegistry = JSON.stringify(registry).replaceAll("<", "\\u003c");
