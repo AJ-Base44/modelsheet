@@ -1,0 +1,49 @@
+name: Watch official sources
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: official-source-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Restore prior source hashes
+        uses: actions/cache/restore@v4
+        with:
+          path: .watch-state
+          key: modelsheet-watch-${{ github.run_id }}
+          restore-keys: |
+            modelsheet-watch-
+
+      - name: Fetch and compare official sources
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WATCH_DELAY_MS: "1000"
+          WATCH_TIMEOUT_MS: "30000"
+        run: node scripts/watch.mjs
+
+      - name: Save source hashes
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .watch-state
+          key: modelsheet-watch-${{ github.run_id }}

@@ -10,6 +10,7 @@
   "scripts": {
     "validate": "node scripts/validate.mjs",
     "build": "node scripts/build.mjs",
+    "watch": "node scripts/watch.mjs",
     "test": "node --test",
     "check": "npm run validate && npm test && npm run build"
   },

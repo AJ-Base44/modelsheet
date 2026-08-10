@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "id": "openai-api-changelog",
+      "lab": "OpenAI",
+      "kind": "changelog",
+      "url": "https://developers.openai.com/api/docs/changelog",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "google-gemini-api-changelog",
+      "lab": "Google",
+      "kind": "changelog",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "google-vertex-ai-release-notes",
+      "lab": "Google",
+      "kind": "release_notes",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "byteplus-modelark-product-updates",
+      "lab": "ByteDance / BytePlus",
+      "kind": "release_notes",
+      "url": "https://docs.byteplus.com/en/docs/modelark/1159177",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "byteplus-dramagic-plans",
+      "lab": "ByteDance / BytePlus",
+      "kind": "docs",
+      "url": "https://docs.byteplus.com/en/docs/Dramagic/PlansPackages",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "black-forest-labs-docs-index",
+      "lab": "Black Forest Labs",
+      "kind": "llms_txt",
+      "url": "https://docs.bfl.ai/llms.txt",
+      "minimum_bytes": 256
+    },
+    {
+      "id": "xai-docs-index",
+      "lab": "xAI",
+      "kind": "llms_txt",
+      "url": "https://docs.x.ai/llms.txt",
+      "minimum_bytes": 256
+    },
+    {
+      "id": "elevenlabs-docs-index",
+      "lab": "ElevenLabs",
+      "kind": "llms_txt",
+      "url": "https://elevenlabs.io/docs/llms.txt",
+      "minimum_bytes": 256
+    },
+    {
+      "id": "minimax-model-release-notes",
+      "lab": "MiniMax",
+      "kind": "release_notes",
+      "url": "https://platform.minimax.io/docs/release-notes/models",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "runway-api-models",
+      "lab": "Runway",
+      "kind": "docs",
+      "url": "https://docs.dev.runwayml.com/guides/models/",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "kling-video-3-guide",
+      "lab": "Kuaishou / Kling AI",
+      "kind": "docs",
+      "url": "https://app.klingai.com/cn/quickstart/klingai-video-3-model-user-guide",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "luma-ray-3-14-guide",
+      "lab": "Luma AI",
+      "kind": "docs",
+      "url": "https://lumalabs.ai/learning-hub/ray314-user-guide",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "ideogram-v4-api-reference",
+      "lab": "Ideogram",
+      "kind": "docs",
+      "url": "https://developer.ideogram.ai/api-reference/api-reference/generate-v4.md",
+      "minimum_bytes": 512
+    },
+    {
+      "id": "stability-api-release-notes",
+      "lab": "Stability AI",
+      "kind": "release_notes",
+      "url": "https://platform.stability.ai/docs/release-notes",
+      "minimum_bytes": 512
+    }
+  ]
+}

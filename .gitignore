@@ -1,5 +1,6 @@
 node_modules/
 artifacts/
+.watch-state/
 
 # Operating-system files
 .DS_Store
