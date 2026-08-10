@@ -1,9 +1,9 @@
 schema_version = 1
 
 [model]
-id = "kuaishou/kling-video-3-0"
-name = "Kling VIDEO 3.0"
-lab = "Kuaishou"
+id = "minimax/minimax-hailuo-2-3-fast"
+name = "MiniMax Hailuo 2.3 Fast"
+lab = "MiniMax"
 modality = "video"
 status = "unknown"
 source_ids = ["docs"]
@@ -23,11 +23,11 @@ source_ids = ["pricing"]
 [[sources]]
 id = "docs"
 kind = "documentation"
-url = "https://app.klingai.com/cn/quickstart/klingai-video-3-model-user-guide"
+url = "https://platform.minimax.io/docs/guides/video-generation"
 retrieved_on = 2026-08-09
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
-url = "https://app.klingai.com/cn/quickstart/klingai-video-3-model-user-guide"
+url = "https://platform.minimax.io/docs/guides/pricing-paygo"
 retrieved_on = 2026-08-09
