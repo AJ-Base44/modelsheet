@@ -19,12 +19,12 @@ Every new record from this plan must carry `verification.state = "unverified"`. 
 | Video | Veo 3.1 | Google | [Docs](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/veo/3-1-generate) | [Pricing](https://cloud.google.com/vertex-ai/generative-ai/pricing) | Vertex and Gemini surfaces disagree on IDs and sound support; record the conflict. |
 | Video | Veo 3.1 Fast | Google | [Docs](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/veo/3-1-generate) | [Pricing](https://cloud.google.com/vertex-ai/generative-ai/pricing) | Distinct official model; preserve source disagreement. |
 | Video | Veo 3.1 Lite | Google | [Docs](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/veo/3-1-generate) | [Pricing](https://cloud.google.com/vertex-ai/generative-ai/pricing) | Official Preview model. |
-| Video | Kling VIDEO 3.0 | Kuaishou / Kling AI | [Docs](https://app.klingai.com/cn/quickstart/klingai-video-3-model-user-guide) | [Pricing](https://app.klingai.com/cn/quickstart/klingai-video-3-model-user-guide) | Keep separate from VIDEO 3.0 Omni; pricing is in credits. |
 | Video | Grok Imagine Video 1.5 | xAI | [Docs](https://docs.x.ai/developers/models/grok-imagine-video-1.5) | [Pricing](https://docs.x.ai/developers/pricing) | Official name; alias Grok Video 1.5. |
 | Video | Gen-4.5 | Runway | [Docs](https://docs.dev.runwayml.com/guides/models/) | [Pricing](https://docs.dev.runwayml.com/guides/pricing/) | Exact current API model. |
 | Video | Gen-4 Turbo | Runway | [Docs](https://docs.dev.runwayml.com/guides/models/) | [Pricing](https://docs.dev.runwayml.com/guides/pricing/) | Exact current API model. |
 | Video | Aleph 2.0 | Runway | [Docs](https://docs.dev.runwayml.com/guides/models/) | [Pricing](https://docs.dev.runwayml.com/guides/pricing/) | Exact current API model. |
 | Video | MiniMax Hailuo 2.3 | MiniMax | [Docs](https://platform.minimax.io/docs/guides/video-generation) | [Pricing](https://platform.minimax.io/docs/guides/pricing-paygo) | Exact current API model. |
+| Video | MiniMax Hailuo 2.3 Fast | MiniMax | [Docs](https://platform.minimax.io/docs/guides/video-generation) | [Pricing](https://platform.minimax.io/docs/guides/pricing-paygo) | Distinct exact current API model. |
 | Video | Ray3.14 | Luma AI | [Docs](https://lumalabs.ai/learning-hub/ray314-user-guide) | [Pricing](https://lumalabs.ai/pricing) | Official current model guide. |
 | Image | GPT Image 2 | OpenAI | [Docs](https://developers.openai.com/api/docs/models/gpt-image-2) | [Pricing](https://developers.openai.com/api/docs/pricing) | Existing registry record. |
 | Image | Gemini 3.1 Flash Image | Google | [Docs](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-image) | [Pricing](https://ai.google.dev/gemini-api/docs/pricing) | Alias Nano Banana 2. |
@@ -68,7 +68,6 @@ These models met the source bar but are not part of the ten batches in this run.
 
 | Model | Reason |
 | --- | --- |
-| MiniMax Hailuo 2.3 Fast | Eligible; deferred after the balanced 53-record target was filled. |
 | MiniMax Hailuo 02 | Eligible; deferred after the balanced 53-record target was filled. |
 | Act-Two | Eligible; deferred after the balanced 53-record target was filled. |
 | LTX-2.3 Fast | Eligible; deferred after the balanced 53-record target was filled. |
@@ -86,7 +85,7 @@ These models met the source bar but are not part of the ten batches in this run.
 
 | Model or family | Reason |
 | --- | --- |
-| Kling VIDEO 3.0 Omni | The series guide distinguishes it, but no exact standalone capability contract and price was located. It is not merged into Kling VIDEO 3.0. |
+| Kling VIDEO 3.0 series, including Omni | The official guide is a series-level surface covering distinct models. No exact standalone capability-and-price contract was located for each member, so the series is not collapsed into one record. |
 | Stable Video Diffusion | No current exact first-party served endpoint and active model-specific pricing source was confirmed. |
 | Pika 2.5 | The public API route is through fal; no direct lab API and lab-direct API price were found. |
 | Suno v5.5 | First-party consumer material exists, but no exact developer API model contract or ID was located. |
@@ -113,7 +112,7 @@ These models met the source bar but are not part of the ten batches in this run.
 | --- | --- |
 | `data/batch-01` | Seedance 2.5; Dreamina Seedance 2.0; Dreamina Seedance 2.0 Fast; Dreamina Seedance 2.0 Mini; Seedance 1.5 Pro |
 | `data/batch-02` | Seedance 1.0 Pro; Seedance 1.0 Pro Fast; Veo 3.1; Veo 3.1 Fast; Veo 3.1 Lite |
-| `data/batch-03` | Kling VIDEO 3.0; Grok Imagine Video 1.5; Gen-4.5; Gen-4 Turbo; Aleph 2.0 |
+| `data/batch-03` | MiniMax Hailuo 2.3 Fast; Grok Imagine Video 1.5; Gen-4.5; Gen-4 Turbo; Aleph 2.0 |
 | `data/batch-04` | MiniMax Hailuo 2.3; Ray3.14; Gemini 3.1 Flash Image; Gemini 3.1 Flash Lite Image; Gemini 3 Pro Image |
 | `data/batch-05` | Gemini 2.5 Flash Image; Seedream 5.0 Pro; Seedream 5.0 Lite; Seedream 4.5; Seedream 4.0 |
 | `data/batch-06` | Grok Imagine Image Quality; Grok Imagine Image; Ideogram 4.0; Ideogram 3.0; FLUX.2 [max] |
