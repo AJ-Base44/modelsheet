@@ -315,7 +315,7 @@ Limitations must remain dated through their referenced `[[sources]]` entries. Co
 
 | Field | Type | Meaning |
 | --- | --- | --- |
-| `pricing.state` | string | `known` when all represented profile pricing is published, `partial` when at least one profile or combination remains unknown, or `unknown` when the lab publishes no usable price. |
+| `pricing.state` | string | `known` when all represented profile pricing is recorded, `partial` when at least one represented profile or combination remains unknown, or `unknown` when no usable lab price has been established in the record. `unknown` may mean the lab publishes no price, the official surfaces conflict, or a cited price has not yet been transcribed and checked. |
 | `pricing.source_ids` | string array | Official lab pricing sources and any sources needed to explain coverage. |
 
 Each `[[pricing.charges]]` is one atomic published charge or one explicit unknown gap:
