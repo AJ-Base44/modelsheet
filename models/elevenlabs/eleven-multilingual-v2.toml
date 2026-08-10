@@ -173,12 +173,6 @@ min_count = 1
 max_count = 1
 source_ids = ["tts-reference", "websocket-reference"]
 
-[[capability_profiles.reference_inputs]]
-role = "audio_reference"
-media_type = "audio"
-state = "unsupported"
-source_ids = ["tts-reference", "websocket-reference"]
-
 [[capability_profiles.delivery_profiles]]
 id = "buffered-http"
 state = "supported"
