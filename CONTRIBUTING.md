@@ -34,10 +34,11 @@ state = "unverified"
 2. Add or edit one TOML file under `models/<lab-slug>/`.
 3. Keep the official lab name in `model.name`; put colloquial names in `model.aliases` and API request values in `api_identifiers`.
 4. Add only fields needed by a real, cited claim. Propose a schema extension only when the existing shape cannot express that claim.
-5. Run `npm.cmd install` once, then `npm.cmd run check` before opening a pull request.
-6. Complete the pull-request evidence checklist for every changed record.
+5. Run `npm.cmd install` once, then `npm.cmd run build`. The build regenerates both `artifacts/api.json` and the marked coverage block in `README.md` from the registry counts. If CI reports a stale coverage block, `npm.cmd run coverage` is the one-step fix.
+6. Commit the changed model record and the regenerated `README.md` together, then run `npm.cmd run check` before opening a pull request.
+7. Complete the pull-request evidence checklist for every changed record.
 
-Model records should arrive through pull requests, never as unreviewed direct commits to `main`. Contributors edit data, not generated artifacts; `artifacts/api.json` is built deterministically from the TOML records.
+Model records should arrive through pull requests, never as unreviewed direct commits to `main`. Contributors do not commit `artifacts/api.json`; it is built deterministically from the TOML records. The generated coverage block in `README.md` is committed so the public count matches the same build.
 
 ## Pull-request scope
 

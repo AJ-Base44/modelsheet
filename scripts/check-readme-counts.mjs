@@ -4,50 +4,34 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { createArtifact } from "./build.mjs";
+import { replaceCoverageBlock } from "./lib/readme-coverage.mjs";
+import { loadRecords } from "./lib/records.mjs";
+
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
 );
 
 export function checkReadmeCoverage(readme, artifact) {
-  const coverageMatch = readme.match(
-    /^\*\*Coverage: (\d+) models indexed, (\d+) documented\.\*\*$/m,
-  );
-
-  if (!coverageMatch) {
-    throw new Error(
-      'README.md must contain "**Coverage: N models indexed, M documented.**"',
-    );
-  }
-
-  const readmeTotal = Number(coverageMatch[1]);
-  const readmeDocumented = Number(coverageMatch[2]);
   const counts = artifact.counts;
+  const generated = replaceCoverageBlock(readme, counts);
 
-  if (!counts || !Number.isInteger(counts.total_records)) {
-    throw new Error("artifacts/api.json does not contain registry counts");
-  }
-  if (counts.documented + counts.indexed !== counts.total_records) {
-    throw new Error("artifacts/api.json documentation counts do not sum to total_records");
-  }
-  if (
-    readmeTotal !== counts.total_records ||
-    readmeDocumented !== counts.documented
-  ) {
+  if (generated !== readme) {
     throw new Error(
-      `README coverage says ${readmeTotal} indexed / ${readmeDocumented} documented, but api.json says ${counts.total_records} total / ${counts.documented} documented`,
+      'README coverage block is stale. Run "npm run coverage" and commit README.md.',
     );
   }
 
-  return `README coverage matches api.json (${counts.total_records} indexed, ${counts.documented} documented).`;
+  return `README coverage block is current (${counts.total_records} total, ${counts.documented} documented, ${counts.indexed} indexed).`;
 }
 
 async function main() {
-  const [readme, artifactSource] = await Promise.all([
+  const [readme, entries] = await Promise.all([
     readFile(path.join(repositoryRoot, "README.md"), "utf8"),
-    readFile(path.join(repositoryRoot, "artifacts", "api.json"), "utf8"),
+    loadRecords(path.join(repositoryRoot, "models")),
   ]);
-  console.log(checkReadmeCoverage(readme, JSON.parse(artifactSource)));
+  console.log(checkReadmeCoverage(readme, createArtifact(entries)));
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

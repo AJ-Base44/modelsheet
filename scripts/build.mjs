@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { loadRecords, normalizeTomlValue } from "./lib/records.mjs";
+import { updateReadmeCoverageFile } from "./lib/readme-coverage.mjs";
 
 const REPOSITORY_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -11,6 +12,7 @@ const REPOSITORY_ROOT = path.resolve(
 
 const DEFAULT_MODELS_DIR = path.join(REPOSITORY_ROOT, "models");
 const DEFAULT_OUTPUT_FILE = path.join(REPOSITORY_ROOT, "artifacts", "api.json");
+const DEFAULT_README_FILE = path.join(REPOSITORY_ROOT, "README.md");
 
 function compareStrings(left, right) {
   if (left < right) return -1;
@@ -157,7 +159,17 @@ const isCommandLine =
 
 if (isCommandLine) {
   try {
-    const result = await buildRegistry(parseArguments(process.argv.slice(2)));
+    const options = parseArguments(process.argv.slice(2));
+    const result = await buildRegistry(options);
+    const updatesDefaultRegistry = !options.modelsDir && !options.outputFile;
+
+    if (updatesDefaultRegistry) {
+      await updateReadmeCoverageFile(
+        DEFAULT_README_FILE,
+        result.artifact.counts,
+      );
+    }
+
     console.log(
       `Built ${result.outputFile} (${result.artifact.counts.total_records} models: ${result.artifact.counts.documented} documented, ${result.artifact.counts.indexed} indexed)`,
     );

@@ -36,11 +36,11 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Check generated README coverage
+        run: npm run check:readme
+
       - name: Build deterministic API artifact
         run: npm run build
-
-      - name: Check README coverage counts
-        run: npm run check:readme
 
       - name: Run site acceptance tests
         run: npm test --prefix site
