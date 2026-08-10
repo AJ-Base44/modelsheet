@@ -116,13 +116,15 @@ const indexedCards = indexedModels.map((record) => ({
   primarySource: record.sources?.find((source) => source.kind !== "pricing") ?? record.sources?.[0],
 }));
 
+const homePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
+
 ---
 
 <SiteLayout>
   <a class="skip-link" href="#registry">Skip to registry</a>
 
   <header class="page-shell site-header">
-    <a class="wordmark" href="/" aria-label="Modelsheet home">
+    <a class="wordmark" href={homePath} aria-label="Modelsheet home">
       <span class="wordmark-mark" aria-hidden="true">M/</span>
       <span>modelsheet</span>
     </a>

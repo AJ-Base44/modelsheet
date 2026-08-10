@@ -47,3 +47,6 @@ jobs:
 
       - name: Build static site
         run: npm run build --prefix site
+
+      - name: Test GitHub Pages output
+        run: npm run test:dist --prefix site

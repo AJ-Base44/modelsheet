@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://modelsheet.dev/schema/source-v1.schema.json",
+  "$id": "https://aj-base44.github.io/modelsheet/schema/source-v1.schema.json",
   "title": "Modelsheet source record v1",
   "description": "Machine-readable contract for one model-first Modelsheet TOML record.",
   "type": "object",

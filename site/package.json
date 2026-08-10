@@ -8,10 +8,11 @@
   },
   "scripts": {
     "build:data": "npm --prefix .. run build",
-    "build": "npm run build:data && astro build",
+    "build": "npm run build:data && astro build && node scripts/publish-static-data.mjs",
     "dev": "npm run build:data && astro dev",
     "test": "node --test checks/acceptance.mjs",
-    "check": "npm test && npm run build"
+    "test:dist": "node --test checks/pages-output.mjs",
+    "check": "npm test && npm run build && npm run test:dist"
   },
   "devDependencies": {
     "astro": "^7.2.0"
