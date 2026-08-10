@@ -8,7 +8,9 @@ The long-term differentiator is a drift feed derived from the Git history of the
 
 ## Coverage
 
-The `main` branch currently contains 3 model records: 1 image, 1 video, and 1 audio model. Planned coverage and source availability are tracked in `docs/coverage-plan.md` when that survey exists.
+**Coverage: 53 models indexed, 3 documented.**
+
+An `indexed` record establishes the official model identity and first-party source links but does not claim comparison-ready capability data. A `documented` record contains at least one real, sourced capability constraint and non-unknown lab pricing, so it can appear in capability filters and comparisons.
 
 ## How records work
 

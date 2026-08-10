@@ -6,7 +6,7 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { buildRegistry } from "../scripts/build.mjs";
+import { buildRegistry, createArtifact } from "../scripts/build.mjs";
 
 const TEST_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPOSITORY_ROOT = path.resolve(TEST_DIR, "..");
@@ -95,4 +95,37 @@ test("two consecutive builds of the same records are byte-identical", async (t) 
   ]);
 
   assert.deepEqual(secondBytes, firstBytes);
+});
+
+test("api.json counts records by documentation state and modality", () => {
+  const artifact = createArtifact([
+    {
+      record: {
+        schema_version: 1,
+        documentation_state: "documented",
+        model: { id: "example/video", modality: "video" },
+      },
+    },
+    {
+      record: {
+        schema_version: 1,
+        documentation_state: "indexed",
+        model: { id: "example/image", modality: "image" },
+      },
+    },
+    {
+      record: {
+        schema_version: 1,
+        documentation_state: "indexed",
+        model: { id: "example/audio", modality: "audio" },
+      },
+    },
+  ]);
+
+  assert.deepEqual(artifact.counts, {
+    by_modality: { audio: 1, image: 1, video: 1 },
+    documented: 1,
+    indexed: 2,
+    total_records: 3,
+  });
 });

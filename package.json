@@ -10,9 +10,10 @@
   "scripts": {
     "validate": "node scripts/validate.mjs",
     "build": "node scripts/build.mjs",
+    "check:readme": "node scripts/check-readme-counts.mjs",
     "watch": "node scripts/watch.mjs",
     "test": "node --test",
-    "check": "npm run validate && npm test && npm run build"
+    "check": "npm run validate && npm test && npm run build && npm run check:readme"
   },
   "dependencies": {
     "@iarna/toml": "^2.2.5",

@@ -47,6 +47,39 @@ export function canonicalize(value) {
   return value;
 }
 
+export function createCounts(records) {
+  const counts = {
+    total_records: records.length,
+    documented: 0,
+    indexed: 0,
+    by_modality: {
+      audio: 0,
+      image: 0,
+      video: 0,
+    },
+  };
+
+  for (const record of records) {
+    const documentationState = record.documentation_state;
+    if (documentationState !== "documented" && documentationState !== "indexed") {
+      throw new Error(
+        `Cannot build api.json: unsupported documentation_state ${JSON.stringify(documentationState)}`,
+      );
+    }
+    counts[documentationState] += 1;
+
+    const modality = record.model?.modality;
+    if (!Object.hasOwn(counts.by_modality, modality)) {
+      throw new Error(
+        `Cannot build api.json: unsupported modality ${JSON.stringify(modality)}`,
+      );
+    }
+    counts.by_modality[modality] += 1;
+  }
+
+  return canonicalize(counts);
+}
+
 export function createArtifact(entries) {
   if (entries.length === 0) {
     throw new Error("Cannot build api.json: no model records were found");
@@ -74,6 +107,7 @@ export function createArtifact(entries) {
 
   return canonicalize({
     schema_version: schemaVersion,
+    counts: createCounts(records),
     models,
   });
 }
@@ -124,7 +158,9 @@ const isCommandLine =
 if (isCommandLine) {
   try {
     const result = await buildRegistry(parseArguments(process.argv.slice(2)));
-    console.log(`Built ${result.outputFile} (${result.artifact.models.length} models)`);
+    console.log(
+      `Built ${result.outputFile} (${result.artifact.counts.total_records} models: ${result.artifact.counts.documented} documented, ${result.artifact.counts.indexed} indexed)`,
+    );
   } catch (error) {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;

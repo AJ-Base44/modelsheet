@@ -78,6 +78,34 @@ export function getVerificationPresentation(record) {
   };
 }
 
+export function isDocumentedRecord(record) {
+  return record?.documentation_state === "documented";
+}
+
+export function getDocumentationPresentation(record) {
+  if (isDocumentedRecord(record)) {
+    return {
+      key: "documented",
+      label: "Documented record",
+      description: "This record has sourced capability constraints and lab pricing.",
+    };
+  }
+
+  return {
+    key: "indexed",
+    label: "Indexed record",
+    description: "This model is indexed from an official source but is not ready for capability comparison.",
+  };
+}
+
+export function selectComparableModels(models, selectedIds) {
+  const selected = new Set(selectedIds ?? []);
+  return models.filter((record) => (
+    isDocumentedRecord(record)
+    && selected.has(record.model?.id)
+  ));
+}
+
 export function countAcceptanceFilterActions(filters) {
   return Number(filters?.modality !== undefined && filters.modality !== ALL_FILTER)
     + Number(filters?.job !== undefined && filters.job !== ALL_FILTER);
@@ -89,6 +117,10 @@ export function filterModels(models, filters = {}) {
   const query = (filters.query ?? "").trim().toLocaleLowerCase();
 
   return models.filter((record) => {
+    if (!isDocumentedRecord(record)) {
+      return false;
+    }
+
     if (modality !== ALL_FILTER && record.model?.modality !== modality) {
       return false;
     }

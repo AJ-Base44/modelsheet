@@ -3,12 +3,20 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { getVerificationPresentation, JOB_PRESETS } from "../lib/filters.mjs";
+import {
+  getDocumentationPresentation,
+  getVerificationPresentation,
+  isDocumentedRecord,
+  JOB_PRESETS,
+} from "../lib/filters.mjs";
 
 const artifactPath = path.resolve(process.cwd(), "../artifacts/api.json");
 const registry = JSON.parse(await readFile(artifactPath, "utf8"));
 const models = registry.models ?? [];
-const serializedRegistry = JSON.stringify(registry).replaceAll("<", "\\u003c");
+const documentedModels = models.filter(isDocumentedRecord);
+const indexedModels = models.filter((record) => record.documentation_state === "indexed");
+const serializedRegistry = JSON.stringify({ ...registry, models: documentedModels })
+  .replaceAll("<", "\\u003c");
 
 const titleCase = (value) => value
   ?.replaceAll("_", " ")
@@ -90,6 +98,7 @@ function sourceDate(record) {
 
 const cardModels = models.map((record) => ({
   record,
+  documentation: getDocumentationPresentation(record),
   verification: getVerificationPresentation(record),
   tasks: tasksFor(record),
   duration: durationSummary(record),
@@ -100,8 +109,13 @@ const cardModels = models.map((record) => ({
   primarySource: record.sources?.[0],
 }));
 
-const modalityCount = new Set(models.map((record) => record.model?.modality)).size;
-const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).map((source) => source.url))).size;
+const documentedCards = cardModels.filter(({ record }) => isDocumentedRecord(record));
+const indexedCards = indexedModels.map((record) => ({
+  record,
+  documentation: getDocumentationPresentation(record),
+  primarySource: record.sources?.find((source) => source.kind !== "pricing") ?? record.sources?.[0],
+}));
+
 ---
 
 <SiteLayout>
@@ -140,28 +154,28 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
 
     <section class="page-shell metrics" aria-label="Current registry coverage">
       <div class="metric">
-        <span class="metric-label">Records on this build</span>
+        <span class="metric-label">Models indexed</span>
         <strong class="metric-value">{models.length}</strong>
       </div>
       <div class="metric">
-        <span class="metric-label">Media modalities</span>
-        <strong class="metric-value">{modalityCount}</strong>
+        <span class="metric-label">Models documented</span>
+        <strong class="metric-value">{documentedModels.length}</strong>
       </div>
       <div class="metric">
-        <span class="metric-label">Official source URLs</span>
-        <strong class="metric-value">{sourceCount}</strong>
+        <span class="metric-label">Awaiting documentation</span>
+        <strong class="metric-value">{indexedModels.length}</strong>
       </div>
     </section>
 
     <section class="page-shell registry-section" id="registry" aria-labelledby="registry-title">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">The sheet</span>
+          <span class="section-kicker">Documented records</span>
           <h2 id="registry-title">Filter for the job. Compare the evidence.</h2>
         </div>
         <p>
-          Filters only match explicitly documented capabilities. Missing data
-          never becomes an assumed “yes.”
+          Only records with sourced capability constraints and lab pricing enter
+          this sheet. Indexed-only models are listed separately below.
         </p>
       </div>
 
@@ -190,13 +204,13 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
       </form>
 
       <div class="results-bar">
-        <p id="result-summary" aria-live="polite"><strong>{models.length}</strong> models shown</p>
+        <p id="result-summary" aria-live="polite"><strong>{documentedModels.length}</strong> documented models shown</p>
         <p class="compare-note" id="compare-status" aria-live="polite">Select up to three records to compare.</p>
       </div>
 
       <div class="model-grid" id="model-grid">
-        {cardModels.map(({ record, verification, tasks, duration, ratios, audio, pricing, latestSourceDate, primarySource }) => (
-          <article class="model-card" data-model-id={record.model.id}>
+        {documentedCards.map(({ record, documentation, verification, tasks, duration, ratios, audio, pricing, latestSourceDate, primarySource }) => (
+          <article class="model-card" data-documented-model-id={record.model.id}>
             <div class="card-topline">
               <span class="modality-pill" data-modality={record.model.modality}>{record.model.modality}</span>
               <label class="compare-control">
@@ -210,6 +224,10 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
               {record.model.lab}
               {record.model.aliases?.length ? ` · aka ${record.model.aliases.join(", ")}` : ""}
             </p>
+
+            <span class="documentation-pill" data-state={documentation.key} title={documentation.description}>
+              {documentation.label}
+            </span>
 
             <span class="verification-pill" data-state={verification.key} title={verification.description}>
               {verification.label}
@@ -273,6 +291,41 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
       </section>
     </section>
 
+    <section class="page-shell indexed-section" id="indexed" aria-labelledby="indexed-title">
+      <div class="section-heading indexed-heading">
+        <div>
+          <span class="section-kicker">Indexed records</span>
+          <h2 id="indexed-title">Known to exist. Not ready to compare.</h2>
+        </div>
+        <p>
+          These {indexedModels.length} models have an official lab source, but do not yet
+          meet Modelsheet’s documentation bar. They never enter the filters or comparison table.
+        </p>
+      </div>
+
+      <ul class="indexed-list" aria-label="Models awaiting capability documentation">
+        {indexedCards.map(({ record, documentation, primarySource }) => (
+          <li class="indexed-record" data-indexed-model-id={record.model.id}>
+            <div class="indexed-record-main">
+              <span class="documentation-pill" data-state={documentation.key} title={documentation.description}>
+                {documentation.label}
+              </span>
+              <h3>{record.model.name}</h3>
+              <p>{record.model.lab}</p>
+            </div>
+            <span class="modality-pill" data-modality={record.model.modality}>{record.model.modality}</span>
+            {primarySource ? (
+              <a class="source-link indexed-source" href={primarySource.url} rel="noreferrer">
+                Official source ↗
+              </a>
+            ) : (
+              <span class="source-missing">Official source not recorded</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+
     <section class="page-shell evidence-strip" id="method" aria-labelledby="method-title">
       <div>
         <span class="section-kicker">Evidence, not vibes</span>
@@ -288,8 +341,8 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
           <p>Missing evidence is not converted into false, zero, or “probably supported.”</p>
         </div>
         <div class="evidence-rule">
-          <strong>Verification is visible</strong>
-          <p>Every card says verified, unverified, or verification not recorded in text.</p>
+          <strong>Record state is visible</strong>
+          <p>Documented and indexed records are separated and labelled in text, never by colour alone.</p>
         </div>
         <div class="evidence-rule">
           <strong>Lab pricing only</strong>
@@ -309,13 +362,14 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
   <script>
     import {
       filterModels,
+      getDocumentationPresentation,
       getVerificationPresentation,
+      selectComparableModels,
     } from "../lib/filters.mjs";
 
     const dataNode = document.querySelector("#registry-data");
     const registry = JSON.parse(dataNode?.textContent ?? '{"models":[]}');
     const models = registry.models ?? [];
-    const byId = new Map(models.map((record) => [record.model.id, record]));
     const selectedIds = new Set();
 
     const filters = document.querySelector("#registry-filters");
@@ -328,7 +382,7 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
     const comparison = document.querySelector("#comparison");
     const compareTable = document.querySelector("#compare-table");
     const clearComparison = document.querySelector("#clear-comparison");
-    const cards = [...document.querySelectorAll("[data-model-id]")];
+    const cards = [...document.querySelectorAll("[data-documented-model-id]")];
     const toggles = [...document.querySelectorAll(".compare-toggle")];
 
     function currentFilters() {
@@ -344,12 +398,12 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
       const visibleIds = new Set(matches.map((record) => record.model.id));
 
       cards.forEach((card) => {
-        card.hidden = !visibleIds.has(card.dataset.modelId);
+        card.hidden = !visibleIds.has(card.dataset.documentedModelId);
       });
 
       if (emptyState) emptyState.hidden = matches.length !== 0;
       if (resultSummary) {
-        resultSummary.textContent = `${matches.length} of ${models.length} ${models.length === 1 ? "model" : "models"} shown`;
+        resultSummary.textContent = `${matches.length} of ${models.length} documented ${models.length === 1 ? "model" : "models"} shown`;
       }
     }
 
@@ -400,7 +454,7 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
     }
 
     function renderComparison() {
-      const selected = [...selectedIds].map((id) => byId.get(id)).filter(Boolean);
+      const selected = selectComparableModels(models, selectedIds);
       if (comparison) comparison.hidden = selected.length === 0;
       if (compareStatus) {
         compareStatus.textContent = selected.length
@@ -429,6 +483,7 @@ const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).ma
       const rows = [
         ["Lab", (record) => record.model.lab],
         ["Modality", (record) => titleCase(record.model.modality)],
+        ["Documentation state", (record) => getDocumentationPresentation(record).label],
         ["Verification", (record) => getVerificationPresentation(record).label],
         ["Lifecycle", (record) => titleCase(record.model.status)],
         ["Capability profiles", taskSummary],
