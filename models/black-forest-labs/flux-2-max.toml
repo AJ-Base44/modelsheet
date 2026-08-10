@@ -1,34 +1,379 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "black-forest-labs/flux-2-max"
 name = "FLUX.2 [max]"
 lab = "Black Forest Labs"
 modality = "image"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["max-model-page", "overview", "max-api"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "flux-2-max"
+source_ids = ["max-api", "overview"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "image-generation-or-editing"
-task = "image_generation_or_editing"
-source_ids = ["docs"]
+id = "text-to-image"
+task = "text_to_image"
+endpoint = "POST /v1/flux-2-max"
+source_ids = ["max-api", "text-to-image-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+default = "1024x1024"
+edge_multiple = 16
+min_total_pixels = 4096
+max_total_pixels = 4194304
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 64
+height = 64
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1920
+height = 1088
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1088
+height = 1920
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 880
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.delivery_profiles]]
+id = "signed-url"
+state = "supported"
+transport = "signed_url"
+endpoint = "GET {polling_url}"
+formats = ["jpeg", "png", "webp"]
+default_format = "jpeg"
+source_ids = ["max-api", "text-to-image-guide"]
+
+[[capability_profiles.controls]]
+name = "disable_pup"
+state = "supported"
+mode = "exact_set"
+values = ["false", "true"]
+default = "false"
+source_ids = ["max-api"]
+
+[[capability_profiles.controls]]
+name = "safety_tolerance"
+state = "supported"
+mode = "range"
+min = 0
+max = 5
+step = 1
+default = 2
+source_ids = ["max-api"]
+
+[[capability_profiles]]
+id = "image-edit"
+task = "image_edit"
+endpoint = "POST /v1/flux-2-max"
+source_ids = ["max-api", "image-editing-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+default = "1024x1024"
+edge_multiple = 16
+min_total_pixels = 4096
+max_total_pixels = 4194304
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 64
+height = 64
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1920
+height = 1088
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1088
+height = 1920
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 880
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 8
+source_ids = ["max-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "signed-url"
+state = "supported"
+transport = "signed_url"
+endpoint = "GET {polling_url}"
+formats = ["jpeg", "png", "webp"]
+default_format = "jpeg"
+source_ids = ["max-api", "image-editing-guide"]
+
+[[capability_profiles.controls]]
+name = "disable_pup"
+state = "supported"
+mode = "exact_set"
+values = ["false", "true"]
+default = "false"
+source_ids = ["max-api"]
+
+[[capability_profiles.controls]]
+name = "safety_tolerance"
+state = "supported"
+mode = "range"
+min = 0
+max = 5
+step = 1
+default = 2
+source_ids = ["max-api"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["pricing-live", "pricing-docs", "pricing-help"]
+
+[[pricing.charges]]
+id = "text-to-image-first-output-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.07
+denomination = "USD"
+per = 1
+unit = "output_megapixel"
+profile_id = "text-to-image"
+applies_when = ["first output megapixel"]
+qualifier = "Each image is rounded up separately for billing; 1 megapixel is counted as 1024x1024."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[pricing.charges]]
+id = "text-to-image-additional-output-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.03
+denomination = "USD"
+per = 1
+unit = "output_megapixel"
+profile_id = "text-to-image"
+applies_when = ["each output megapixel after the first"]
+qualifier = "Each image is rounded up separately for billing; 1 megapixel is counted as 1024x1024."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[pricing.charges]]
+id = "image-edit-first-output-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.07
+denomination = "USD"
+per = 1
+unit = "output_megapixel"
+profile_id = "image-edit"
+applies_when = ["first output megapixel"]
+qualifier = "Each image is rounded up separately for billing; 1 megapixel is counted as 1024x1024."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[pricing.charges]]
+id = "image-edit-additional-output-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.03
+denomination = "USD"
+per = 1
+unit = "output_megapixel"
+profile_id = "image-edit"
+applies_when = ["each output megapixel after the first"]
+qualifier = "Each image is rounded up separately for billing; 1 megapixel is counted as 1024x1024."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[pricing.charges]]
+id = "image-edit-reference-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.03
+denomination = "USD"
+per = 1
+unit = "reference_megapixel"
+profile_id = "image-edit"
+qualifier = "Each reference image is rounded up separately for billing; 1 megapixel is counted as 1024x1024."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[conflicts]]
+path = "capability_profiles.*.size.default"
+summary = "The API schema gives width and height defaults of 0 despite a minimum of 64, while the dimensions table publishes a 1024x1024 default."
+handling = "Use the explicit 1024x1024 default from the dimensions table; retain the API contradiction as provenance rather than interpreting 0."
+source_ids = ["max-api", "dimensions-help"]
+
+[[conflicts]]
+path = "capability_profiles.image-edit.reference_inputs.image_reference.max_count"
+summary = "The model overview says the REST API accepts 8 references and the playground accepts 10, while the Max model page and broader editing material describe multiple references without exposing another REST parameter."
+handling = "Use 8 for the recorded REST endpoint because its live request schema exposes input_image through input_image_8; do not apply a playground limit to the API."
+source_ids = ["max-api", "overview", "max-model-page", "image-editing-guide"]
 
 [[sources]]
-id = "docs"
+id = "docs-index"
+kind = "documentation"
+url = "https://docs.bfl.ml/llms.txt"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "max-model-page"
+kind = "documentation"
+url = "https://bfl.ai/models/flux-2-max"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "family-model-page"
+kind = "documentation"
+url = "https://bfl.ai/models/flux-2"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "overview"
+kind = "documentation"
+url = "https://docs.bfl.ai/flux_2/flux2_overview"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "text-to-image-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/flux_2/flux2_text_to_image"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "image-editing-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/flux_2/flux2_image_editing"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "prompting-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/guides/prompting_guide_flux2"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "multi-reference-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/guides/prompting_editing_multi_reference"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "dimensions-help"
+kind = "documentation"
+url = "https://help.bfl.ai/articles/8916739058-what-aspect-ratios-and-output-dimensions-are-supported"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "multi-reference-help"
+kind = "documentation"
+url = "https://help.bfl.ai/articles/6546682167-what-is-multi-reference-editing"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "max-api"
 kind = "api_reference"
 url = "https://docs.bfl.ai/api-reference/models/generate-or-edit-an-image-with-flux2-%5Bmax%5D"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
 
 [[sources]]
-id = "pricing"
+id = "pricing-live"
+kind = "pricing"
+url = "https://bfl.ai/pricing?category=flux.2"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "pricing-docs"
 kind = "pricing"
 url = "https://docs.bfl.ai/quick_start/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "pricing-help"
+kind = "pricing"
+url = "https://help.bfl.ai/articles/7986977817-what-are-the-costs-associated-with-using-your-models"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "integration-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/api_integration/integration_guidelines"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "mcp-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/api_integration/mcp_integration"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "release-notes"
+kind = "release_note"
+url = "https://docs.bfl.ai/release-notes"
+retrieved_on = 2026-08-10
