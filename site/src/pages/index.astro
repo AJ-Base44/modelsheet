@@ -1,0 +1,474 @@
+---
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getVerificationPresentation, JOB_PRESETS } from "../lib/filters.mjs";
+
+const artifactPath = fileURLToPath(
+  new URL("../../../artifacts/api.json", import.meta.url),
+);
+const registry = JSON.parse(await readFile(artifactPath, "utf8"));
+const models = registry.models ?? [];
+const serializedRegistry = JSON.stringify(registry).replaceAll("<", "\\u003c");
+
+const titleCase = (value) => value
+  ?.replaceAll("_", " ")
+  .replace(/\b\w/g, (letter) => letter.toUpperCase()) ?? "Unknown";
+
+function tasksFor(record) {
+  return [...new Set((record.capability_profiles ?? []).map((profile) => profile.task))];
+}
+
+function durationSummary(record) {
+  const durations = (record.capability_profiles ?? [])
+    .map((profile) => profile.duration)
+    .filter(Boolean);
+  const supported = durations.filter((duration) => duration.state === "supported");
+
+  if (supported.length) {
+    const labels = supported.map((duration) => {
+      const suffix = duration.unit === "second" ? "s" : ` ${duration.unit ?? ""}`;
+      if (duration.mode === "range") return `${duration.min}–${duration.max}${suffix}`;
+      if (duration.mode === "exact_set") return `${duration.values?.join(", ")}${suffix}`;
+      return "Documented";
+    });
+    return [...new Set(labels)].join(" · ");
+  }
+
+  if (durations.length && durations.every((duration) => duration.state === "not_applicable")) {
+    return "Not applicable";
+  }
+  if (durations.length && durations.every((duration) => duration.state === "unsupported")) {
+    return "Unsupported";
+  }
+  return "Unknown";
+}
+
+function aspectRatioSummary(record) {
+  const sizes = (record.capability_profiles ?? [])
+    .map((profile) => profile.size)
+    .filter(Boolean);
+  const ratios = [...new Set(sizes.flatMap((size) => [
+    ...(size.examples ?? []).map((example) => example.aspect_ratio),
+    ...(size.options ?? []).flatMap((option) => [
+      ...(option.aspect_ratios ?? []),
+      ...(option.examples ?? []).map((example) => example.aspect_ratio),
+    ]),
+  ]).filter(Boolean))];
+
+  if (ratios.length) return ratios.join(", ");
+  if (sizes.some((size) => size.state === "supported")) return "Sizes documented";
+  if (sizes.length && sizes.every((size) => size.state === "not_applicable")) return "Not applicable";
+  if (sizes.length && sizes.every((size) => size.state === "unsupported")) return "Unsupported";
+  return "Unknown";
+}
+
+function audioSummary(record) {
+  const audioStates = (record.capability_profiles ?? [])
+    .map((profile) => profile.native_audio?.state)
+    .filter(Boolean);
+  if (audioStates.includes("supported")) return "Supported";
+  if (audioStates.length && audioStates.every((state) => state === "not_applicable")) return "Not applicable";
+  if (audioStates.length && audioStates.every((state) => state === "unsupported")) return "Unsupported";
+  return "Unknown";
+}
+
+function pricingSummary(record) {
+  const state = record.pricing?.state ?? "unknown";
+  const statedCharges = (record.pricing?.charges ?? [])
+    .filter((charge) => charge.state === "known").length;
+  const label = titleCase(state);
+  return {
+    label,
+    detail: statedCharges === 1 ? "1 stated charge" : `${statedCharges} stated charges`,
+  };
+}
+
+function sourceDate(record) {
+  const dates = (record.sources ?? []).map((source) => source.retrieved_on).filter(Boolean);
+  return dates.sort().at(-1) ?? "Unknown";
+}
+
+const cardModels = models.map((record) => ({
+  record,
+  verification: getVerificationPresentation(record),
+  tasks: tasksFor(record),
+  duration: durationSummary(record),
+  ratios: aspectRatioSummary(record),
+  audio: audioSummary(record),
+  pricing: pricingSummary(record),
+  latestSourceDate: sourceDate(record),
+  primarySource: record.sources?.[0],
+}));
+
+const modalityCount = new Set(models.map((record) => record.model?.modality)).size;
+const sourceCount = new Set(models.flatMap((record) => (record.sources ?? []).map((source) => source.url))).size;
+---
+
+<SiteLayout>
+  <a class="skip-link" href="#registry">Skip to registry</a>
+
+  <header class="page-shell site-header">
+    <a class="wordmark" href="/" aria-label="Modelsheet home">
+      <span class="wordmark-mark" aria-hidden="true">M/</span>
+      <span>modelsheet</span>
+    </a>
+    <nav class="header-nav" aria-label="Primary navigation">
+      <a href="#method">Evidence rules</a>
+      <a class="github-link" href="https://github.com/AJ-Base44/modelsheet">View source ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-shell hero" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">Open data for generative media</p>
+        <h1 id="hero-title">Know the model <span class="hero-accent">before</span> you wire it in.</h1>
+        <p class="hero-copy">
+          Capability limits, model identity, and the lab’s own pricing—kept as
+          source-linked data, not buried in another comparison blog.
+        </p>
+      </div>
+      <aside class="hero-aside" aria-label="Modelsheet core promise">
+        <span class="section-kicker">The core promise</span>
+        <h2>Changes should leave fingerprints.</h2>
+        <p>
+          Modelsheet is designed around a drift feed derived from data history:
+          which capability changed, on which model, and when.
+        </p>
+      </aside>
+    </section>
+
+    <section class="page-shell metrics" aria-label="Current registry coverage">
+      <div class="metric">
+        <span class="metric-label">Records on this build</span>
+        <strong class="metric-value">{models.length}</strong>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Media modalities</span>
+        <strong class="metric-value">{modalityCount}</strong>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Official source URLs</span>
+        <strong class="metric-value">{sourceCount}</strong>
+      </div>
+    </section>
+
+    <section class="page-shell registry-section" id="registry" aria-labelledby="registry-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">The sheet</span>
+          <h2 id="registry-title">Filter for the job. Compare the evidence.</h2>
+        </div>
+        <p>
+          Filters only match explicitly documented capabilities. Missing data
+          never becomes an assumed “yes.”
+        </p>
+      </div>
+
+      <form class="filter-panel" id="registry-filters" aria-label="Filter model records">
+        <div class="field">
+          <label for="search-models">Search</label>
+          <input id="search-models" name="query" type="search" placeholder="Model, lab, or alias" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="modality-filter">Modality</label>
+          <select id="modality-filter" name="modality">
+            <option value="all">All media</option>
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="job-filter">Capability preset</label>
+          <select id="job-filter" name="job">
+            <option value="all">Any documented capability</option>
+            {JOB_PRESETS.map((preset) => <option value={preset.id}>{preset.label}</option>)}
+          </select>
+        </div>
+        <button class="clear-button" type="reset">Clear filters</button>
+      </form>
+
+      <div class="results-bar">
+        <p id="result-summary" aria-live="polite"><strong>{models.length}</strong> models shown</p>
+        <p class="compare-note" id="compare-status" aria-live="polite">Select up to three records to compare.</p>
+      </div>
+
+      <div class="model-grid" id="model-grid">
+        {cardModels.map(({ record, verification, tasks, duration, ratios, audio, pricing, latestSourceDate, primarySource }) => (
+          <article class="model-card" data-model-id={record.model.id}>
+            <div class="card-topline">
+              <span class="modality-pill" data-modality={record.model.modality}>{record.model.modality}</span>
+              <label class="compare-control">
+                <input class="compare-toggle" type="checkbox" value={record.model.id} />
+                <span>Compare</span>
+              </label>
+            </div>
+
+            <h3 class="card-title">{record.model.name}</h3>
+            <p class="card-lab">
+              {record.model.lab}
+              {record.model.aliases?.length ? ` · aka ${record.model.aliases.join(", ")}` : ""}
+            </p>
+
+            <span class="verification-pill" data-state={verification.key} title={verification.description}>
+              {verification.label}
+            </span>
+
+            <dl class="facts">
+              <div class="fact">
+                <dt>Duration</dt>
+                <dd>{duration}</dd>
+              </div>
+              <div class="fact">
+                <dt>Generated audio</dt>
+                <dd>{audio}</dd>
+              </div>
+              <div class="fact">
+                <dt>Aspect ratios</dt>
+                <dd>{ratios}</dd>
+              </div>
+              <div class="fact">
+                <dt>Lifecycle</dt>
+                <dd>{titleCase(record.model.status)}</dd>
+              </div>
+            </dl>
+
+            <div class="task-list" aria-label="Documented capability profiles">
+              {tasks.map((task) => <span class="task-chip">{titleCase(task)}</span>)}
+            </div>
+
+            <div class="card-footer">
+              <div class="price-state">
+                <span class="card-label">Lab pricing</span>
+                <strong>{pricing.label}</strong>
+                <small>{pricing.detail} · sources read {latestSourceDate}</small>
+              </div>
+              {primarySource && (
+                <a class="source-link" href={primarySource.url} rel="noreferrer">Source ↗</a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="empty-state" id="empty-state" hidden>
+        <h3>No explicit match.</h3>
+        <p>Unknown values are excluded from capability presets. Try clearing a filter.</p>
+      </div>
+
+      <section class="comparison" id="comparison" aria-labelledby="comparison-title" hidden>
+        <div class="comparison-header">
+          <div>
+            <span class="section-kicker">Side by side</span>
+            <h3 id="comparison-title">Selected records</h3>
+          </div>
+          <button type="button" id="clear-comparison">Clear comparison</button>
+        </div>
+        <div class="table-wrap">
+          <table class="compare-table" id="compare-table">
+            <caption class="sr-only">Comparison of selected model records</caption>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section class="page-shell evidence-strip" id="method" aria-labelledby="method-title">
+      <div>
+        <span class="section-kicker">Evidence, not vibes</span>
+        <h2 id="method-title">A registry should know what it doesn’t know.</h2>
+      </div>
+      <div class="evidence-rules">
+        <div class="evidence-rule">
+          <strong>Official sources only</strong>
+          <p>Capability claims and prices point back to the lab that publishes them.</p>
+        </div>
+        <div class="evidence-rule">
+          <strong>Unknown stays unknown</strong>
+          <p>Missing evidence is not converted into false, zero, or “probably supported.”</p>
+        </div>
+        <div class="evidence-rule">
+          <strong>Verification is visible</strong>
+          <p>Every card says verified, unverified, or verification not recorded in text.</p>
+        </div>
+        <div class="evidence-rule">
+          <strong>Lab pricing only</strong>
+          <p>No reseller markups, aggregator rates, or invented currency conversions.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-shell site-footer">
+    <p>Modelsheet is open source under MIT.</p>
+    <p><a href="https://github.com/AJ-Base44/modelsheet">Contribute a sourced record ↗</a></p>
+  </footer>
+
+  <script id="registry-data" type="application/json" set:html={serializedRegistry}></script>
+
+  <script>
+    import {
+      filterModels,
+      getVerificationPresentation,
+    } from "../lib/filters.mjs";
+
+    const dataNode = document.querySelector("#registry-data");
+    const registry = JSON.parse(dataNode?.textContent ?? '{"models":[]}');
+    const models = registry.models ?? [];
+    const byId = new Map(models.map((record) => [record.model.id, record]));
+    const selectedIds = new Set();
+
+    const filters = document.querySelector("#registry-filters");
+    const search = document.querySelector("#search-models");
+    const modality = document.querySelector("#modality-filter");
+    const job = document.querySelector("#job-filter");
+    const resultSummary = document.querySelector("#result-summary");
+    const compareStatus = document.querySelector("#compare-status");
+    const emptyState = document.querySelector("#empty-state");
+    const comparison = document.querySelector("#comparison");
+    const compareTable = document.querySelector("#compare-table");
+    const clearComparison = document.querySelector("#clear-comparison");
+    const cards = [...document.querySelectorAll("[data-model-id]")];
+    const toggles = [...document.querySelectorAll(".compare-toggle")];
+
+    function currentFilters() {
+      return {
+        query: search?.value ?? "",
+        modality: modality?.value ?? "all",
+        job: job?.value ?? "all",
+      };
+    }
+
+    function applyFilters() {
+      const matches = filterModels(models, currentFilters());
+      const visibleIds = new Set(matches.map((record) => record.model.id));
+
+      cards.forEach((card) => {
+        card.hidden = !visibleIds.has(card.dataset.modelId);
+      });
+
+      if (emptyState) emptyState.hidden = matches.length !== 0;
+      if (resultSummary) {
+        resultSummary.textContent = `${matches.length} of ${models.length} ${models.length === 1 ? "model" : "models"} shown`;
+      }
+    }
+
+    function titleCase(value) {
+      if (!value) return "Unknown";
+      return value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+    }
+
+    function taskSummary(record) {
+      const tasks = [...new Set((record.capability_profiles ?? []).map((profile) => titleCase(profile.task)))];
+      return tasks.length ? tasks.join(", ") : "Unknown";
+    }
+
+    function durationSummary(record) {
+      const durations = (record.capability_profiles ?? [])
+        .map((profile) => profile.duration)
+        .filter((duration) => duration?.state === "supported");
+      if (!durations.length) return "Unknown or not applicable";
+      return [...new Set(durations.map((duration) => {
+        const suffix = duration.unit === "second" ? "s" : ` ${duration.unit ?? ""}`;
+        if (duration.mode === "range") return `${duration.min}–${duration.max}${suffix}`;
+        if (duration.mode === "exact_set") return `${duration.values?.join(", ")}${suffix}`;
+        return "Documented";
+      }))].join(" · ");
+    }
+
+    function audioSummary(record) {
+      const states = (record.capability_profiles ?? [])
+        .map((profile) => profile.native_audio?.state)
+        .filter(Boolean);
+      if (states.includes("supported")) return "Supported";
+      if (states.length && states.every((state) => state === "not_applicable")) return "Not applicable";
+      if (states.length && states.every((state) => state === "unsupported")) return "Unsupported";
+      return "Unknown";
+    }
+
+    function priceSummary(record) {
+      const state = titleCase(record.pricing?.state ?? "unknown");
+      const knownCharges = (record.pricing?.charges ?? []).filter((charge) => charge.state === "known").length;
+      return `${state} · ${knownCharges} stated ${knownCharges === 1 ? "charge" : "charges"}`;
+    }
+
+    function appendCell(row, value, tag = "td") {
+      const cell = document.createElement(tag);
+      cell.textContent = value;
+      row.append(cell);
+      return cell;
+    }
+
+    function renderComparison() {
+      const selected = [...selectedIds].map((id) => byId.get(id)).filter(Boolean);
+      if (comparison) comparison.hidden = selected.length === 0;
+      if (compareStatus) {
+        compareStatus.textContent = selected.length
+          ? `${selected.length} of 3 comparison slots used.`
+          : "Select up to three records to compare.";
+      }
+
+      toggles.forEach((toggle) => {
+        toggle.disabled = selected.length >= 3 && !toggle.checked;
+      });
+
+      if (!compareTable) return;
+      compareTable.replaceChildren();
+      if (!selected.length) return;
+
+      const head = document.createElement("thead");
+      const headRow = document.createElement("tr");
+      appendCell(headRow, "Field", "th").scope = "col";
+      selected.forEach((record) => {
+        const cell = appendCell(headRow, record.model.name, "th");
+        cell.scope = "col";
+      });
+      head.append(headRow);
+      compareTable.append(head);
+
+      const rows = [
+        ["Lab", (record) => record.model.lab],
+        ["Modality", (record) => titleCase(record.model.modality)],
+        ["Verification", (record) => getVerificationPresentation(record).label],
+        ["Lifecycle", (record) => titleCase(record.model.status)],
+        ["Capability profiles", taskSummary],
+        ["Documented duration", durationSummary],
+        ["Generated audio", audioSummary],
+        ["Lab pricing", priceSummary],
+        ["Source links", (record) => `${record.sources?.length ?? 0} official URLs`],
+      ];
+      const body = document.createElement("tbody");
+      rows.forEach(([label, readValue]) => {
+        const row = document.createElement("tr");
+        const labelCell = appendCell(row, label, "th");
+        labelCell.scope = "row";
+        selected.forEach((record) => appendCell(row, readValue(record)));
+        body.append(row);
+      });
+      compareTable.append(body);
+    }
+
+    filters?.addEventListener("input", applyFilters);
+    filters?.addEventListener("change", applyFilters);
+    filters?.addEventListener("reset", () => window.setTimeout(applyFilters));
+
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("change", () => {
+        if (toggle.checked) selectedIds.add(toggle.value);
+        else selectedIds.delete(toggle.value);
+        renderComparison();
+      });
+    });
+
+    clearComparison?.addEventListener("click", () => {
+      selectedIds.clear();
+      toggles.forEach((toggle) => { toggle.checked = false; });
+      renderComparison();
+    });
+
+    applyFilters();
+    renderComparison();
+  </script>
+</SiteLayout>

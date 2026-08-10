@@ -20,9 +20,15 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            site/package-lock.json
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Install site dependencies
+        run: npm ci --prefix site
 
       - name: Validate source records
         run: npm run validate
@@ -32,3 +38,9 @@ jobs:
 
       - name: Build deterministic API artifact
         run: npm run build
+
+      - name: Run site acceptance tests
+        run: npm test --prefix site
+
+      - name: Build static site
+        run: npm run build --prefix site

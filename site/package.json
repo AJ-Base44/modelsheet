@@ -1,0 +1,19 @@
+{
+  "name": "modelsheet-site",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build:data": "npm --prefix .. run build",
+    "build": "npm run build:data && astro build",
+    "dev": "npm run build:data && astro dev",
+    "test": "node --test checks/acceptance.mjs",
+    "check": "npm test && npm run build"
+  },
+  "devDependencies": {
+    "astro": "^5.13.5"
+  }
+}
