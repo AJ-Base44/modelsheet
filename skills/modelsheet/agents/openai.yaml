@@ -1,0 +1,4 @@
+interface:
+  display_name: "Modelsheet"
+  short_description: "Query generative media model capabilities"
+  default_prompt: "Use $modelsheet to find media models that match these capability and pricing requirements."

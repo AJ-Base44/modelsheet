@@ -1,0 +1,56 @@
+{
+  "name": "@modelsheet/registry",
+  "version": "0.1.0",
+  "description": "Typed, queryable access to the Modelsheet generative media model registry.",
+  "license": "MIT",
+  "author": "Aatman Jain",
+  "type": "module",
+  "main": "./index.cjs",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "data/api.json",
+    "index.cjs",
+    "index.d.ts",
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "require": "./index.cjs"
+    },
+    "./api.json": "./data/api.json",
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "sync-data": "node scripts/sync-data.mjs",
+    "check:data": "node scripts/sync-data.mjs --check",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "node --test",
+    "check": "npm run check:data && npm run typecheck && npm test",
+    "prepack": "npm run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AJ-Base44/modelsheet.git",
+    "directory": "packages/registry"
+  },
+  "bugs": {
+    "url": "https://github.com/AJ-Base44/modelsheet/issues"
+  },
+  "homepage": "https://github.com/AJ-Base44/modelsheet#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
