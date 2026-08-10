@@ -1,35 +1,456 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "xai/grok-imagine-video-1-5"
 name = "Grok Imagine Video 1.5"
 aliases = ["Grok Video 1.5"]
 lab = "xAI"
 modality = "video"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-page", "release"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "grok-imagine-video-1.5"
+source_ids = ["model-page", "llms"]
+
+[[api_identifiers]]
+kind = "version_selector"
+value = "grok-imagine-video-1.5-preview"
+resolves_to = "grok-imagine-video-1.5"
+source_ids = ["model-page"]
+
+[[api_identifiers]]
+kind = "snapshot_id"
+value = "grok-imagine-video-1.5-2026-05-30"
+source_ids = ["model-page"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "video-generation"
-task = "video_generation"
-source_ids = ["docs"]
+id = "text-to-video"
+task = "text_to_video"
+endpoint = "POST /v1/videos/generations"
+api_mode = "text-to-video"
+source_ids = ["generation-guide", "videos-reference", "llms"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 1
+max = 15
+step = 1
+source_ids = ["generation-guide", "llms"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "480p"
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles.size.options]]
+id = "480p"
+label = "Standard definition"
+aspect_ratios = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+label = "HD quality"
+aspect_ratios = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+label = "Full HD quality"
+aspect_ratios = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+source_ids = ["generation-guide", "llms"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["generation-guide", "release"]
+
+[[capability_profiles.controls]]
+name = "duration"
+state = "supported"
+mode = "range"
+min = 1
+max = 15
+step = 1
+default = 8
+unit = "second"
+source_ids = ["llms"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+default = "16:9"
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles.controls]]
+name = "resolution"
+state = "supported"
+mode = "exact_set"
+values = ["480p", "720p", "1080p"]
+default = "480p"
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles]]
+id = "image-to-video"
+task = "image_to_video"
+endpoint = "POST /v1/videos/generations"
+api_mode = "image-to-video"
+source_ids = ["image-to-video-guide", "generation-guide", "videos-reference", "llms"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 1
+max = 15
+step = 1
+source_ids = ["generation-guide", "llms"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "480p"
+source_ids = ["generation-guide", "image-to-video-guide", "llms"]
+
+[[capability_profiles.size.options]]
+id = "480p"
+label = "Standard definition"
+aspect_ratios = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+label = "HD quality"
+aspect_ratios = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+label = "Full HD quality"
+aspect_ratios = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+source_ids = ["generation-guide", "image-to-video-guide", "llms"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["generation-guide", "release"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpeg", "png", "webp"]
+encodings = ["https_url", "base64_data_uri", "file_id"]
+source_ids = ["image-to-video-guide", "llms"]
+
+[[capability_profiles.controls]]
+name = "duration"
+state = "supported"
+mode = "range"
+min = 1
+max = 15
+step = 1
+default = 8
+unit = "second"
+source_ids = ["llms"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+default = "input_image_aspect_ratio"
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles.controls]]
+name = "resolution"
+state = "supported"
+mode = "exact_set"
+values = ["480p", "720p", "1080p"]
+default = "480p"
+source_ids = ["generation-guide", "image-to-video-guide", "llms"]
+
+[[capability_profiles]]
+id = "reference-to-video"
+task = "reference_to_video"
+endpoint = "POST /v1/videos/generations"
+api_mode = "reference-to-video"
+source_ids = ["reference-to-video-guide", "generation-guide", "videos-reference", "llms"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 1
+max = 15
+step = 1
+source_ids = ["reference-to-video-guide", "generation-guide", "llms"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "480p"
+source_ids = ["reference-to-video-guide", "generation-guide", "llms"]
+
+[[capability_profiles.size.options]]
+id = "480p"
+label = "Standard definition"
+aspect_ratios = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+label = "HD quality"
+aspect_ratios = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+source_ids = ["reference-to-video-guide", "generation-guide", "llms"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["generation-guide", "reference-to-video-guide", "release"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 7
+formats = ["jpeg", "png", "webp"]
+encodings = ["https_url", "base64_data_uri", "file_id"]
+constraints = ["combined_reference_min_count=1", "mutually_exclusive_with=image_to_video", "mutually_exclusive_with=video_editing"]
+source_ids = ["reference-to-video-guide", "llms"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "voice_id"
+state = "supported"
+min_count = 0
+max_count = 3
+constraints = ["preset_voice_only", "combined_reference_min_count=1", "mutually_exclusive_with=image_to_video", "mutually_exclusive_with=video_editing"]
+source_ids = ["reference-to-video-guide", "generation-guide", "llms"]
+
+[[capability_profiles.controls]]
+name = "duration"
+state = "supported"
+mode = "range"
+min = 1
+max = 15
+step = 1
+default = 8
+unit = "second"
+source_ids = ["llms"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+default = "16:9"
+source_ids = ["generation-guide", "llms"]
+
+[[capability_profiles.controls]]
+name = "resolution"
+state = "supported"
+mode = "exact_set"
+values = ["480p", "720p"]
+default = "480p"
+source_ids = ["reference-to-video-guide", "generation-guide", "llms"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "t2v-480p-output"
+state = "known"
+kind = "metered"
+amount = 0.08
+denomination = "USD"
+per = 1
+unit = "output_second"
+profile_id = "text-to-video"
+applies_when = ["resolution=480p"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "t2v-720p-output"
+state = "known"
+kind = "metered"
+amount = 0.14
+denomination = "USD"
+per = 1
+unit = "output_second"
+profile_id = "text-to-video"
+applies_when = ["resolution=720p"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "t2v-1080p-output"
+state = "known"
+kind = "metered"
+amount = 0.25
+denomination = "USD"
+per = 1
+unit = "output_second"
+profile_id = "text-to-video"
+applies_when = ["resolution=1080p"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "i2v-image-input"
+state = "known"
+kind = "metered"
+amount = 0.01
+denomination = "USD"
+per = 1
+unit = "input_image"
+profile_id = "image-to-video"
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "i2v-480p-output"
+state = "known"
+kind = "metered"
+amount = 0.08
+denomination = "USD"
+per = 1
+unit = "output_second"
+profile_id = "image-to-video"
+applies_when = ["resolution=480p"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "i2v-720p-output"
+state = "known"
+kind = "metered"
+amount = 0.14
+denomination = "USD"
+per = 1
+unit = "output_second"
+profile_id = "image-to-video"
+applies_when = ["resolution=720p"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "i2v-1080p-output"
+state = "known"
+kind = "metered"
+amount = 0.25
+denomination = "USD"
+per = 1
+unit = "output_second"
+profile_id = "image-to-video"
+applies_when = ["resolution=1080p"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "r2v-image-input"
+state = "known"
+kind = "metered"
+amount = 0.01
+denomination = "USD"
+per = 1
+unit = "input_image"
+profile_id = "reference-to-video"
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "r2v-preset-voice-input"
+state = "known"
+kind = "metered"
+amount = 0.0
+denomination = "USD"
+per = 1
+unit = "preset_voice_input"
+profile_id = "reference-to-video"
+qualifier = "included"
+source_ids = ["model-page"]
+
+[[pricing.charges]]
+id = "r2v-480p-output"
+state = "known"
+kind = "metered"
+amount = 0.08
+denomination = "USD"
+per = 1
+unit = "output_second"
+profile_id = "reference-to-video"
+applies_when = ["resolution=480p"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "r2v-720p-output"
+state = "known"
+kind = "metered"
+amount = 0.14
+denomination = "USD"
+per = 1
+unit = "output_second"
+profile_id = "reference-to-video"
+applies_when = ["resolution=720p"]
+source_ids = ["model-page", "pricing"]
 
 [[sources]]
-id = "docs"
+id = "model-page"
 kind = "documentation"
 url = "https://docs.x.ai/developers/models/grok-imagine-video-1.5"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "release"
+kind = "release_note"
+url = "https://x.ai/news/grok-imagine-video-1-5"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "generation-guide"
+kind = "documentation"
+url = "https://docs.x.ai/developers/model-capabilities/video/generation"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "image-to-video-guide"
+kind = "documentation"
+url = "https://docs.x.ai/developers/model-capabilities/video/image-to-video"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "reference-to-video-guide"
+kind = "documentation"
+url = "https://docs.x.ai/developers/model-capabilities/video/reference-to-video"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "videos-reference"
+kind = "api_reference"
+url = "https://docs.x.ai/developers/rest-api-reference/inference/videos"
+retrieved_on = 2026-08-10
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://docs.x.ai/developers/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "llms"
+kind = "api_schema"
+url = "https://docs.x.ai/llms.txt"
+retrieved_on = 2026-08-10
