@@ -1,34 +1,453 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "black-forest-labs/flux-2-klein-4b"
 name = "FLUX.2 [klein] 4B"
 lab = "Black Forest Labs"
 modality = "image"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-page", "overview", "klein-api", "release-notes"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "flux-2-klein-4b"
+source_ids = ["klein-api", "overview", "openapi"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "black-forest-labs/FLUX.2-klein-4B"
+source_ids = ["model-card"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "image-generation-or-editing"
-task = "image_generation_or_editing"
-source_ids = ["docs"]
+id = "text-to-image"
+task = "text_to_image"
+endpoint = "POST /v1/flux-2-klein-4b"
+source_ids = ["klein-api", "openapi", "text-to-image-guide"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["klein-api", "openapi"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+default = "1024x1024"
+edge_multiple = 16
+min_total_pixels = 4096
+max_total_pixels = 4194304
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 64
+height = 64
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1920
+height = 1088
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1088
+height = 1920
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 880
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.delivery_profiles]]
+id = "signed-url"
+state = "supported"
+transport = "signed_url"
+endpoint = "GET {polling_url}"
+formats = ["jpeg", "png", "webp"]
+default_format = "jpeg"
+source_ids = ["klein-api", "openapi", "text-to-image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "webhook"
+state = "supported"
+transport = "webhook"
+endpoint = "POST /v1/flux-2-klein-4b"
+source_ids = ["openapi"]
+
+[[capability_profiles.controls]]
+name = "safety_tolerance"
+state = "supported"
+mode = "range"
+min = 0
+max = 5
+step = 1
+default = 2
+source_ids = ["klein-api", "openapi"]
+
+[[capability_profiles.controls]]
+name = "prompt_upsampling"
+state = "unsupported"
+source_ids = ["klein-quick-help"]
+
+[[capability_profiles.controls]]
+name = "grounding_search"
+state = "unsupported"
+source_ids = ["klein-quick-help"]
+
+[[capability_profiles]]
+id = "image-edit"
+task = "image_edit"
+endpoint = "POST /v1/flux-2-klein-4b"
+source_ids = ["klein-api", "openapi", "image-editing-guide"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["klein-api", "openapi"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+default = "1024x1024"
+edge_multiple = 16
+min_total_pixels = 4096
+max_total_pixels = 4194304
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 64
+height = 64
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1920
+height = 1088
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 1088
+height = 1920
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 880
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["dimensions-help"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["dimensions-help"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 4
+source_ids = ["klein-api", "openapi", "klein-quick-help"]
+
+[[capability_profiles.delivery_profiles]]
+id = "signed-url"
+state = "supported"
+transport = "signed_url"
+endpoint = "GET {polling_url}"
+formats = ["jpeg", "png", "webp"]
+default_format = "jpeg"
+source_ids = ["klein-api", "openapi", "image-editing-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "webhook"
+state = "supported"
+transport = "webhook"
+endpoint = "POST /v1/flux-2-klein-4b"
+source_ids = ["openapi"]
+
+[[capability_profiles.controls]]
+name = "safety_tolerance"
+state = "supported"
+mode = "range"
+min = 0
+max = 5
+step = 1
+default = 2
+source_ids = ["klein-api", "openapi"]
+
+[[capability_profiles.controls]]
+name = "prompt_upsampling"
+state = "unsupported"
+source_ids = ["klein-quick-help"]
+
+[[capability_profiles.controls]]
+name = "grounding_search"
+state = "unsupported"
+source_ids = ["klein-quick-help"]
+
+[[limitations]]
+id = "not-factual-information"
+summary = "Black Forest Labs says the model is not intended or able to provide factual information."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "rendered-text"
+summary = "Black Forest Labs says rendered text may be inaccurate or distorted."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "training-data-bias"
+summary = "Black Forest Labs says the model may represent or amplify biases present in its training data."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "four-megapixel-resizing"
+summary = "Black Forest Labs says input or output images above 4 megapixels are automatically resized to the 4-megapixel limit."
+source_ids = ["dimensions-help"]
+
+[[limitations]]
+id = "signed-url-expiration"
+summary = "Black Forest Labs says signed result URLs expire after ten minutes."
+source_ids = ["image-editing-guide"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["pricing-live", "pricing-docs", "pricing-help"]
+
+[[pricing.charges]]
+id = "text-to-image-first-output-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.014
+denomination = "USD"
+per = 1
+unit = "output_megapixel"
+profile_id = "text-to-image"
+applies_when = ["first output megapixel"]
+qualifier = "Each image is rounded up separately for billing; 1 megapixel is counted as 1024x1024."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[pricing.charges]]
+id = "text-to-image-additional-output-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.001
+denomination = "USD"
+per = 1
+unit = "output_megapixel"
+profile_id = "text-to-image"
+applies_when = ["each output megapixel after the first"]
+qualifier = "Each image is rounded up separately for billing; 1 megapixel is counted as 1024x1024."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[pricing.charges]]
+id = "image-edit-first-output-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.014
+denomination = "USD"
+per = 1
+unit = "output_megapixel"
+profile_id = "image-edit"
+applies_when = ["first output megapixel"]
+qualifier = "Each image is rounded up separately for billing; 1 megapixel is counted as 1024x1024."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[pricing.charges]]
+id = "image-edit-additional-output-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.001
+denomination = "USD"
+per = 1
+unit = "output_megapixel"
+profile_id = "image-edit"
+applies_when = ["each output megapixel after the first"]
+qualifier = "Each image is rounded up separately for billing; 1 megapixel is counted as 1024x1024."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[pricing.charges]]
+id = "image-edit-reference-megapixel"
+state = "known"
+kind = "metered"
+amount = 0.001
+denomination = "USD"
+per = 1
+unit = "reference_megapixel"
+profile_id = "image-edit"
+qualifier = "Each reference image is rounded up separately for billing; 1 megapixel is counted as 1024x1024, so every reference counts as at least 1 megapixel."
+source_ids = ["pricing-live", "pricing-help"]
+
+[[conflicts]]
+path = "capability_profiles.*.size.default"
+summary = "The live API schema gives width and height defaults of 0 despite a minimum of 64, while the dimensions table publishes a 1024x1024 default."
+handling = "Use the explicit 1024x1024 default from the dimensions table and retain the API contradiction rather than interpreting 0 as an output size."
+source_ids = ["klein-api", "openapi", "dimensions-help"]
+
+[[conflicts]]
+path = "pricing.charges.text-to-image-*"
+summary = "The quick-start pricing prose contains a malformed duplicated term in its 4B example, while the live pricing table and help example agree on the first-megapixel plus additional-megapixel formula."
+handling = "Use the dedicated live pricing table and worked help example; retain the malformed quick-start expression as conflicting provenance."
+source_ids = ["pricing-live", "pricing-docs", "pricing-help"]
 
 [[sources]]
-id = "docs"
+id = "docs-index"
+kind = "documentation"
+url = "https://docs.bfl.ai/llms.txt"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "model-page"
+kind = "documentation"
+url = "https://bfl.ai/models/flux-2-klein"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "overview"
+kind = "documentation"
+url = "https://docs.bfl.ai/flux_2/flux2_overview"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "text-to-image-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/flux_2/flux2_text_to_image"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "image-editing-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/flux_2/flux2_image_editing"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "multi-reference-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/guides/prompting_editing_multi_reference"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "unified-reference-guide"
+kind = "documentation"
+url = "https://docs.bfl.ai/guides/prompting_unified_reference"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "dimensions-help"
+kind = "documentation"
+url = "https://help.bfl.ai/articles/8916739058-what-aspect-ratios-and-output-dimensions-are-supported"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "klein-quick-help"
+kind = "documentation"
+url = "https://help.bfl.ai/articles/7592221790-how-do-i-generate-quickly-with-flux-2-klein"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "klein-api"
 kind = "api_reference"
 url = "https://docs.bfl.ai/api-reference/models/generate-or-edit-an-image-with-flux2-%5Bklein%5D-4b"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
 
 [[sources]]
-id = "pricing"
+id = "openapi"
+kind = "api_schema"
+url = "https://api.bfl.ai/openapi.json"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "pricing-live"
+kind = "pricing"
+url = "https://bfl.ai/pricing?category=flux.2"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "pricing-docs"
 kind = "pricing"
 url = "https://docs.bfl.ai/quick_start/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "pricing-help"
+kind = "pricing"
+url = "https://help.bfl.ai/articles/7986977817-what-are-the-costs-associated-with-using-your-models"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "release-notes"
+kind = "release_note"
+url = "https://docs.bfl.ai/release-notes"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "model-card"
+kind = "documentation"
+url = "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B"
+retrieved_on = 2026-08-10

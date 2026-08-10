@@ -1,34 +1,1046 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "ideogram/ideogram-4-0"
 name = "Ideogram 4.0"
+aliases = ["Ideogram 4"]
 lab = "Ideogram"
 modality = "image"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-page", "release-announcement", "generate-api", "open-repository"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "ideogram-ai/ideogram-4-nf4"
+source_ids = ["nf4-model-card", "open-repository"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "ideogram-ai/ideogram-4-fp8"
+source_ids = ["fp8-model-card", "open-repository"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "ideogram-ai/ideogram-4-nf4-diffusers"
+source_ids = ["diffusers-model-card", "open-repository"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "image-generation"
-task = "image_generation"
-source_ids = ["docs"]
+id = "text-to-image"
+task = "text_to_image"
+endpoint = "POST /v1/ideogram-v4/generate"
+source_ids = ["generate-api", "generate-async-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page", "release-announcement"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["generate-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page", "release-announcement"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "pixel"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "2048x2048"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1440x2880"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "2880x1440"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1664x2496"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "2496x1664"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1792x2240"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "2240x1792"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1440x2560"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "2560x1440"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1600x2560"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "2560x1600"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1728x2304"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "2304x1728"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1296x3168"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "3168x1296"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1152x2944"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "2944x1152"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1248x3328"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "3328x1248"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1280x3072"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "3072x1280"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1024x3072"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "3072x1024"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1024x1024"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "896x1120"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1120x896"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "864x1152"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1152x864"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "832x1248"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1248x832"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "800x1280"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1280x800"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "720x1280"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1280x720"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "720x1440"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1440x720"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "512x1536"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1536x512"
+source_ids = ["generate-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page", "release-announcement"]
+
+[[capability_profiles.delivery_profiles]]
+id = "synchronous-temporary-url"
+state = "supported"
+transport = "temporary_url"
+endpoint = "POST /v1/ideogram-v4/generate"
+source_ids = ["generate-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "asynchronous-submission"
+state = "supported"
+transport = "asynchronous_job"
+endpoint = "POST /v1/ideogram-v4/async/generate"
+source_ids = ["generate-async-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "asynchronous-polling"
+state = "supported"
+transport = "polling"
+endpoint = "GET /v1/generations/{generation_id}"
+source_ids = ["generate-async-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "asynchronous-webhook"
+state = "supported"
+transport = "webhook"
+endpoint = "POST {webhook_url}"
+source_ids = ["generate-async-api", "webhooks-guide"]
+
+[[capability_profiles.controls]]
+name = "prompt_input_mode"
+state = "supported"
+mode = "exact_set"
+values = ["text_prompt", "json_prompt"]
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "rendering_speed"
+state = "supported"
+mode = "exact_set"
+values = ["TURBO", "DEFAULT", "QUALITY"]
+unsupported_values = ["FLASH"]
+default = "DEFAULT"
+source_ids = ["generate-api", "pricing"]
+
+[[capability_profiles.controls]]
+name = "enable_copyright_detection"
+state = "supported"
+mode = "exact_set"
+values = ["false", "true"]
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "structured_element_type"
+state = "supported"
+mode = "exact_set"
+values = ["obj", "text"]
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "bounding_box_coordinate"
+state = "supported"
+mode = "range"
+min = 0
+max = 1000
+step = 1
+unit = "normalized_coordinate"
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "unknown"
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "request_seed"
+state = "unknown"
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "unknown"
+source_ids = ["generate-api"]
+
+[[capability_profiles]]
+id = "image-remix"
+task = "image_remix"
+endpoint = "POST /v1/ideogram-v4/remix"
+source_ids = ["remix-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page", "release-announcement"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["remix-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page", "release-announcement"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "pixel"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "2048x2048"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1440x2880"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "2880x1440"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1664x2496"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "2496x1664"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1792x2240"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "2240x1792"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1440x2560"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "2560x1440"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1600x2560"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "2560x1600"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1728x2304"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "2304x1728"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1296x3168"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "3168x1296"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1152x2944"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "2944x1152"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1248x3328"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "3328x1248"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1280x3072"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "3072x1280"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1024x3072"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "3072x1024"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1024x1024"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "896x1120"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1120x896"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "864x1152"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1152x864"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "832x1248"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1248x832"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "800x1280"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1280x800"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "720x1280"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1280x720"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "720x1440"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1440x720"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "512x1536"
+source_ids = ["remix-api"]
+
+[[capability_profiles.size.options]]
+id = "1536x512"
+source_ids = ["remix-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page", "release-announcement"]
+
+[[capability_profiles.reference_inputs]]
+role = "initial_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpeg", "png", "webp"]
+constraints = ["max_file_size=10 MB"]
+source_ids = ["remix-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "synchronous-temporary-url"
+state = "supported"
+transport = "temporary_url"
+endpoint = "POST /v1/ideogram-v4/remix"
+source_ids = ["remix-api"]
+
+[[capability_profiles.controls]]
+name = "prompt_input_mode"
+state = "supported"
+mode = "exact_set"
+values = ["text_prompt"]
+source_ids = ["remix-api"]
+
+[[capability_profiles.controls]]
+name = "image_weight"
+state = "supported"
+mode = "range"
+min = 1
+max = 100
+step = 1
+source_ids = ["remix-api"]
+
+[[capability_profiles.controls]]
+name = "rendering_speed"
+state = "supported"
+mode = "exact_set"
+values = ["FLASH", "TURBO", "DEFAULT", "QUALITY"]
+default = "DEFAULT"
+source_ids = ["remix-api"]
+
+[[capability_profiles.controls]]
+name = "enable_copyright_detection"
+state = "supported"
+mode = "exact_set"
+values = ["false", "true"]
+source_ids = ["remix-api"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "unknown"
+source_ids = ["remix-api"]
+
+[[capability_profiles.controls]]
+name = "request_seed"
+state = "unknown"
+source_ids = ["remix-api"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "unknown"
+source_ids = ["remix-api"]
+
+[[capability_profiles]]
+id = "magic-prompt"
+task = "text_to_structured_prompt"
+endpoint = "POST /v1/ideogram-v4/magic-prompt"
+source_ids = ["magic-prompt-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["magic-prompt-api"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["magic-prompt-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["magic-prompt-api"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["magic-prompt-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["magic-prompt-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "json-response"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v1/ideogram-v4/magic-prompt"
+source_ids = ["magic-prompt-api"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = [
+  "AUTO", "1x4", "1x3", "1x2", "9x16", "10x16", "2x3", "3x4", "4x5",
+  "1x1", "5x4", "4x3", "3x2", "16x10", "16x9", "2x1", "3x1", "4x1",
+]
+default = "AUTO"
+source_ids = ["magic-prompt-api"]
+
+[[capability_profiles]]
+id = "image-to-structured-prompt"
+task = "image_to_structured_prompt"
+endpoint = "POST /v1/ideogram-v4/describe"
+source_ids = ["describe-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["describe-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["describe-api"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["describe-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["describe-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpeg", "png", "webp"]
+constraints = ["max_file_size=10 MB"]
+source_ids = ["describe-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "json-response"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v1/ideogram-v4/describe"
+source_ids = ["describe-api"]
+
+[[capability_profiles.controls]]
+name = "include_bbox"
+state = "supported"
+mode = "exact_set"
+values = ["false", "true"]
+default = "true"
+source_ids = ["describe-api"]
+
+[[capability_profiles]]
+id = "open-weights-text-to-image"
+task = "text_to_image"
+variants = [
+  "ideogram-ai/ideogram-4-nf4",
+  "ideogram-ai/ideogram-4-fp8",
+  "ideogram-ai/ideogram-4-nf4-diffusers",
+]
+source_ids = ["open-repository", "open-inference", "nf4-model-card", "fp8-model-card", "diffusers-model-card"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["open-repository"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["open-prompting"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["open-repository"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+default = "1024x1024"
+edge_multiple = 16
+max_edge = 2048
+min_total_pixels = 65536
+max_total_pixels = 4194304
+max_long_to_short_ratio = 6
+source_ids = ["open-inference"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["open-inference"]
+
+[[capability_profiles.size.examples]]
+width = 1536
+height = 1024
+unit = "pixel"
+aspect_ratio = "3:2"
+source_ids = ["open-inference"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1536
+unit = "pixel"
+aspect_ratio = "2:3"
+source_ids = ["open-inference"]
+
+[[capability_profiles.size.examples]]
+width = 1920
+height = 1088
+unit = "pixel"
+aspect_ratio = "~16:9"
+source_ids = ["open-inference"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 768
+unit = "pixel"
+aspect_ratio = "~21:9"
+source_ids = ["open-inference"]
+
+[[capability_profiles.size.examples]]
+width = 1024
+height = 1792
+unit = "pixel"
+aspect_ratio = "~9:16"
+source_ids = ["open-inference"]
+
+[[capability_profiles.size.examples]]
+width = 1600
+height = 400
+unit = "pixel"
+aspect_ratio = "4:1"
+source_ids = ["open-inference"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["open-repository"]
+
+[[capability_profiles.controls]]
+name = "sampler_preset"
+state = "supported"
+mode = "exact_set"
+values = ["V4_QUALITY_48", "V4_DEFAULT_20", "V4_TURBO_12"]
+default = "V4_QUALITY_48"
+source_ids = ["open-inference"]
+
+[[capability_profiles.controls]]
+name = "prompt_input_mode"
+state = "supported"
+mode = "exact_set"
+values = ["structured_json"]
+unsupported_values = ["plain_text"]
+source_ids = ["open-prompting"]
+
+[[capability_profiles.controls]]
+name = "structured_element_type"
+state = "supported"
+mode = "exact_set"
+values = ["obj", "text"]
+source_ids = ["open-prompting"]
+
+[[capability_profiles.controls]]
+name = "bounding_box_coordinate"
+state = "supported"
+mode = "range"
+min = 0
+max = 1000
+step = 1
+unit = "normalized_coordinate"
+source_ids = ["open-prompting"]
+
+[[capability_profiles.controls]]
+name = "style_color_palette_count"
+state = "supported"
+mode = "range"
+min = 0
+max = 16
+step = 1
+unit = "color"
+source_ids = ["open-prompting"]
+
+[[capability_profiles.controls]]
+name = "element_color_palette_count"
+state = "supported"
+mode = "range"
+min = 0
+max = 5
+step = 1
+unit = "color"
+source_ids = ["open-prompting"]
+
+[[limitations]]
+id = "native-editable-layers-not-yet-available"
+summary = "Ideogram says current 4.0 inference does not yet return alpha channels, editable text layers, or movable image layers directly; those are planned for a follow-up release and currently require separate tools."
+source_ids = ["model-page", "release-announcement"]
+
+[[limitations]]
+id = "open-weights-plain-text-prompts"
+summary = "Ideogram says passing plain text directly to the open-weight model will not work and will likely trigger a safety warning; a structured JSON prompt or Magic Prompt is required for usable results."
+source_ids = ["open-prompting"]
+
+[[limitations]]
+id = "open-weights-runtime-safety-filters"
+summary = "Ideogram says supported open-weight deployments must retain prompt and output NSFW moderation or equivalent stronger filters; disabling runtime screening is not a supported deployment configuration."
+source_ids = ["open-safety"]
+
+[[limitations]]
+id = "temporary-hosted-output-links"
+summary = "Ideogram says hosted Generate and Remix image links remain available only for a limited period and must be downloaded for durable storage."
+source_ids = ["generate-api", "remix-api"]
 
 [pricing]
-state = "unknown"
+state = "partial"
+source_ids = ["pricing", "open-prompting", "model-page", "open-inference"]
+
+[[pricing.charges]]
+id = "text-to-image-turbo"
+state = "known"
+kind = "metered"
+amount = 0.03
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "text-to-image"
+applies_when = ["rendering_speed=TURBO"]
 source_ids = ["pricing"]
 
+[[pricing.charges]]
+id = "text-to-image-default"
+state = "known"
+kind = "metered"
+amount = 0.06
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "text-to-image"
+applies_when = ["rendering_speed=DEFAULT"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "text-to-image-quality"
+state = "known"
+kind = "metered"
+amount = 0.10
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "text-to-image"
+applies_when = ["rendering_speed=QUALITY"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "image-remix-flash"
+state = "unknown"
+profile_id = "image-remix"
+applies_when = ["rendering_speed=FLASH"]
+qualifier = "The Remix request enum exposes FLASH, but the pricing table has no Ideogram 4.0 Flash rate and the Generate reference says Flash is not yet available."
+source_ids = ["remix-api", "generate-api", "pricing"]
+
+[[pricing.charges]]
+id = "image-remix-turbo"
+state = "known"
+kind = "metered"
+amount = 0.03
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-remix"
+applies_when = ["rendering_speed=TURBO"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "image-remix-default"
+state = "known"
+kind = "metered"
+amount = 0.06
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-remix"
+applies_when = ["rendering_speed=DEFAULT"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "image-remix-quality"
+state = "known"
+kind = "metered"
+amount = 0.10
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-remix"
+applies_when = ["rendering_speed=QUALITY"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "magic-prompt-request"
+state = "unknown"
+profile_id = "magic-prompt"
+qualifier = "The production V4 Magic Prompt endpoint has no published price; the free ideogram-4-v1 service described by the open package is a different system."
+source_ids = ["magic-prompt-api", "pricing", "open-prompting"]
+
+[[pricing.charges]]
+id = "describe-v4-input"
+state = "known"
+kind = "metered"
+amount = 0.015
+denomination = "USD"
+per = 1
+unit = "input_image"
+profile_id = "image-to-structured-prompt"
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "open-weights-runtime-compute"
+state = "unknown"
+profile_id = "open-weights-text-to-image"
+qualifier = "Ideogram publishes no universal per-output cost for self-hosted inference; cost depends on the compute provisioned by the operator."
+source_ids = ["model-page", "open-inference"]
+
+[[conflicts]]
+path = "capability_profiles.text-to-image.size.options"
+summary = "The visible Generate summary refers to 2K output and a collapsed view of 23 choices, while the live embedded request schema enumerates 38 exact 1K and 2K resolutions."
+handling = "Record all 38 values from the callable request schema and retain the shorter visible summary as conflicting documentation."
+source_ids = ["generate-api", "model-page", "release-announcement"]
+
+[[conflicts]]
+path = "capability_profiles.*.controls.rendering_speed, pricing.charges.*"
+summary = "Generate explicitly says FLASH is coming soon and currently returns HTTP 400; Remix still exposes FLASH in its enum without that warning, and the pricing table lists no 4.0 Flash rate."
+handling = "Mark FLASH unsupported for Generate, retain it as an exposed but unresolved Remix enum value, and leave its Remix price unknown."
+source_ids = ["generate-api", "generate-async-api", "remix-api", "pricing"]
+
+[[conflicts]]
+path = "capability_profiles.image-edit, capability_profiles.image-reframe, capability_profiles.replace-background"
+summary = "The pricing page groups 4.0 pricing under Generate, Remix, Edit, Reframe and Replace Background, while the developer reference exposes V4 endpoints only for Generate and Remix and labels those other model-specific routes as V3."
+handling = "Record only the V4 Generate and Remix image-output profiles; do not infer V4 Edit, Reframe, or Replace Background endpoints from grouped pricing copy."
+source_ids = ["pricing", "generate-api", "remix-api"]
+
+[[conflicts]]
+path = "api_identifiers.ideogram-4.0"
+summary = "Marketing sample code shows model=ideogram-4.0, while the production API reference selects V4 through endpoint-specific routes and exposes no model request parameter."
+handling = "Do not record the marketing pseudo-parameter as a served API identifier; preserve the exact endpoint paths on capability profiles."
+source_ids = ["model-page", "generate-api", "remix-api"]
+
+[[conflicts]]
+path = "pricing.source_revision"
+summary = "The live pricing page displays a last-revised date of August 6, 2025 even though it contains Ideogram 4.0 rates for the model released in June 2026."
+handling = "Use the live values as retrieved on 2026-08-10 and retain the stale displayed revision date as provenance."
+source_ids = ["pricing", "release-announcement"]
+
+[[conflicts]]
+path = "capability_profiles.*.controls.color_palette"
+summary = "The hosted JSON schema accepts six-digit hexadecimal colors in either case, while the open-weight CaptionVerifier guide requires uppercase #RRGGBB values and stricter palette limits."
+handling = "Keep hosted and open-weight prompting rules scoped to their separate profiles and do not imply that the open CaptionVerifier restrictions govern the hosted API."
+source_ids = ["generate-api", "open-prompting"]
+
+[[conflicts]]
+path = "capability_profiles.open-weights-text-to-image.controls.magic_prompt"
+summary = "Ideogram says the Magic Prompt shipped with the open package is not the same system used in the production Ideogram product, including when the package calls the Ideogram-hosted ideogram-4-v1 service."
+handling = "Do not treat open-package and production Magic Prompt results as equivalent or derive capability values across them."
+source_ids = ["open-prompting", "magic-prompt-api"]
+
 [[sources]]
-id = "docs"
+id = "model-page"
+kind = "documentation"
+url = "https://ideogram.ai/models/4.0/"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "release-announcement"
+kind = "release_note"
+url = "https://ideogram.ai/news/ideogram-4.0/"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "release-blog"
+kind = "release_note"
+url = "https://ideogram.ai/blog/ideogram-4.0/"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "api-overview"
+kind = "documentation"
+url = "https://ideogram.ai/api-learn/"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "generate-api"
 kind = "api_reference"
 url = "https://developer.ideogram.ai/api-reference/api-reference/generate-v4"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "generate-async-api"
+kind = "api_reference"
+url = "https://developer.ideogram.ai/api-reference/api-reference/generate-v4-async"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "remix-api"
+kind = "api_reference"
+url = "https://developer.ideogram.ai/api-reference/api-reference/remix-v4"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "magic-prompt-api"
+kind = "api_reference"
+url = "https://developer.ideogram.ai/api-reference/api-reference/magic-prompt-v4"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "describe-api"
+kind = "api_reference"
+url = "https://developer.ideogram.ai/api-reference/api-reference/describe-v4"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "webhooks-guide"
+kind = "documentation"
+url = "https://developer.ideogram.ai/ideogram-api/webhooks"
+retrieved_on = 2026-08-10
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://ideogram.ai/api-pricing/"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "open-repository"
+kind = "documentation"
+url = "https://github.com/ideogram-oss/ideogram4"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "open-inference"
+kind = "documentation"
+url = "https://github.com/ideogram-oss/ideogram4/blob/main/docs/inference.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "open-prompting"
+kind = "documentation"
+url = "https://github.com/ideogram-oss/ideogram4/blob/main/docs/prompting.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "open-safety"
+kind = "documentation"
+url = "https://github.com/ideogram-oss/ideogram4/blob/main/docs/safety.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "nf4-model-card"
+kind = "documentation"
+url = "https://huggingface.co/ideogram-ai/ideogram-4-nf4"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "fp8-model-card"
+kind = "documentation"
+url = "https://huggingface.co/ideogram-ai/ideogram-4-fp8"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "diffusers-model-card"
+kind = "documentation"
+url = "https://huggingface.co/ideogram-ai/ideogram-4-nf4-diffusers"
+retrieved_on = 2026-08-10

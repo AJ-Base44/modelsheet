@@ -11,7 +11,7 @@ The differentiator is a [drift feed](https://aj-base44.github.io/modelsheet/drif
 ## Coverage
 
 <!-- coverage:start -->
-**Coverage: 53 total models: 13 documented, 40 indexed (18 image, 18 video, 17 audio).**
+**Coverage: 53 total models: 23 documented, 30 indexed (18 image, 18 video, 17 audio).**
 <!-- coverage:end -->
 
 An `indexed` record establishes the official model identity and first-party source links but does not claim comparison-ready capability data. A `documented` record contains at least one real, sourced capability constraint and non-unknown lab pricing, so it can appear in capability filters and comparisons.
