@@ -2,7 +2,7 @@
 
 - Snapshot date: 2026-08-10
 - Repository: <https://github.com/AJ-Base44/modelsheet>
-- Completion branch at report time: `agent/complete-project`
+- Main completion commit: `c9f0dc2`
 
 ## Registry state
 
@@ -29,19 +29,20 @@ Verification remains deliberately conservative. Fifty records explicitly say `ve
 - Public-output generation includes latest and version-pinned registry and drift JSON, RSS, and the source JSON Schema. Contract versioning is recorded in [decision 0002](decisions/0002-versioning-and-distribution.md).
 - `packages/registry` is a publish-ready, typed `@modelsheet/registry` package with ESM, CommonJS, raw JSON, query helpers, tests, and data-sync checks. It has not been published to npm.
 - `skills/modelsheet` is a dependency-free, read-only agent skill for querying documented capabilities, prices, provenance, and verification state from the local artifact.
-- GitHub Pages deployment is configured for `https://aj-base44.github.io/modelsheet/`. No custom domain, `CNAME`, DNS work, Vercel deployment, or domain purchase is part of the project.
+- GitHub Pages is live at <https://aj-base44.github.io/modelsheet/>. No custom domain, `CNAME`, DNS work, Vercel deployment, or domain purchase is part of the project.
 
 No model TOML record was changed by the completion work described above.
 
 ## Evidence at this snapshot
 
-- `node scripts/validate.mjs` passed all 53 records on 2026-08-10.
+- The full root check passed all 53 records and 39 tests; the package passed seven tests plus TypeScript checking; the site passed six acceptance and five deployed-output tests.
 - The built artifact reports exactly 53 total, 13 documented, 40 indexed, with 18 image, 18 video, and 17 audio records.
-- The latest completed CI run on `main` (`114a1a4`) passed.
+- The post-merge CI run on `main` (`c9f0dc2`) passed.
 - The repository reports MIT licensing, squash-only merging, strict branch protection, no force pushes, and no branch deletion on `main`.
 - There were no open pull requests when this report was written.
+- GitHub Pages deployment run `31391683526` passed. The home page, drift page, latest and v1 registry JSON, latest and v1 drift JSON, RSS, and source schema all returned HTTP 200. The deployed registry, drift JSON, and RSS bytes matched the deterministic local artifacts by SHA-256.
 
-The completion branch had not yet been merged when this snapshot was written. GitHub Pages is enabled with `build_type = "workflow"`, but no deployment from this branch is claimed here. The Pages workflow must be merged and the deployed URLs checked before announcing them as live.
+The completion work was squash-merged through protected PR #23. GitHub Pages is enabled with `build_type = "workflow"`, HTTPS enforced, and no custom domain.
 
 ## Human work that remains
 
@@ -60,4 +61,4 @@ The completion branch had not yet been merged when this snapshot was written. Gi
 - Unknown, unsupported, and not applicable remain distinct.
 - The watcher is detection-only and cannot write records or open pull requests.
 - Drift artifacts are generated from Git history rather than a contributor-maintained changelog.
-- The typed package is not published, the Pages site is not claimed live in this snapshot, and no custom domain work was attempted.
+- The typed package is not published, the Pages site is live at the repository URL, and no custom domain work was attempted.
