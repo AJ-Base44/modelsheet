@@ -1,35 +1,909 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "google/gemini-3-pro-image"
 name = "Gemini 3 Pro Image"
 aliases = ["Nano Banana Pro"]
 lab = "Google"
 modality = "image"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["gemini-model", "deepmind-model", "gemini-changelog"]
 
 [verification]
 state = "unverified"
 
+[[api_identifiers]]
+kind = "model_id"
+value = "gemini-3-pro-image"
+source_ids = ["gemini-model", "gemini-changelog"]
+
+[language_support]
+state = "unknown"
+scope = "prompt_input"
+source_ids = ["gemini-model", "image-guide"]
+
 [[capability_profiles]]
-id = "image-generation"
+id = "interactions-text-to-image"
+task = "text_to_image"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/interactions"
+api_mode = "gemini-3-pro-image"
+source_ids = ["gemini-model", "image-guide", "interactions-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["gemini-model"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["gemini-model"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 848
+height = 1264
+unit = "pixel"
+aspect_ratio = "2:3"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1264
+height = 848
+unit = "pixel"
+aspect_ratio = "3:2"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 896
+height = 1200
+unit = "pixel"
+aspect_ratio = "3:4"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1200
+height = 896
+unit = "pixel"
+aspect_ratio = "4:3"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 928
+height = 1152
+unit = "pixel"
+aspect_ratio = "4:5"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1152
+height = 928
+unit = "pixel"
+aspect_ratio = "5:4"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 768
+height = 1376
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1376
+height = 768
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1584
+height = 672
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "2K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1696
+height = 2528
+unit = "pixel"
+aspect_ratio = "2:3"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 2528
+height = 1696
+unit = "pixel"
+aspect_ratio = "3:2"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1792
+height = 2400
+unit = "pixel"
+aspect_ratio = "3:4"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 2400
+height = 1792
+unit = "pixel"
+aspect_ratio = "4:3"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1856
+height = 2304
+unit = "pixel"
+aspect_ratio = "4:5"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 2304
+height = 1856
+unit = "pixel"
+aspect_ratio = "5:4"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1536
+height = 2752
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 2752
+height = 1536
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 3168
+height = 1344
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "4K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 4096
+height = 4096
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 3392
+height = 5056
+unit = "pixel"
+aspect_ratio = "2:3"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 5056
+height = 3392
+unit = "pixel"
+aspect_ratio = "3:2"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 3584
+height = 4800
+unit = "pixel"
+aspect_ratio = "3:4"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 4800
+height = 3584
+unit = "pixel"
+aspect_ratio = "4:3"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 3712
+height = 4608
+unit = "pixel"
+aspect_ratio = "4:5"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 4608
+height = 3712
+unit = "pixel"
+aspect_ratio = "5:4"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 3072
+height = 5504
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 5504
+height = 3072
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 6336
+height = 2688
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["gemini-model", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "interactions-inline"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/interactions"
+formats = ["jpeg"]
+default_format = "jpeg"
+source_ids = ["interactions-api"]
+
+[[capability_profiles.controls]]
+name = "response_modalities"
+state = "supported"
+mode = "exact_set"
+values = ["text_and_image", "image_only"]
+default = "text_and_image"
+source_ids = ["image-guide"]
+
+[[capability_profiles]]
+id = "interactions-image-edit"
+task = "image_edit"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/interactions"
+api_mode = "gemini-3-pro-image"
+source_ids = ["image-guide", "interactions-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["gemini-model"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["gemini-model"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "2K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "4K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["gemini-model", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "all_image_references"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 14
+formats = ["png", "jpeg", "webp", "heic", "heif", "gif", "bmp", "tiff"]
+source_ids = ["image-guide", "interactions-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "object_reference"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 6
+constraints = ["high_fidelity_preservation=true", "aggregate_image_limit=14"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "character_reference"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 5
+constraints = ["character_consistency=true", "aggregate_image_limit=14"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "style_reference"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 3
+constraints = ["style_transfer=true", "aggregate_image_limit=14"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "interactions-inline"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/interactions"
+formats = ["jpeg"]
+default_format = "jpeg"
+source_ids = ["interactions-api"]
+
+[[capability_profiles]]
+id = "generate-content-image-generation"
+task = "multimodal_image_generation"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image:generateContent"
+api_mode = "gemini-3-pro-image"
+source_ids = ["legacy-guide", "generate-content-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["gemini-model"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["gemini-model"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["legacy-guide", "image-guide"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "2K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "4K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["gemini-model", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "all_image_references"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 14
+source_ids = ["legacy-guide", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "generate-content-inline"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/models/{model}:generateContent"
+formats = ["png"]
+source_ids = ["legacy-guide"]
+
+[[capability_profiles]]
+id = "agent-image-generation"
 task = "image_generation"
-source_ids = ["docs"]
+api_mode = "gemini-3-pro-image"
+source_ids = ["agent-model"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["agent-model"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["agent-model"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["agent-model"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.size.options]]
+id = "2K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.size.options]]
+id = "4K"
+render_modes = ["preview"]
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["agent-model"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["agent-model"]
+
+[[capability_profiles.reference_inputs]]
+role = "all_image_references"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 14
+formats = ["png", "jpeg", "webp", "heic", "heif"]
+constraints = ["inline_file_size_less_than_or_equal_to=7MB", "cloud_storage_file_size_less_than_or_equal_to=30MB", "total_request_input_less_than_or_equal_to=500MB"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.controls]]
+name = "temperature"
+state = "supported"
+mode = "range"
+min = 0
+max = 2
+source_ids = ["agent-model"]
+
+[[capability_profiles.controls]]
+name = "top_p"
+state = "supported"
+mode = "range"
+min = 0
+max = 1
+default = 0.95
+source_ids = ["agent-model"]
+
+[[capability_profiles.controls]]
+name = "top_k"
+state = "supported"
+mode = "exact_set"
+values = ["64"]
+default = 64
+source_ids = ["agent-model"]
+
+[[capability_profiles.controls]]
+name = "candidate_count"
+state = "supported"
+mode = "exact_set"
+values = ["1"]
+default = 1
+source_ids = ["agent-model"]
+
+[[limitations]]
+id = "small-text-and-fine-details"
+summary = "Google says small faces, spelling, and fine image details can remain difficult."
+source_ids = ["deepmind-model"]
+
+[[limitations]]
+id = "factual-accuracy"
+summary = "Google says generated visual content can contain factual inaccuracies."
+source_ids = ["deepmind-model"]
+
+[[limitations]]
+id = "translation-quality"
+summary = "Google says translated image text can have grammatical or cultural errors."
+source_ids = ["deepmind-model"]
+
+[[limitations]]
+id = "complex-masked-edits"
+summary = "Google says complex masked edits can produce blending artifacts."
+source_ids = ["deepmind-model"]
+
+[[limitations]]
+id = "character-consistency"
+summary = "Google says character consistency across generated images can remain imperfect."
+source_ids = ["deepmind-model"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "input-image-token-usage"
+state = "known"
+kind = "usage_increment"
+amount = 560
+denomination = "input_token"
+per = 1
+unit = "input_image"
+source_ids = ["gemini-model", "gemini-pricing"]
+
+[[pricing.charges]]
+id = "output-token-usage-1k-2k"
+state = "known"
+kind = "usage_increment"
+amount = 1120
+denomination = "image_output_token"
+per = 1
+unit = "output_image"
+applies_when = ["size=1K_or_2K"]
+source_ids = ["gemini-model", "image-guide", "gemini-pricing"]
+
+[[pricing.charges]]
+id = "output-token-usage-4k"
+state = "known"
+kind = "usage_increment"
+amount = 2000
+denomination = "image_output_token"
+per = 1
+unit = "output_image"
+applies_when = ["size=4K"]
+source_ids = ["gemini-model", "image-guide", "gemini-pricing"]
+
+[[pricing.charges]]
+id = "standard-input"
+state = "known"
+kind = "metered"
+amount = 2.00
+denomination = "USD"
+per = 1000000
+unit = "text_or_image_input_token"
+applies_when = ["service=standard"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "standard-output-text-thinking"
+state = "known"
+kind = "metered"
+amount = 12.00
+denomination = "USD"
+per = 1000000
+unit = "text_or_thinking_output_token"
+applies_when = ["service=standard"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "standard-input-image-equivalent"
+state = "known"
+kind = "estimate"
+amount = 0.0011
+denomination = "USD"
+per = 1
+unit = "input_image"
+applies_when = ["service=standard", "token_usage=560"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "standard-output-image-tokens"
+state = "known"
+kind = "metered"
+amount = 120.00
+denomination = "USD"
+per = 1000000
+unit = "image_output_token"
+applies_when = ["service=standard"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "standard-output-image-1k-2k"
+state = "known"
+kind = "metered"
+amount = 0.134
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "size=1K_or_2K"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "standard-output-image-4k"
+state = "known"
+kind = "metered"
+amount = 0.24
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "size=4K"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "batch-input"
+state = "known"
+kind = "metered"
+amount = 1.00
+denomination = "USD"
+per = 1000000
+unit = "text_or_image_input_token"
+applies_when = ["service=batch"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "batch-output-text-thinking"
+state = "known"
+kind = "metered"
+amount = 6.00
+denomination = "USD"
+per = 1000000
+unit = "text_or_thinking_output_token"
+applies_when = ["service=batch"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "batch-input-image-equivalent"
+state = "known"
+kind = "estimate"
+amount = 0.0006
+denomination = "USD"
+per = 1
+unit = "input_image"
+applies_when = ["service=batch", "token_usage=560"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "batch-output-image-tokens"
+state = "known"
+kind = "metered"
+amount = 60.00
+denomination = "USD"
+per = 1000000
+unit = "image_output_token"
+applies_when = ["service=batch"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "batch-output-image-1k-2k"
+state = "known"
+kind = "metered"
+amount = 0.067
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=batch", "size=1K_or_2K"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "batch-output-image-4k"
+state = "known"
+kind = "metered"
+amount = 0.12
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=batch", "size=4K"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "flex-input"
+state = "known"
+kind = "metered"
+amount = 1.00
+denomination = "USD"
+per = 1000000
+unit = "text_or_image_input_token"
+applies_when = ["service=flex"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "flex-input-image-equivalent"
+state = "known"
+kind = "estimate"
+amount = 0.0006
+denomination = "USD"
+per = 1
+unit = "input_image"
+applies_when = ["service=flex", "token_usage=560"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "flex-output-text-thinking"
+state = "known"
+kind = "metered"
+amount = 6.00
+denomination = "USD"
+per = 1000000
+unit = "text_or_thinking_output_token"
+applies_when = ["service=flex"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "flex-output-image-tokens"
+state = "known"
+kind = "metered"
+amount = 60.00
+denomination = "USD"
+per = 1000000
+unit = "image_output_token"
+applies_when = ["service=flex"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "flex-output-image-1k-2k"
+state = "known"
+kind = "metered"
+amount = 0.067
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=flex", "size=1K_or_2K"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "flex-output-image-4k"
+state = "known"
+kind = "metered"
+amount = 0.12
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=flex", "size=4K"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "priority-input"
+state = "known"
+kind = "metered"
+amount = 3.60
+denomination = "USD"
+per = 1000000
+unit = "text_or_image_input_token"
+applies_when = ["service=priority"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "priority-output-text-thinking"
+state = "known"
+kind = "metered"
+amount = 21.60
+denomination = "USD"
+per = 1000000
+unit = "text_or_thinking_output_token"
+applies_when = ["service=priority"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "priority-output-image-tokens"
+state = "known"
+kind = "metered"
+amount = 216.00
+denomination = "USD"
+per = 1000000
+unit = "image_output_token"
+applies_when = ["service=priority"]
+qualifier = "Google does not publish a per-image priority equivalent."
+source_ids = ["gemini-pricing"]
+
+[[conflicts]]
+path = "capability_profiles.*.delivery_profiles.*.formats"
+summary = "The Interactions API response-format reference lists JPEG, while official model-guide examples request PNG."
+handling = "Keep JPEG on Interactions profiles and PNG on the separately scoped GenerateContent profile; do not assert one universal output format."
+source_ids = ["interactions-api", "image-guide", "legacy-guide"]
+
+[[conflicts]]
+path = "capability_profiles.interactions-image-edit.reference_inputs.object_reference.max_count"
+summary = "The typed reference table permits six high-fidelity object images, while another guide paragraph says five high-fidelity images."
+handling = "Use six on the typed object-reference role and retain the prose inconsistency."
+source_ids = ["image-guide"]
+
+[[conflicts]]
+path = "capability_profiles.agent-image-generation.size.options.4K"
+summary = "The stable model is generally available, while Agent Platform describes 4K output as preview."
+handling = "Keep the model available and mark only the Agent 4K size option with its published preview qualifier."
+source_ids = ["gemini-changelog", "agent-model"]
+
+[[conflicts]]
+path = "capability_profiles.*.controls.thinking"
+summary = "The image guide describes thinking as enabled by default and not disableable, while other Google material describes search grounding with thinking on or off."
+handling = "Omit a thinking control until the official surfaces agree."
+source_ids = ["image-guide", "gemini-model"]
+
+[[conflicts]]
+path = "capability_profiles.*.controls.output_count"
+summary = "Google says the model may not follow an exact requested image count and publishes no dependable model-specific maximum."
+handling = "Keep output-count constraints unknown rather than inferring a limit."
+source_ids = ["image-guide"]
 
 [[sources]]
-id = "docs"
+id = "gemini-model"
 kind = "documentation"
 url = "https://ai.google.dev/gemini-api/docs/models/gemini-3-pro-image"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
 
 [[sources]]
-id = "pricing"
+id = "image-guide"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/image-generation"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "legacy-guide"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/generate-content/image-generation"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "interactions-api"
+kind = "api_reference"
+url = "https://ai.google.dev/api/interactions-api-v1"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "generate-content-api"
+kind = "api_reference"
+url = "https://ai.google.dev/api/generate-content"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "gemini-pricing"
 kind = "pricing"
 url = "https://ai.google.dev/gemini-api/docs/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "gemini-changelog"
+kind = "changelog"
+url = "https://ai.google.dev/gemini-api/docs/changelog"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "agent-model"
+kind = "documentation"
+url = "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-pro-image"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "deepmind-model"
+kind = "documentation"
+url = "https://deepmind.google/models/gemini-image/pro/"
+retrieved_on = 2026-08-10
