@@ -1,0 +1,33 @@
+schema_version = 1
+
+[model]
+id = "minimax/minimax-hailuo-2-3-fast"
+name = "MiniMax Hailuo 2.3 Fast"
+lab = "MiniMax"
+modality = "video"
+status = "unknown"
+source_ids = ["docs"]
+
+[verification]
+state = "unverified"
+
+[[capability_profiles]]
+id = "video-generation"
+task = "video_generation"
+source_ids = ["docs"]
+
+[pricing]
+state = "unknown"
+source_ids = ["pricing"]
+
+[[sources]]
+id = "docs"
+kind = "documentation"
+url = "https://platform.minimax.io/docs/guides/video-generation"
+retrieved_on = 2026-08-09
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://platform.minimax.io/docs/guides/pricing-paygo"
+retrieved_on = 2026-08-09
