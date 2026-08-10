@@ -7,6 +7,7 @@ The primary entity is the model. A file represents one officially named model, n
 ## File and identity rules
 
 - Store one UTF-8 TOML file at `models/<lab-slug>/<model-slug>.toml`.
+- Every record declares `documentation_state` as either `indexed` or `documented`; the state is validated against the record contents.
 - `model.name` is the lab's official published name. Colloquial or display names belong in `model.aliases`; API request values belong in `api_identifiers`.
 - Every new record includes `[verification]` with `state = "unverified"`. The three seed records predate this process field and are the only allowed omissions.
 - Do not write an empty array to mean unknown. Omit a non-applicable optional collection, or use a claim table with an explicit state when the distinction matters.
@@ -54,6 +55,7 @@ Only first-party lab or provider pages are valid capability and pricing sources.
 | Path | Type | Meaning |
 | --- | --- | --- |
 | `schema_version` | integer | Record schema version. These records use `1`. |
+| `documentation_state` | string | Registry completeness state: `indexed` or `documented`, as defined below. |
 | `model.id` | string | Stable registry ID in `<lab-slug>/<model-slug>` form. |
 | `model.name` | string | Official model name, preserving the lab's spelling and capitalization. |
 | `model.aliases` | string array | Known colloquial or display names. This is absent when no alias is evidenced; API IDs do not belong here. |
@@ -61,6 +63,17 @@ Only first-party lab or provider pages are valid capability and pricing sources.
 | `model.modality` | string | Primary output modality: `video`, `image`, or `audio`. |
 | `model.status` | string | Source-backed lifecycle status described above. |
 | `model.source_ids` | string array | Sources for identity, aliases, modality, and lifecycle. |
+
+### `documentation_state`
+
+This field separates an honest model index from records that are ready for capability comparison:
+
+| Value | Meaning |
+| --- | --- |
+| `indexed` | The model exists, is correctly named and attributed, and carries official source URLs. The record does not claim that capability constraints or usable pricing have been documented. |
+| `documented` | At least one capability profile contains a concrete, source-backed constraint such as a duration, size, format, reference-input rule, generated-audio state, or modality-equivalent parameter value, and `pricing.state` is `known` or `partial`. |
+
+Endpoint names, task labels, model variants, and source URLs establish discoverability but are not capability constraints. A record that claims `documented` while every profile lacks concrete values, or while `pricing.state = "unknown"`, fails validation.
 
 ### `[verification]`
 
@@ -364,3 +377,4 @@ The Stage 3 validator should enforce these schema-derived rules:
 11. Every `audio_format_access.format_ids` value occurs in at least one delivery profile in the same capability profile.
 12. Limitation IDs are unique within a record, and each limitation has a non-empty summary plus at least one resolvable source.
 13. Every non-seed record has `verification.state = "unverified"`; no schema-valid value promotes a record to verified.
+14. Every record declares `documentation_state`. A `documented` record has at least one concrete constraint inside a capability profile and has `pricing.state` set to `known` or `partial`.

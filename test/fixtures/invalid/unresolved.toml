@@ -1,4 +1,5 @@
 schema_version = 1
+documentation_state = "indexed"
 unexpected_root_key = "must be rejected"
 
 [model]

@@ -1,4 +1,5 @@
 schema_version = 1
+documentation_state = "indexed"
 
 [model]
 id = "example-lab/example-image"

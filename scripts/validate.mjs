@@ -326,11 +326,143 @@ function checkRange(min, max, instancePath, filePath, errors) {
   }
 }
 
+function hasOwn(value, key) {
+  return isObject(value) && Object.prototype.hasOwnProperty.call(value, key);
+}
+
+function hasNonEmptyArray(value, key) {
+  return hasOwn(value, key) && Array.isArray(value[key]) && value[key].length > 0;
+}
+
+function hasAnyOwn(value, keys) {
+  return keys.some((key) => hasOwn(value, key));
+}
+
+function profileHasConcreteConstraint(profile) {
+  if (!isObject(profile)) {
+    return false;
+  }
+
+  if (hasAnyOwn(profile.duration, ["min", "max"])) {
+    return true;
+  }
+  if (hasAnyOwn(profile.text_input, ["max"])) {
+    return true;
+  }
+  if (hasNonEmptyArray(profile.frame_rate, "values")) {
+    return true;
+  }
+  if (
+    hasAnyOwn(profile.size, [
+      "edge_multiple",
+      "max_edge",
+      "min_total_pixels",
+      "max_total_pixels",
+      "experimental_above_total_pixels",
+      "max_long_to_short_ratio",
+    ]) ||
+    hasNonEmptyArray(profile.size, "options") ||
+    hasNonEmptyArray(profile.size, "examples")
+  ) {
+    return true;
+  }
+  if (
+    profile.native_audio?.state === "supported" ||
+    profile.native_audio?.state === "unsupported"
+  ) {
+    return true;
+  }
+  if (
+    asArray(profile.audio_formats).length > 0 ||
+    asArray(profile.audio_format_access).length > 0
+  ) {
+    return true;
+  }
+  if (
+    asArray(profile.reference_inputs).some(
+      (reference) =>
+        reference?.state === "supported" ||
+        reference?.state === "unsupported" ||
+        hasAnyOwn(reference, [
+          "min_count",
+          "max_count",
+          "demonstrated_count",
+          "max_duration",
+        ]) ||
+        hasNonEmptyArray(reference, "position_roles") ||
+        hasNonEmptyArray(reference, "formats") ||
+        hasNonEmptyArray(reference, "encodings") ||
+        hasNonEmptyArray(reference, "constraints"),
+    )
+  ) {
+    return true;
+  }
+  if (
+    asArray(profile.delivery_profiles).some(
+      (delivery) =>
+        hasNonEmptyArray(delivery, "formats") ||
+        hasAnyOwn(delivery, ["default_format", "max_partial_outputs"]),
+    )
+  ) {
+    return true;
+  }
+  if (
+    asArray(profile.controls).some(
+      (control) =>
+        hasNonEmptyArray(control, "values") ||
+        hasNonEmptyArray(control, "unsupported_values") ||
+        hasNonEmptyArray(control, "formats") ||
+        hasAnyOwn(control, ["default", "min", "max", "step"]),
+    )
+  ) {
+    return true;
+  }
+
+  return (
+    hasAnyOwn(profile.timing, ["granularity"]) ||
+    hasNonEmptyArray(profile.timing, "delivery_profile_ids") ||
+    hasNonEmptyArray(profile.timing, "endpoints") ||
+    hasNonEmptyArray(profile.timing, "metadata")
+  );
+}
+
+function checkDocumentationState(record, filePath, errors) {
+  if (record.documentation_state !== "documented") {
+    return;
+  }
+
+  const hasConstraint = asArray(record.capability_profiles).some(
+    profileHasConcreteConstraint,
+  );
+  if (!hasConstraint) {
+    errors.push(
+      makeError(
+        filePath,
+        "/documentation_state",
+        '"documented" requires at least one capability profile with a concrete constraint value',
+        "documentationState",
+      ),
+    );
+  }
+
+  if (record.pricing?.state === "unknown") {
+    errors.push(
+      makeError(
+        filePath,
+        "/pricing/state",
+        '"documented" requires pricing.state to be "known" or "partial"',
+        "documentationState",
+      ),
+    );
+  }
+}
+
 function checkRecordInvariants(record, filePath, errors) {
   checkNestedStableIds(record, "", filePath, errors);
   checkNoEmptyArrays(record, "", filePath, errors);
   checkSourceReferences(record, filePath, errors);
   checkFactualClaimSources(record, filePath, errors);
+  checkDocumentationState(record, filePath, errors);
 
   const modelId = record.model?.id;
   if (
