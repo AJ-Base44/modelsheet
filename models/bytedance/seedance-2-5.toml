@@ -1,0 +1,27 @@
+schema_version = 1
+
+[model]
+id = "bytedance/seedance-2-5"
+name = "Seedance 2.5"
+lab = "ByteDance"
+modality = "video"
+status = "unknown"
+source_ids = ["docs"]
+
+[verification]
+state = "unverified"
+
+[[capability_profiles]]
+id = "text-to-video"
+task = "text_to_video"
+source_ids = ["docs"]
+
+[pricing]
+state = "unknown"
+source_ids = ["docs"]
+
+[[sources]]
+id = "docs"
+kind = "documentation"
+url = "https://www.byteplus.com/en/contact-us/ai-seedance2-5-official"
+retrieved_on = 2026-08-09
