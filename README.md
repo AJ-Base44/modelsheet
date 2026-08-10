@@ -8,7 +8,7 @@ The long-term differentiator is a drift feed derived from the Git history of the
 
 ## Coverage
 
-**Coverage: 53 models indexed, 4 documented.**
+**Coverage: 53 models indexed, 13 documented.**
 
 An `indexed` record establishes the official model identity and first-party source links but does not claim comparison-ready capability data. A `documented` record contains at least one real, sourced capability constraint and non-unknown lab pricing, so it can appear in capability filters and comparisons.
 
