@@ -1,34 +1,676 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "elevenlabs/eleven-music-v2"
 name = "Eleven Music v2"
 lab = "ElevenLabs"
 modality = "audio"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["models", "music-overview", "v2-api-release"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "music_v2"
+source_ids = ["models", "compose-reference", "v2-api-release"]
+
+[language_support]
+state = "supported"
+scope = "native_audio"
+published_label = "English, Spanish, German, Japanese and more"
+listed_count = 4
+list_completeness = "non_exhaustive"
+languages = [
+  { name = "English", code = "en" },
+  { name = "Spanish", code = "es" },
+  { name = "German", code = "de" },
+  { name = "Japanese", code = "ja" },
+]
+source_ids = ["models", "music-overview"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "music-generation"
+id = "music-compose"
 task = "music_generation"
-source_ids = ["docs"]
+endpoint = "POST /v1/music"
+source_ids = ["compose-reference", "composition-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 3
+max = 600
+automatic = true
+source_ids = ["compose-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 4100
+source_ids = ["compose-reference"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["music-overview"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["music-overview"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["music-overview"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [22050]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32]
+source_ids = ["compose-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [24000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [48]
+source_ids = ["compose-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["compose-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [48000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [128, 192, 240, 320]
+source_ids = ["compose-reference", "format-changelog"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100, 48000]
+source_ids = ["compose-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [48000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["compose-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "ulaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["compose-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "alaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["compose-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "supported"
+constraints = ["copyright_screening=required", "duration_claim=conflicted"]
+source_ids = ["music-overview", "references-release"]
+
+[[capability_profiles.delivery_profiles]]
+id = "buffered-audio"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v1/music"
+formats = [
+  "auto", "mp3_22050_32", "mp3_24000_48", "mp3_44100_32",
+  "mp3_44100_64", "mp3_44100_96", "mp3_44100_128",
+  "mp3_44100_192", "mp3_48000_128", "mp3_48000_192",
+  "mp3_48000_240", "mp3_48000_320", "pcm_8000", "pcm_16000",
+  "pcm_22050", "pcm_24000", "pcm_32000", "pcm_44100",
+  "pcm_48000", "opus_48000_32", "opus_48000_64",
+  "opus_48000_96", "opus_48000_128", "opus_48000_192",
+  "ulaw_8000", "alaw_8000",
+]
+default_format = "auto"
+source_ids = ["compose-reference", "format-changelog"]
+
+[[capability_profiles.controls]]
+name = "seed"
+state = "supported"
+mode = "range"
+min = 0
+max = 2147483647
+step = 1
+unit = "integer"
+source_ids = ["compose-reference"]
+
+[[capability_profiles.controls]]
+name = "force_instrumental"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["compose-reference"]
+
+[[capability_profiles.controls]]
+name = "store_for_inpainting"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["compose-reference"]
+
+[[capability_profiles.controls]]
+name = "sign_with_c2pa"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+formats = ["mp3"]
+source_ids = ["compose-reference"]
+
+[[capability_profiles]]
+id = "music-stream"
+task = "music_generation"
+endpoint = "POST /v1/music/stream"
+source_ids = ["stream-reference"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 3
+max = 600
+automatic = true
+source_ids = ["stream-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 4100
+source_ids = ["stream-reference"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["music-overview"]
+
+[[capability_profiles.delivery_profiles]]
+id = "streaming-audio"
+state = "supported"
+transport = "http_chunked"
+endpoint = "POST /v1/music/stream"
+formats = [
+  "auto", "mp3_22050_32", "mp3_24000_48", "mp3_44100_32",
+  "mp3_44100_64", "mp3_44100_96", "mp3_44100_128",
+  "mp3_44100_192", "mp3_48000_128", "mp3_48000_192",
+  "mp3_48000_240", "mp3_48000_320", "pcm_8000", "pcm_16000",
+  "pcm_22050", "pcm_24000", "pcm_32000", "pcm_44100",
+  "pcm_48000", "opus_48000_32", "opus_48000_64",
+  "opus_48000_96", "opus_48000_128", "opus_48000_192",
+  "ulaw_8000", "alaw_8000",
+]
+default_format = "auto"
+source_ids = ["stream-reference", "format-changelog"]
+
+[[capability_profiles]]
+id = "music-detailed"
+task = "music_generation_with_metadata"
+endpoint = "POST /v1/music/detailed"
+source_ids = ["detailed-reference"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 3
+max = 600
+automatic = true
+source_ids = ["detailed-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 4100
+source_ids = ["detailed-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "multipart-audio-and-metadata"
+state = "supported"
+transport = "multipart_mixed"
+endpoint = "POST /v1/music/detailed"
+formats = [
+  "auto", "mp3_22050_32", "mp3_24000_48", "mp3_44100_32",
+  "mp3_44100_64", "mp3_44100_96", "mp3_44100_128",
+  "mp3_44100_192", "mp3_48000_128", "mp3_48000_192",
+  "mp3_48000_240", "mp3_48000_320", "pcm_8000", "pcm_16000",
+  "pcm_22050", "pcm_24000", "pcm_32000", "pcm_44100",
+  "pcm_48000", "opus_48000_32", "opus_48000_64",
+  "opus_48000_96", "opus_48000_128", "opus_48000_192",
+  "ulaw_8000", "alaw_8000",
+]
+default_format = "auto"
+source_ids = ["detailed-reference", "format-changelog"]
+
+[[capability_profiles.controls]]
+name = "with_timestamps"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["detailed-reference"]
+
+[[capability_profiles]]
+id = "music-detailed-stream"
+task = "music_generation_with_metadata"
+endpoint = "POST /v1/music/detailed/stream"
+source_ids = ["detailed-stream-reference", "sse-changelog"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 3
+max = 600
+automatic = true
+source_ids = ["detailed-stream-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 4100
+source_ids = ["detailed-stream-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "sse-audio-and-metadata"
+state = "supported"
+transport = "server_sent_events"
+endpoint = "POST /v1/music/detailed/stream"
+formats = [
+  "auto", "mp3_22050_32", "mp3_24000_48", "mp3_44100_32",
+  "mp3_44100_64", "mp3_44100_96", "mp3_44100_128",
+  "mp3_44100_192", "mp3_48000_128", "mp3_48000_192",
+  "mp3_48000_240", "mp3_48000_320", "pcm_8000", "pcm_16000",
+  "pcm_22050", "pcm_24000", "pcm_32000", "pcm_44100",
+  "pcm_48000", "opus_48000_32", "opus_48000_64",
+  "opus_48000_96", "opus_48000_128", "opus_48000_192",
+  "ulaw_8000", "alaw_8000",
+]
+default_format = "auto"
+source_ids = ["detailed-stream-reference", "format-changelog"]
+
+[[capability_profiles.controls]]
+name = "with_timestamps"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["detailed-stream-reference"]
+
+[[capability_profiles]]
+id = "composition-plan"
+task = "music_composition_plan"
+endpoint = "POST /v1/music/plan"
+source_ids = ["plan-reference", "composition-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 3
+max = 600
+automatic = true
+source_ids = ["plan-reference", "composition-guide"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 4100
+source_ids = ["plan-reference"]
+
+[[capability_profiles.controls]]
+name = "chunk_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 30
+step = 1
+unit = "chunk"
+source_ids = ["composition-guide"]
+
+[[capability_profiles.controls]]
+name = "chunk_duration"
+state = "supported"
+mode = "range"
+min = 3
+max = 120
+unit = "second"
+source_ids = ["composition-guide"]
+
+[[capability_profiles.controls]]
+name = "positive_styles_count"
+state = "supported"
+mode = "range"
+min = 0
+max = 50
+step = 1
+unit = "style"
+source_ids = ["composition-guide"]
+
+[[capability_profiles.controls]]
+name = "negative_styles_count"
+state = "supported"
+mode = "range"
+min = 0
+max = 50
+step = 1
+unit = "style"
+source_ids = ["composition-guide"]
+
+[[capability_profiles.controls]]
+name = "context_adherence"
+state = "supported"
+mode = "exact_set"
+values = ["low", "medium", "high"]
+default = "high"
+source_ids = ["composition-guide"]
+
+[[capability_profiles.controls]]
+name = "conditioning_reference_duration"
+state = "supported"
+mode = "range"
+min = 0.05
+max = 30
+unit = "second"
+source_ids = ["composition-guide", "inpainting-guide"]
+
+[[capability_profiles.controls]]
+name = "conditioning_strength"
+state = "supported"
+mode = "exact_set"
+values = ["low", "medium", "high", "xhigh"]
+default = "medium"
+source_ids = ["inpainting-guide"]
+
+[[capability_profiles]]
+id = "music-upload"
+task = "music_upload_for_inpainting"
+endpoint = "POST /v1/music/upload"
+source_ids = ["upload-reference", "inpainting-guide"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["upload-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "supported"
+min_count = 1
+max_count = 1
+constraints = ["copyright_screening=required"]
+source_ids = ["upload-reference"]
+
+[[capability_profiles.controls]]
+name = "extract_composition_plan"
+state = "supported"
+mode = "exact_set"
+values = ["music_v1", "music_v2"]
+source_ids = ["upload-reference"]
+
+[[capability_profiles.controls]]
+name = "with_timestamps"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["upload-reference"]
+
+[[capability_profiles]]
+id = "video-to-music"
+task = "video_to_music"
+endpoint = "POST /v1/music/video-to-music"
+source_ids = ["video-to-music-reference"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["video-to-music-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 1000
+source_ids = ["video-to-music-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "video_reference"
+media_type = "video"
+state = "supported"
+min_count = 1
+max_count = 10
+max_duration = 600
+duration_unit = "second"
+constraints = ["maximum_combined_size=200MB", "duration_scope=combined"]
+source_ids = ["video-to-music-reference"]
+
+[[capability_profiles.controls]]
+name = "style_tag_count"
+state = "supported"
+mode = "range"
+min = 0
+max = 10
+step = 1
+unit = "tag"
+source_ids = ["video-to-music-reference"]
+
+[[limitations]]
+id = "audio-reference-not-remixing"
+summary = "Audio Reference guides style and sound; it is not a remixing or genre-transfer tool, and substantially different requested genres may be less reliable."
+source_ids = ["music-overview"]
+
+[[limitations]]
+id = "seed-not-exactly-reproducible"
+summary = "Using the same seed and parameters does not guarantee exact reproducibility, and output can change across system updates."
+source_ids = ["compose-reference"]
+
+[[limitations]]
+id = "copyright-screening"
+summary = "Copyrighted prompts, styles, lyrics, and uploaded material can be rejected; an uploaded copyrighted file is still charged half the request cost."
+source_ids = ["composition-guide", "upload-reference"]
 
 [pricing]
+state = "partial"
+source_ids = ["pricing", "plan-reference", "upload-reference"]
+
+[[pricing.charges]]
+id = "music-api-output"
+state = "known"
+kind = "metered"
+amount = 0.15
+denomination = "USD"
+per = 1
+unit = "output_minute"
+applies_when = ["model_id=music_v2"]
+qualifier = "Prices exclude taxes, levies, and duties."
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "composition-plan-request"
+state = "known"
+kind = "metered"
+amount = 0
+denomination = "credit"
+per = 1
+unit = "request"
+profile_id = "composition-plan"
+qualifier = "The endpoint costs zero credits but is rate-limited."
+source_ids = ["plan-reference"]
+
+[[pricing.charges]]
+id = "music-finetune"
+state = "known"
+kind = "metered"
+amount = 1.50
+denomination = "USD"
+per = 1
+unit = "finetune"
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "music-upload"
 state = "unknown"
+profile_id = "music-upload"
+qualifier = "The upload endpoint says upload price equals song-generation price, but does not publish a safe upload billing unit; copyrighted uploads are charged half."
+source_ids = ["upload-reference"]
+
+[[conflicts]]
+path = "capability_profiles.*.duration.max"
+summary = "The Music overview states a five-minute maximum, while the live generation endpoints and v2 composition-plan guide permit a 600-second total."
+handling = "Use the callable endpoint's 600-second bound only inside endpoint-scoped API profiles; do not generalize it to the UI."
+source_ids = ["music-overview", "compose-reference", "stream-reference", "detailed-reference", "detailed-stream-reference", "composition-guide"]
+
+[[conflicts]]
+path = "capability_profiles.music-compose.reference_inputs.audio_reference"
+summary = "The capability overview says an audio reference may be approximately 30 seconds, while the newer official References release says uploads may be 10 seconds to five minutes and are available through ElevenAPI; no matching parameter reference was published."
+handling = "Record support and copyright screening, but keep the duration and API request shape unresolved."
+source_ids = ["music-overview", "references-release"]
+
+[[conflicts]]
+path = "capability_profiles.*.delivery_profiles.*.formats"
+summary = "The overview advertises MP3 at 44.1 kHz and WAV, while current endpoint enums include 48 kHz MP3, PCM, Opus, u-law, and A-law but no WAV selector."
+handling = "Use exact endpoint enums for API profiles and retain the overview claim only as conflicting provenance."
+source_ids = ["music-overview", "compose-reference", "stream-reference", "detailed-reference", "detailed-stream-reference"]
+
+[[conflicts]]
+path = "pricing.charges.music-api-output"
+summary = "The pricing table publishes USD 0.15 per minute, while the pricing FAQ describes Music as billed per generation."
+handling = "Record the displayed USD per-minute charge and preserve the FAQ wording as a billing conflict."
 source_ids = ["pricing"]
 
 [[sources]]
-id = "docs"
+id = "models"
 kind = "documentation"
 url = "https://elevenlabs.io/docs/overview/models"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "music-overview"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/overview/capabilities/music"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "compose-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/music/compose.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "stream-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/music/stream.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "detailed-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/music/compose-detailed.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "detailed-stream-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/music/compose-detailed-stream.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "plan-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/music/create-composition-plan.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "upload-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/music/upload.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "video-to-music-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/music/video-to-music.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "composition-guide"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/eleven-api/guides/how-to/music/composition-plans"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "inpainting-guide"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/eleven-api/guides/how-to/music/inpainting"
+retrieved_on = 2026-08-10
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
-url = "https://elevenlabs.io/pricing/api"
-retrieved_on = 2026-08-09
+url = "https://elevenlabs.io/pricing/api?price.platform=api"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "v2-api-release"
+kind = "changelog"
+url = "https://elevenlabs.io/docs/changelog/2026/6/15"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "format-changelog"
+kind = "changelog"
+url = "https://elevenlabs.io/docs/changelog/2026/6/22"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "sse-changelog"
+kind = "changelog"
+url = "https://elevenlabs.io/docs/changelog/2026/7/6"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "references-release"
+kind = "release_note"
+url = "https://elevenlabs.io/blog/introducing-references-sound-control-for-music-v2"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "llms-docs"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/llms.txt"
+retrieved_on = 2026-08-10

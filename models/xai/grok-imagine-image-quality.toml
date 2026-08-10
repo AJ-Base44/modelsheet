@@ -1,34 +1,494 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "xai/grok-imagine-image-quality"
 name = "Grok Imagine Image Quality"
 lab = "xAI"
 modality = "image"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-page", "release"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "grok-imagine-image-quality"
+source_ids = ["model-page", "images-reference", "llms"]
+
+[[api_identifiers]]
+kind = "snapshot_id"
+value = "grok-imagine-image-quality-20260403"
+source_ids = ["model-page"]
+
+[[api_identifiers]]
+kind = "version_selector"
+value = "grok-imagine-image-quality-latest"
+source_ids = ["model-page"]
+
+[[api_identifiers]]
+kind = "version_selector"
+value = "grok-imagine-image-pro"
+resolves_to = "grok-imagine-image-quality"
+source_ids = ["model-page", "retirement"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "image-generation"
-task = "image_generation"
-source_ids = ["docs"]
+id = "text-to-image"
+task = "text_to_image"
+endpoint = "POST /v1/images/generations"
+source_ids = ["generation-guide", "images-reference", "llms"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["generation-guide", "images-reference", "llms"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+automatic = true
+source_ids = ["model-page", "generation-guide", "images-reference", "llms"]
+
+[[capability_profiles.size.options]]
+id = "1k"
+label = "1K"
+aspect_ratios = ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2", "9:19.5", "19.5:9", "9:20", "20:9", "1:2", "2:1"]
+source_ids = ["model-page", "generation-guide", "images-reference", "llms"]
+
+[[capability_profiles.size.options.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["model-page", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "2k"
+label = "2K"
+aspect_ratios = ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2", "9:19.5", "19.5:9", "9:20", "20:9", "1:2", "2:1"]
+source_ids = ["model-page", "generation-guide", "images-reference", "llms"]
+
+[[capability_profiles.size.options.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["model-page", "pricing"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.delivery_profiles]]
+id = "url-response"
+state = "supported"
+transport = "url"
+source_ids = ["generation-guide", "images-reference", "llms"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-response"
+state = "supported"
+transport = "base64_in_response"
+source_ids = ["generation-guide", "images-reference", "llms"]
+
+[[capability_profiles.controls]]
+name = "resolution"
+state = "supported"
+mode = "exact_set"
+values = ["1k", "2k"]
+source_ids = ["model-page", "generation-guide", "images-reference", "llms"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2", "9:19.5", "19.5:9", "9:20", "20:9", "1:2", "2:1", "auto"]
+source_ids = ["generation-guide", "images-reference", "llms"]
+
+[[capability_profiles.controls]]
+name = "response_format"
+state = "supported"
+mode = "exact_set"
+values = ["url", "b64_json"]
+default = "url"
+source_ids = ["generation-guide", "images-reference", "llms"]
+
+[[capability_profiles]]
+id = "single-image-edit"
+task = "image_edit"
+endpoint = "POST /v1/images/edits"
+source_ids = ["editing-guide", "images-reference", "llms"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["editing-guide", "images-reference", "llms"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+automatic = true
+source_ids = ["model-page", "editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.size.options]]
+id = "1k"
+label = "1K"
+aspect_ratios = ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2", "9:19.5", "19.5:9", "9:20", "20:9", "1:2", "2:1"]
+source_ids = ["model-page", "editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.size.options.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["model-page", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "2k"
+label = "2K"
+aspect_ratios = ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2", "9:19.5", "19.5:9", "9:20", "20:9", "1:2", "2:1"]
+source_ids = ["model-page", "editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.size.options.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["model-page", "pricing"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpeg", "png", "webp"]
+encodings = ["https_url", "base64_data_uri", "file_id"]
+source_ids = ["editing-guide", "files-inputs", "images-reference", "llms"]
+
+[[capability_profiles.delivery_profiles]]
+id = "url-response"
+state = "supported"
+transport = "url"
+source_ids = ["editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-response"
+state = "supported"
+transport = "base64_in_response"
+source_ids = ["editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.controls]]
+name = "resolution"
+state = "supported"
+mode = "exact_set"
+values = ["1k", "2k"]
+source_ids = ["model-page", "editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2", "9:19.5", "19.5:9", "9:20", "20:9", "1:2", "2:1", "auto"]
+source_ids = ["editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.controls]]
+name = "response_format"
+state = "supported"
+mode = "exact_set"
+values = ["url", "b64_json"]
+default = "url"
+source_ids = ["editing-guide", "images-reference", "llms"]
+
+[[capability_profiles]]
+id = "multi-image-edit"
+task = "multi_image_edit"
+endpoint = "POST /v1/images/edits"
+source_ids = ["multi-editing-guide", "images-reference", "llms"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["multi-editing-guide", "images-reference", "llms"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+automatic = true
+source_ids = ["model-page", "multi-editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.size.options]]
+id = "1k"
+label = "1K"
+aspect_ratios = ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2", "9:19.5", "19.5:9", "9:20", "20:9", "1:2", "2:1"]
+source_ids = ["model-page", "multi-editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.size.options.examples]]
+width = 1024
+height = 1024
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["model-page", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "2k"
+label = "2K"
+aspect_ratios = ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2", "9:19.5", "19.5:9", "9:20", "20:9", "1:2", "2:1"]
+source_ids = ["model-page", "multi-editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.size.options.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["model-page", "pricing"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 2
+max_count = 3
+formats = ["jpeg", "png", "webp"]
+encodings = ["https_url", "base64_data_uri", "file_id"]
+constraints = ["mixed_transport_encodings_allowed=true"]
+source_ids = ["multi-editing-guide", "files-inputs", "images-reference", "llms"]
+
+[[capability_profiles.delivery_profiles]]
+id = "url-response"
+state = "supported"
+transport = "url"
+source_ids = ["multi-editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-response"
+state = "supported"
+transport = "base64_in_response"
+source_ids = ["multi-editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.controls]]
+name = "resolution"
+state = "supported"
+mode = "exact_set"
+values = ["1k", "2k"]
+source_ids = ["model-page", "multi-editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2", "9:19.5", "19.5:9", "9:20", "20:9", "1:2", "2:1", "auto"]
+default = "first_input_image_aspect_ratio"
+source_ids = ["multi-editing-guide", "images-reference", "llms"]
+
+[[capability_profiles.controls]]
+name = "response_format"
+state = "supported"
+mode = "exact_set"
+values = ["url", "b64_json"]
+default = "url"
+source_ids = ["multi-editing-guide", "images-reference", "llms"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "generation-1k-output"
+state = "known"
+kind = "metered"
+amount = 0.05
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "text-to-image"
+applies_when = ["resolution=1k"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "generation-2k-output"
+state = "known"
+kind = "metered"
+amount = 0.07
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "text-to-image"
+applies_when = ["resolution=2k"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "single-edit-input"
+state = "known"
+kind = "metered"
+amount = 0.01
+denomination = "USD"
+per = 1
+unit = "input_image"
+profile_id = "single-image-edit"
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "single-edit-1k-output"
+state = "known"
+kind = "metered"
+amount = 0.05
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "single-image-edit"
+applies_when = ["resolution=1k"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "single-edit-2k-output"
+state = "known"
+kind = "metered"
+amount = 0.07
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "single-image-edit"
+applies_when = ["resolution=2k"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "multi-edit-input"
+state = "known"
+kind = "metered"
+amount = 0.01
+denomination = "USD"
+per = 1
+unit = "input_image"
+profile_id = "multi-image-edit"
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "multi-edit-1k-output"
+state = "known"
+kind = "metered"
+amount = 0.05
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "multi-image-edit"
+applies_when = ["resolution=1k"]
+source_ids = ["model-page", "pricing"]
+
+[[pricing.charges]]
+id = "multi-edit-2k-output"
+state = "known"
+kind = "metered"
+amount = 0.07
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "multi-image-edit"
+applies_when = ["resolution=2k"]
+source_ids = ["model-page", "pricing"]
+
+[[conflicts]]
+path = "pricing.charges"
+summary = "The current model and pricing pages publish USD 0.05 for 1K and USD 0.07 for 2K output, while an official cost-tracking example for this model reports 200000000 cost ticks, equivalent under that page's formula to USD 0.02."
+handling = "Use the current model-specific pricing table and retain the lower cost-tracking example as a dated official conflict."
+source_ids = ["model-page", "pricing", "cost-tracking"]
 
 [[sources]]
-id = "docs"
+id = "model-page"
 kind = "documentation"
 url = "https://docs.x.ai/developers/models/grok-imagine-image-quality"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "release"
+kind = "release_note"
+url = "https://x.ai/news/grok-imagine-quality-mode"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "generation-guide"
+kind = "documentation"
+url = "https://docs.x.ai/developers/model-capabilities/images/generation"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "editing-guide"
+kind = "documentation"
+url = "https://docs.x.ai/developers/model-capabilities/images/editing"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "multi-editing-guide"
+kind = "documentation"
+url = "https://docs.x.ai/developers/model-capabilities/images/multi-image-editing"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "images-reference"
+kind = "api_reference"
+url = "https://docs.x.ai/developers/rest-api-reference/inference/images"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "files-inputs"
+kind = "documentation"
+url = "https://docs.x.ai/developers/model-capabilities/imagine/files/inputs"
+retrieved_on = 2026-08-10
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://docs.x.ai/developers/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "cost-tracking"
+kind = "documentation"
+url = "https://docs.x.ai/developers/cost-tracking"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "retirement"
+kind = "release_note"
+url = "https://docs.x.ai/developers/migration/may-15-retirement"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "llms"
+kind = "api_schema"
+url = "https://docs.x.ai/llms.txt"
+retrieved_on = 2026-08-10

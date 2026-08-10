@@ -1,13 +1,19 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "elevenlabs/sound-effects-v2"
-name = "Sound Effects v2"
+name = "Sound effects"
 lab = "ElevenLabs"
 modality = "audio"
 status = "unknown"
-source_ids = ["docs"]
+source_ids = ["models", "sound-effects-overview", "sound-effects-reference"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "eleven_text_to_sound_v2"
+source_ids = ["models", "sound-effects-reference"]
 
 [verification]
 state = "unverified"
@@ -15,20 +21,253 @@ state = "unverified"
 [[capability_profiles]]
 id = "sound-effect-generation"
 task = "sound_effect_generation"
-source_ids = ["docs"]
+endpoint = "POST /v1/sound-generation"
+source_ids = ["sound-effects-reference", "sound-effects-overview"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 0.5
+max = 30
+automatic = true
+source_ids = ["sound-effects-reference"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["sound-effects-reference", "website-product-help"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["sound-effects-overview"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["sound-effects-overview"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["sound-effects-overview"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [22050]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32]
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [24000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [48]
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100, 48000]
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [48000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "ulaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "alaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.audio_format_access]]
+format_ids = ["mp3_44100_192"]
+minimum_plan = "Creator"
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.audio_format_access]]
+format_ids = ["pcm_44100"]
+minimum_plan = "Pro"
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "audio-download"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v1/sound-generation"
+formats = [
+  "mp3_22050_32", "mp3_24000_48", "mp3_44100_32",
+  "mp3_44100_64", "mp3_44100_96", "mp3_44100_128",
+  "mp3_44100_192", "pcm_8000", "pcm_16000", "pcm_22050",
+  "pcm_24000", "pcm_32000", "pcm_44100", "pcm_48000",
+  "opus_48000_32", "opus_48000_64", "opus_48000_96",
+  "opus_48000_128", "opus_48000_192", "ulaw_8000", "alaw_8000",
+]
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.controls]]
+name = "loop"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["sound-effects-reference"]
+
+[[capability_profiles.controls]]
+name = "prompt_influence"
+state = "supported"
+mode = "range"
+min = 0
+max = 1
+default = 0.3
+unit = "ratio"
+source_ids = ["sound-effects-reference"]
+
+[[limitations]]
+id = "complex-sequences-best-composed"
+summary = "The model understands multi-effect sequences, but ElevenLabs recommends generating individual effects and combining them in an audio editor for best results."
+source_ids = ["prompting-help"]
 
 [pricing]
-state = "unknown"
+state = "partial"
+source_ids = ["pricing", "credits-pricing"]
+
+[[pricing.charges]]
+id = "sound-effects-api-output"
+state = "known"
+kind = "metered"
+amount = 0.12
+denomination = "USD"
+per = 1
+unit = "output_minute"
+profile_id = "sound-effect-generation"
+qualifier = "Prices exclude taxes, levies, and duties."
 source_ids = ["pricing"]
 
+[[pricing.charges]]
+id = "sound-effects-api-automatic-duration"
+state = "known"
+kind = "metered"
+amount = 100
+denomination = "credit"
+per = 1
+unit = "generation"
+profile_id = "sound-effect-generation"
+applies_when = ["duration=automatic"]
+qualifier = "One sound effect is returned per API generation."
+source_ids = ["credits-pricing"]
+
+[[pricing.charges]]
+id = "sound-effects-api-specified-duration"
+state = "known"
+kind = "metered"
+amount = 11
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "sound-effect-generation"
+applies_when = ["duration=specified"]
+qualifier = "Text-input length does not affect the charge."
+source_ids = ["credits-pricing"]
+
+[[conflicts]]
+path = "capability_profiles.sound-effect-generation.duration.min"
+summary = "The capability overview states a 0.1-second minimum, while the live API parameter table requires at least 0.5 seconds."
+handling = "Use 0.5 seconds for the endpoint-scoped API profile."
+source_ids = ["sound-effects-overview", "sound-effects-reference"]
+
+[[conflicts]]
+path = "capability_profiles.sound-effect-generation.delivery_profiles.audio-download.formats"
+summary = "The overview says every effect is available as MP3 and non-looping effects as 48 kHz WAV, while the live API enum exposes MP3, PCM, Opus, u-law, and A-law and has no WAV selector; response prose still calls the result MP3."
+handling = "Use the exact request enum for the API profile and retain the overview and response prose as conflicting provenance."
+source_ids = ["sound-effects-overview", "sound-effects-reference"]
+
+[[conflicts]]
+path = "capability_profiles.sound-effect-generation.text_input.max"
+summary = "The website product UI documents a 450-character prompt maximum, while the API parameter table publishes no text maximum."
+handling = "Keep the API text limit unknown; do not apply the website UI limit to the API."
+source_ids = ["website-product-help", "sound-effects-reference"]
+
+[[conflicts]]
+path = "pricing"
+summary = "The current API pricing page publishes USD 0.12 per minute and says Sound Effects is billed per generation, while the product-specific API billing page publishes 100 credits per automatic-duration generation or 11 credits per specified second."
+handling = "Preserve all official charge representations with their conditions; do not convert credits or infer equivalence."
+source_ids = ["pricing", "credits-pricing"]
+
 [[sources]]
-id = "docs"
+id = "models"
 kind = "documentation"
 url = "https://elevenlabs.io/docs/overview/models"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "sound-effects-overview"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/overview/capabilities/sound-effects"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "sound-effects-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-sound-effects/convert.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "website-product-help"
+kind = "documentation"
+url = "https://help.elevenlabs.io/hc/en-us/articles/25735182995985-What-is-Sound-Effects"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "prompting-help"
+kind = "documentation"
+url = "https://help.elevenlabs.io/hc/en-us/articles/25735604945041-How-do-I-prompt-for-sound-effects"
+retrieved_on = 2026-08-10
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
-url = "https://elevenlabs.io/pricing/api"
-retrieved_on = 2026-08-09
+url = "https://elevenlabs.io/pricing/api?price.platform=api"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "credits-pricing"
+kind = "pricing"
+url = "https://elevenlabs.io/docs/help-center/product/content-production/sound-effects/how-much-does-it-cost-to-generate-sound-effects"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "llms-docs"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/llms.txt"
+retrieved_on = 2026-08-10

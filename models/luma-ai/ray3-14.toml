@@ -1,34 +1,1052 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "luma-ai/ray3-14"
 name = "Ray3.14"
+aliases = ["Ray3 Pi", "Ray3Pi", "Ray3.14 (Pi)"]
 lab = "Luma AI"
 modality = "video"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["user-guide", "model-faq", "release"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "video-generation"
-task = "video_generation"
-source_ids = ["docs"]
+id = "web-text-to-video-sdr"
+task = "text_to_video"
+variants = ["SDR"]
+source_ids = ["user-guide", "model-faq", "model-field-guide"]
 
-[pricing]
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 10
+step = 5
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-field-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["user-guide", "model-faq", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "draft"
+label = "Draft Mode"
+source_ids = ["model-faq", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "540p"
+source_ids = ["user-guide", "model-faq", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+source_ids = ["user-guide", "model-faq", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+label = "native 1080p"
+source_ids = ["user-guide", "model-faq", "pricing"]
+
+[capability_profiles.native_audio]
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles]]
+id = "web-text-to-video-hdr"
+task = "text_to_video"
+variants = ["HDR"]
+source_ids = ["user-guide", "model-faq", "model-field-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 10
+step = 5
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-field-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["model-faq", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "540p"
+source_ids = ["model-faq", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+source_ids = ["model-faq", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+source_ids = ["model-faq", "credit-guide"]
+
+[capability_profiles.native_audio]
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles]]
+id = "web-text-to-video-hdr-exr"
+task = "text_to_video"
+variants = ["HDR+EXR"]
+source_ids = ["user-guide", "model-faq", "color-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 10
+step = 5
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-field-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["color-guide", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "540p"
+source_ids = ["color-guide", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+source_ids = ["color-guide", "credit-guide"]
+
+[capability_profiles.native_audio]
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles.delivery_profiles]]
+id = "openexr-download"
+state = "supported"
+transport = "download"
+formats = ["exr"]
+default_format = "exr"
+source_ids = ["color-guide"]
+
+[[capability_profiles]]
+id = "web-image-to-video-sdr"
+task = "image_to_video"
+variants = ["SDR"]
+source_ids = ["user-guide", "model-faq", "keyframes-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 5
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-field-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["user-guide", "model-faq", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "draft"
+label = "Draft Mode"
+source_ids = ["model-faq", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "540p"
+source_ids = ["user-guide", "model-faq", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+source_ids = ["user-guide", "model-faq", "pricing"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+label = "native 1080p"
+source_ids = ["user-guide", "model-faq", "pricing"]
+
+[capability_profiles.native_audio]
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles.reference_inputs]]
+role = "keyframe_sequence"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 2
+position_roles = ["start_image", "end_image"]
+source_ids = ["keyframes-guide", "model-field-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "character_reference"
+media_type = "image"
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles]]
+id = "web-image-to-video-hdr"
+task = "image_to_video"
+variants = ["HDR"]
+source_ids = ["user-guide", "model-faq", "keyframes-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 5
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-field-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["model-faq", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "540p"
+source_ids = ["model-faq", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+source_ids = ["model-faq", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+source_ids = ["model-faq", "credit-guide"]
+
+[capability_profiles.native_audio]
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles.reference_inputs]]
+role = "keyframe_sequence"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 2
+position_roles = ["start_image", "end_image"]
+source_ids = ["keyframes-guide", "model-field-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "character_reference"
+media_type = "image"
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles]]
+id = "web-image-to-video-hdr-exr"
+task = "image_to_video"
+variants = ["HDR+EXR"]
+source_ids = ["user-guide", "model-faq", "keyframes-guide", "color-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 5
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-field-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["color-guide", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "540p"
+source_ids = ["color-guide", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+source_ids = ["color-guide", "credit-guide"]
+
+[capability_profiles.native_audio]
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles.reference_inputs]]
+role = "keyframe_sequence"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 2
+position_roles = ["start_image", "end_image"]
+source_ids = ["keyframes-guide", "model-field-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "character_reference"
+media_type = "image"
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles.delivery_profiles]]
+id = "openexr-download"
+state = "supported"
+transport = "download"
+formats = ["exr"]
+default_format = "exr"
+source_ids = ["color-guide"]
+
+[[capability_profiles]]
+id = "web-video-modify"
+task = "video_edit"
+variants = ["SDR"]
+source_ids = ["user-guide", "model-faq", "model-field-guide"]
+
+[capability_profiles.duration]
 state = "unknown"
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-field-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["pricing", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "draft"
+label = "Draft Mode"
 source_ids = ["pricing"]
 
+[[capability_profiles.size.options]]
+id = "540p"
+source_ids = ["pricing", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+source_ids = ["pricing", "credit-guide"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+source_ids = ["pricing", "credit-guide"]
+
+[capability_profiles.native_audio]
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_video"
+media_type = "video"
+state = "supported"
+min_count = 1
+max_count = 1
+max_duration = 18
+duration_unit = "second"
+formats = ["mp4", "mov"]
+constraints = ["format_list=non_exhaustive"]
+source_ids = ["user-guide", "model-faq"]
+
+[[capability_profiles.reference_inputs]]
+role = "keyframe_sequence"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 2
+position_roles = ["start_image", "end_image"]
+source_ids = ["model-field-guide"]
+
+[[capability_profiles.controls]]
+name = "modify_mode"
+state = "supported"
+mode = "exact_set"
+values = ["Adhere", "Flex", "Reimagine"]
+source_ids = ["model-field-guide"]
+
+[[capability_profiles.controls]]
+name = "modify_intensity"
+state = "supported"
+mode = "exact_set"
+values = ["1", "2", "3"]
+source_ids = ["model-field-guide"]
+
+[[capability_profiles.controls]]
+name = "hdr_output"
+state = "unsupported"
+source_ids = ["model-faq", "model-field-guide"]
+
+[[capability_profiles.controls]]
+name = "exr_output"
+state = "unsupported"
+source_ids = ["model-faq", "model-field-guide"]
+
+[[capability_profiles]]
+id = "web-video-extension"
+task = "video_extension"
+source_ids = ["user-guide", "model-faq", "extend-guide"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["user-guide", "model-faq", "extend-guide"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-field-guide"]
+
+[capability_profiles.size]
+state = "unknown"
+source_ids = ["extend-guide"]
+
+[capability_profiles.native_audio]
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_video"
+media_type = "video"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["extend-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "end_image"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 1
+source_ids = ["extend-guide"]
+
+[[capability_profiles]]
+id = "web-video-loop"
+task = "video_loop"
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-field-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["user-guide", "model-faq"]
+
+[[capability_profiles.size.options]]
+id = "540p"
+source_ids = ["user-guide", "model-faq"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+source_ids = ["user-guide", "model-faq"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.native_audio]
+state = "unsupported"
+source_ids = ["model-faq"]
+
+[[capability_profiles]]
+id = "web-video-upscale"
+task = "video_upscale"
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.frame_rate]
+state = "unknown"
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["user-guide", "model-faq"]
+
+[[capability_profiles.size.options]]
+id = "4K"
+label = "4K upscale"
+source_ids = ["user-guide", "model-faq"]
+
+[capability_profiles.native_audio]
+state = "unknown"
+source_ids = ["user-guide", "model-faq"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_video"
+media_type = "video"
+state = "supported"
+min_count = 1
+max_count = 1
+constraints = ["input_resolution=540p_or_720p_or_1080p"]
+source_ids = ["user-guide", "model-faq"]
+
+[[limitations]]
+id = "public-api-unavailable"
+summary = "Luma states that Ray3.14 is available only in Dream Machine Web and is not available through its public API."
+source_ids = ["model-faq", "agents-model-guide", "agents-generation-reference"]
+
+[[limitations]]
+id = "character-reference"
+summary = "Luma says Ray3.14 lacks character consistency and the unpositioned reference-image feature; positional start and end keyframes remain available."
+source_ids = ["model-faq", "keyframes-guide"]
+
+[[limitations]]
+id = "reframe"
+summary = "Luma states that Ray3.14 cannot be used with Reframe."
+source_ids = ["model-faq"]
+
+[[limitations]]
+id = "native-audio"
+summary = "Luma states that Ray3.14 does not generate native audio; audio can be added in a separate post-generation workflow."
+source_ids = ["model-faq", "model-field-guide"]
+
+[[limitations]]
+id = "modify-hdr-exr"
+summary = "Luma states that HDR and EXR are not supported in Modify."
+source_ids = ["model-faq", "model-field-guide"]
+
+[[limitations]]
+id = "extension-length"
+summary = "Luma states that Ray3.14 video can be extended up to approximately 30 seconds."
+source_ids = ["user-guide", "model-faq"]
+
+[pricing]
+state = "partial"
+source_ids = ["pricing", "credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-sdr-draft"
+state = "known"
+kind = "metered"
+amount = 4
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-text-to-video-sdr"
+applies_when = ["resolution=draft"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "t2v-sdr-540p"
+state = "known"
+kind = "metered"
+amount = 10
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-text-to-video-sdr"
+applies_when = ["resolution=540p"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "t2v-sdr-720p"
+state = "known"
+kind = "metered"
+amount = 20
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-text-to-video-sdr"
+applies_when = ["resolution=720p"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "t2v-sdr-1080p"
+state = "known"
+kind = "metered"
+amount = 80
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-text-to-video-sdr"
+applies_when = ["resolution=1080p"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "i2v-sdr-draft"
+state = "known"
+kind = "metered"
+amount = 4
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-image-to-video-sdr"
+applies_when = ["resolution=draft"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "i2v-sdr-540p"
+state = "known"
+kind = "metered"
+amount = 10
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-image-to-video-sdr"
+applies_when = ["resolution=540p"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "i2v-sdr-720p"
+state = "known"
+kind = "metered"
+amount = 20
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-image-to-video-sdr"
+applies_when = ["resolution=720p"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "i2v-sdr-1080p"
+state = "known"
+kind = "metered"
+amount = 80
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-image-to-video-sdr"
+applies_when = ["resolution=1080p"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "t2v-hdr-540p-5s"
+state = "known"
+kind = "metered"
+amount = 200
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr"
+applies_when = ["resolution=540p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-hdr-540p-10s"
+state = "known"
+kind = "metered"
+amount = 400
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr"
+applies_when = ["resolution=540p", "duration=10_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-hdr-720p-5s"
+state = "known"
+kind = "metered"
+amount = 400
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr"
+applies_when = ["resolution=720p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-hdr-720p-10s"
+state = "known"
+kind = "metered"
+amount = 800
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr"
+applies_when = ["resolution=720p", "duration=10_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-hdr-1080p-5s"
+state = "known"
+kind = "metered"
+amount = 1600
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr"
+applies_when = ["resolution=1080p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-hdr-1080p-10s"
+state = "known"
+kind = "metered"
+amount = 3200
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr"
+applies_when = ["resolution=1080p", "duration=10_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "i2v-hdr-540p-5s"
+state = "known"
+kind = "metered"
+amount = 200
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-image-to-video-hdr"
+applies_when = ["resolution=540p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "i2v-hdr-720p-5s"
+state = "known"
+kind = "metered"
+amount = 400
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-image-to-video-hdr"
+applies_when = ["resolution=720p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "i2v-hdr-1080p-5s"
+state = "known"
+kind = "metered"
+amount = 1600
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-image-to-video-hdr"
+applies_when = ["resolution=1080p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-hdr-exr-540p-5s"
+state = "known"
+kind = "metered"
+amount = 350
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr-exr"
+applies_when = ["resolution=540p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-hdr-exr-540p-10s"
+state = "known"
+kind = "metered"
+amount = 700
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr-exr"
+applies_when = ["resolution=540p", "duration=10_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-hdr-exr-720p-5s"
+state = "known"
+kind = "metered"
+amount = 700
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr-exr"
+applies_when = ["resolution=720p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "t2v-hdr-exr-720p-10s"
+state = "known"
+kind = "metered"
+amount = 1400
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-text-to-video-hdr-exr"
+applies_when = ["resolution=720p", "duration=10_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "i2v-hdr-exr-540p-5s"
+state = "known"
+kind = "metered"
+amount = 350
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-image-to-video-hdr-exr"
+applies_when = ["resolution=540p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "i2v-hdr-exr-720p-5s"
+state = "known"
+kind = "metered"
+amount = 700
+denomination = "credit"
+per = 1
+unit = "video"
+profile_id = "web-image-to-video-hdr-exr"
+applies_when = ["resolution=720p", "duration=5_seconds"]
+source_ids = ["credit-guide", "model-faq"]
+
+[[pricing.charges]]
+id = "modify-draft"
+state = "known"
+kind = "metered"
+amount = 12
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-video-modify"
+applies_when = ["resolution=draft"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "modify-540p"
+state = "known"
+kind = "metered"
+amount = 24
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-video-modify"
+applies_when = ["resolution=540p"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "modify-720p"
+state = "known"
+kind = "metered"
+amount = 48
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-video-modify"
+applies_when = ["resolution=720p"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "modify-1080p"
+state = "known"
+kind = "metered"
+amount = 192
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "web-video-modify"
+applies_when = ["resolution=1080p"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "credit-purchase"
+state = "known"
+kind = "metered"
+amount = 0.0033
+denomination = "USD"
+per = 1
+unit = "credit"
+qualifier = "Dream Machine credit price; top-ups start at USD 4 for 1,200 credits."
+source_ids = ["credit-guide"]
+
+[[pricing.charges]]
+id = "extension"
+state = "unknown"
+profile_id = "web-video-extension"
+source_ids = ["pricing", "credit-guide"]
+
+[[pricing.charges]]
+id = "loop"
+state = "unknown"
+profile_id = "web-video-loop"
+source_ids = ["pricing", "credit-guide"]
+
+[[pricing.charges]]
+id = "upscale"
+state = "unknown"
+profile_id = "web-video-upscale"
+source_ids = ["pricing", "credit-guide"]
+
+[[conflicts]]
+path = "capability_profiles.web-text-to-video-*.duration,capability_profiles.web-image-to-video-*.duration,capability_profiles.web-video-modify.duration"
+summary = "Ray3.14's model-specific FAQ and user guide state 5- or 10-second text-to-video, 5-second image-to-video, and up to 18-second Modify input, while a summary table in Luma's video-model field guide lists 4, 8, and 12 seconds with roughly 18 seconds of orchestration."
+handling = "Use the exact model-specific FAQ and user-guide values; keep Modify output duration unknown because the 18-second claim is an input-video limit."
+source_ids = ["user-guide", "model-faq", "model-field-guide"]
+
+[[conflicts]]
+path = "capability_profiles.web-*-hdr-exr.size.options"
+summary = "Luma's color-space guide says EXR export is available at 540p and 720p, while an official credit surface also publishes 1080p HDR+EXR charges."
+handling = "Expose 540p and 720p in HDR+EXR profiles and leave 1080p omitted until Luma resolves the serving-versus-pricing disagreement."
+source_ids = ["color-guide", "credit-guide", "model-faq"]
+
+[[conflicts]]
+path = "capability_profiles.web-image-to-video-*.reference_inputs"
+summary = "The model FAQ says the reference-image feature is unavailable, while Luma's keyframe guide and field guide document start and end keyframes."
+handling = "Represent positional start/end keyframes as supported and the separate unpositioned character-reference role as unsupported."
+source_ids = ["model-faq", "keyframes-guide", "model-field-guide"]
+
+[[conflicts]]
+path = "capability_profiles.*.native_audio.state"
+summary = "The model FAQ explicitly says Ray3.14 has no native audio, while the broader field guide says audio generation is available in supported user interfaces."
+handling = "Use unsupported for same-generation native audio and treat the field-guide statement as the separate Add Audio workflow."
+source_ids = ["model-faq", "model-field-guide"]
+
+[[conflicts]]
+path = "api_identifiers"
+summary = "The exact Ray3.14 FAQ says the model is Dream Machine Web-only, while Luma's API marketing page mentions Ray3.14 under other models without publishing a serving ID or parameter contract; current API enums list other Ray models."
+handling = "Do not create an API identifier or API capability profile for Ray3.14."
+source_ids = ["model-faq", "api-overview", "agents-model-guide", "agents-generation-reference"]
+
 [[sources]]
-id = "docs"
+id = "user-guide"
 kind = "documentation"
 url = "https://lumalabs.ai/learning-hub/ray314-user-guide"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "model-faq"
+kind = "documentation"
+url = "https://lumalabs.ai/learning-hub/ray3-faq"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "model-field-guide"
+kind = "documentation"
+url = "https://lumalabs.ai/learning-center/articles/luma-video-models-field-guide"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "keyframes-guide"
+kind = "documentation"
+url = "https://lumalabs.ai/learning-hub/how-to-use-keyframes"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "extend-guide"
+kind = "documentation"
+url = "https://lumalabs.ai/learning-hub/how-to-use-extend"
+retrieved_on = 2026-08-10
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://lumalabs.ai/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "credit-guide"
+kind = "pricing"
+url = "https://lumalabs.ai/learning-hub/dream-machine-credit-system"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "release"
+kind = "release_note"
+url = "https://lumalabs.ai/news/ray3_14"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "color-guide"
+kind = "documentation"
+url = "https://lumalabs.ai/learning-center/articles/color-space-field-guide"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "changelog"
+kind = "changelog"
+url = "https://lumalabs.ai/changelog"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "api-overview"
+kind = "documentation"
+url = "https://lumalabs.ai/api"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "agents-docs"
+kind = "documentation"
+url = "https://docs.agents.lumalabs.ai/"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "agents-model-guide"
+kind = "api_reference"
+url = "https://docs.agents.lumalabs.ai/guides/model/"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "agents-generation-reference"
+kind = "api_reference"
+url = "https://docs.agents.lumalabs.ai/api/resources/generations/methods/create"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "legacy-llms"
+kind = "api_schema"
+url = "https://docs.lumalabs.ai/llms.txt"
+retrieved_on = 2026-08-10

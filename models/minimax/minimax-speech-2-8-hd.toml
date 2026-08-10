@@ -1,34 +1,808 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "minimax/minimax-speech-2-8-hd"
 name = "MiniMax Speech 2.8 HD"
 lab = "MiniMax"
 modality = "audio"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-guide", "launch", "release-notes"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "speech-2.8-hd"
+source_ids = ["model-guide", "http-reference", "websocket-reference", "async-reference"]
+
+[language_support]
+state = "supported"
+scope = "speech_output"
+published_label = "40 languages"
+listed_count = 40
+languages = [
+  { name = "Chinese" },
+  { name = "Cantonese" },
+  { name = "English" },
+  { name = "Spanish" },
+  { name = "French" },
+  { name = "Russian" },
+  { name = "German" },
+  { name = "Portuguese" },
+  { name = "Arabic" },
+  { name = "Italian" },
+  { name = "Japanese" },
+  { name = "Korean" },
+  { name = "Indonesian" },
+  { name = "Vietnamese" },
+  { name = "Turkish" },
+  { name = "Dutch" },
+  { name = "Ukrainian" },
+  { name = "Thai" },
+  { name = "Polish" },
+  { name = "Romanian" },
+  { name = "Greek" },
+  { name = "Czech" },
+  { name = "Finnish" },
+  { name = "Hindi" },
+  { name = "Bulgarian" },
+  { name = "Danish" },
+  { name = "Hebrew" },
+  { name = "Malay" },
+  { name = "Persian" },
+  { name = "Slovak" },
+  { name = "Swedish" },
+  { name = "Croatian" },
+  { name = "Filipino" },
+  { name = "Hungarian" },
+  { name = "Norwegian" },
+  { name = "Slovenian" },
+  { name = "Catalan" },
+  { name = "Nynorsk" },
+  { name = "Tamil" },
+  { name = "Afrikaans" },
+]
+source_ids = ["model-guide", "http-reference"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "text-to-speech"
+id = "text-to-speech-http"
 task = "text_to_speech"
-source_ids = ["docs"]
+endpoint = "POST /v1/t2a_v2"
+source_ids = ["http-reference"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["http-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 9999
+source_ids = ["http-reference"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-guide"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["model-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-guide"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 128, 256]
+source_ids = ["http-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100]
+source_ids = ["http-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100]
+source_ids = ["http-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "ulaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["http-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice"
+media_type = "voice_id"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["http-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice_mix"
+media_type = "voice_id"
+state = "supported"
+min_count = 1
+max_count = 4
+count_scope = "unique"
+constraints = ["weight_min=1", "weight_max=100"]
+source_ids = ["http-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "hex-http-response"
+state = "supported"
+transport = "json_hex"
+endpoint = "POST https://api.minimax.io/v1/t2a_v2"
+formats = ["mp3", "pcm", "flac", "wav", "pcmu_raw", "pcmu_wav", "opus"]
+default_format = "mp3"
+source_ids = ["http-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "low-ttfa-http-response"
+state = "supported"
+transport = "json_hex"
+endpoint = "POST https://api-uw.minimax.io/v1/t2a_v2"
+formats = ["mp3", "pcm", "flac", "wav", "pcmu_raw", "pcmu_wav", "opus"]
+default_format = "mp3"
+source_ids = ["http-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "temporary-url"
+state = "supported"
+transport = "temporary_url"
+endpoint = "POST /v1/t2a_v2"
+formats = ["mp3", "pcm", "flac", "wav", "pcmu_raw", "pcmu_wav", "opus"]
+default_format = "mp3"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "stream"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "speed"
+state = "supported"
+mode = "range"
+min = 0.5
+max = 2
+default = 1
+unit = "ratio"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "pitch"
+state = "supported"
+mode = "range"
+min = -12
+max = 12
+default = 0
+unit = "semitone"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "emotion"
+state = "supported"
+mode = "exact_set"
+values = ["happy", "sad", "angry", "fearful", "disgusted", "surprised", "calm"]
+unsupported_values = ["fluent", "whisper"]
+source_ids = ["model-guide", "http-reference"]
+
+[[capability_profiles.controls]]
+name = "pause_duration"
+state = "supported"
+mode = "range"
+min = 0.01
+max = 99.99
+step = 0.01
+unit = "second"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "interjection_tag"
+state = "supported"
+mode = "exact_set"
+values = [
+  "laughs", "chuckle", "coughs", "clear-throat", "groans", "breath",
+  "pant", "inhale", "exhale", "gasps", "sniffs", "sighs", "snorts",
+  "burps", "lip-smacking", "humming", "hissing", "emm", "sneezes",
+]
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "text_normalization"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "latex_read"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "output_delivery"
+state = "supported"
+mode = "exact_set"
+values = ["hex", "url"]
+default = "hex"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "channel"
+state = "supported"
+mode = "exact_set"
+values = ["1", "2"]
+default = "1"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "force_cbr"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+formats = ["mp3"]
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "subtitle_enable"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "subtitle_type"
+state = "supported"
+mode = "exact_set"
+values = ["sentence", "word", "word_streaming"]
+default = "sentence"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "voice_modify_pitch"
+state = "supported"
+mode = "range"
+min = -100
+max = 100
+default = 0
+unit = "relative"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "voice_modify_intensity"
+state = "supported"
+mode = "range"
+min = -100
+max = 100
+default = 0
+unit = "relative"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "voice_modify_timbre"
+state = "supported"
+mode = "range"
+min = -100
+max = 100
+default = 0
+unit = "relative"
+source_ids = ["http-reference"]
+
+[[capability_profiles.controls]]
+name = "voice_sound_effect"
+state = "supported"
+mode = "exact_set"
+values = ["spacious_echo", "auditorium_echo", "lofi_telephone", "robotic"]
+formats = ["mp3", "wav", "flac"]
+source_ids = ["http-reference"]
+
+[[capability_profiles]]
+id = "text-to-speech-websocket"
+task = "text_to_speech"
+endpoint = "WSS /ws/v1/t2a_v2"
+source_ids = ["websocket-reference", "websocket-guide"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["websocket-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 10000
+source_ids = ["websocket-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice"
+media_type = "voice_id"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["websocket-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "websocket-hex-audio"
+state = "supported"
+transport = "websocket"
+endpoint = "WSS wss://api.minimax.io/ws/v1/t2a_v2"
+formats = ["mp3", "pcm", "flac", "wav", "pcmu_raw", "pcmu_wav", "opus"]
+default_format = "mp3"
+source_ids = ["websocket-reference", "websocket-guide"]
+
+[[capability_profiles.controls]]
+name = "speed"
+state = "supported"
+mode = "range"
+min = 0.5
+max = 2
+default = 1
+unit = "ratio"
+source_ids = ["websocket-reference"]
+
+[[capability_profiles.controls]]
+name = "pitch"
+state = "supported"
+mode = "range"
+min = -12
+max = 12
+default = 0
+unit = "semitone"
+source_ids = ["websocket-reference"]
+
+[[capability_profiles.controls]]
+name = "emotion"
+state = "supported"
+mode = "exact_set"
+values = ["happy", "sad", "angry", "fearful", "disgusted", "surprised", "calm"]
+unsupported_values = ["fluent", "whisper"]
+source_ids = ["model-guide", "websocket-reference"]
+
+[[capability_profiles.controls]]
+name = "output_sample_rate"
+state = "supported"
+mode = "exact_set"
+values = ["8000", "16000", "22050", "24000", "32000", "44100"]
+default = "32000"
+unit = "hertz"
+source_ids = ["websocket-reference"]
+
+[[capability_profiles.controls]]
+name = "mp3_bitrate"
+state = "supported"
+mode = "exact_set"
+values = ["32000", "64000", "128000", "256000"]
+default = "128000"
+unit = "bit_per_second"
+formats = ["mp3"]
+source_ids = ["websocket-reference"]
+
+[[capability_profiles.controls]]
+name = "channel"
+state = "supported"
+mode = "exact_set"
+values = ["1", "2"]
+default = "1"
+source_ids = ["websocket-reference"]
+
+[[capability_profiles.controls]]
+name = "continuous_sound"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["websocket-reference"]
+
+[[capability_profiles.controls]]
+name = "subtitle_enable"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["websocket-reference"]
+
+[[capability_profiles.controls]]
+name = "subtitle_type"
+state = "supported"
+mode = "exact_set"
+values = ["sentence", "word", "word_streaming"]
+default = "sentence"
+source_ids = ["websocket-reference"]
+
+[[capability_profiles]]
+id = "text-to-speech-async"
+task = "text_to_speech"
+endpoint = "POST /v1/t2a_async_v2"
+source_ids = ["async-reference", "async-guide"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["async-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 50000
+source_ids = ["async-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 128, 256]
+source_ids = ["async-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100]
+source_ids = ["async-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100]
+source_ids = ["async-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 12000, 16000, 24000, 48000]
+source_ids = ["async-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "ulaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["async-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice"
+media_type = "voice_id"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["async-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "text_file"
+media_type = "binary"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["txt", "zip"]
+constraints = [
+  "maximum_characters=1000000",
+  "zip_member_types=txt_or_json",
+  "json_fields=title_content_extra",
+]
+source_ids = ["async-reference", "async-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "async-download"
+state = "supported"
+transport = "temporary_url"
+endpoint = "GET /v1/query/t2a_async_query_v2"
+formats = ["mp3", "pcm", "flac", "wav", "pcmu_raw", "pcmu_wav", "opus"]
+default_format = "mp3"
+source_ids = ["async-reference", "async-query"]
+
+[[capability_profiles.controls]]
+name = "speed"
+state = "supported"
+mode = "range"
+min = 0.5
+max = 2
+default = 1
+unit = "ratio"
+source_ids = ["async-reference"]
+
+[[capability_profiles.controls]]
+name = "pitch"
+state = "supported"
+mode = "range"
+min = -12
+max = 12
+default = 0
+unit = "semitone"
+source_ids = ["async-reference"]
+
+[[capability_profiles.controls]]
+name = "emotion"
+state = "supported"
+mode = "exact_set"
+values = ["happy", "sad", "angry", "fearful", "disgusted", "surprised", "calm"]
+unsupported_values = ["fluent", "whisper"]
+source_ids = ["model-guide", "async-reference"]
+
+[[capability_profiles.controls]]
+name = "interjection_tag"
+state = "supported"
+mode = "exact_set"
+values = [
+  "laughs", "chuckle", "coughs", "clear-throat", "groans", "breath",
+  "pant", "inhale", "exhale", "gasps", "sniffs", "sighs", "snorts",
+  "burps", "lip-smacking", "humming", "hissing", "emm", "whistles",
+  "sneezes", "crying", "applause",
+]
+source_ids = ["async-reference"]
+
+[[capability_profiles.controls]]
+name = "output_sample_rate"
+state = "supported"
+mode = "exact_set"
+values = ["8000", "16000", "22050", "24000", "32000", "44100"]
+default = "32000"
+unit = "hertz"
+source_ids = ["async-reference"]
+
+[[capability_profiles.controls]]
+name = "mp3_bitrate"
+state = "supported"
+mode = "exact_set"
+values = ["32000", "64000", "128000", "256000"]
+default = "128000"
+unit = "bit_per_second"
+formats = ["mp3"]
+source_ids = ["async-reference"]
+
+[[capability_profiles.controls]]
+name = "channel"
+state = "supported"
+mode = "exact_set"
+values = ["1", "2"]
+default = "2"
+source_ids = ["async-reference"]
+
+[[capability_profiles]]
+id = "voice-cloning"
+task = "voice_cloning"
+endpoint = "POST /v1/voice_clone"
+source_ids = ["clone-reference", "clone-upload", "prompt-upload"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 1000
+source_ids = ["clone-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice_clone_source"
+media_type = "audio"
+state = "supported"
+min_count = 1
+max_count = 1
+max_duration = 300
+duration_unit = "second"
+formats = ["mp3", "m4a", "wav"]
+constraints = ["minimum_duration_seconds=10", "maximum_size=20MB"]
+source_ids = ["clone-upload", "clone-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice_clone_prompt"
+media_type = "audio"
+state = "supported"
+min_count = 0
+max_count = 1
+formats = ["mp3", "m4a", "wav"]
+constraints = ["duration_seconds<8", "maximum_size=20MB"]
+source_ids = ["prompt-upload", "clone-reference"]
+
+[[capability_profiles.controls]]
+name = "accuracy"
+state = "supported"
+mode = "range"
+min = 0
+max = 1
+default = 0.7
+unit = "ratio"
+source_ids = ["clone-reference"]
+
+[[capability_profiles.controls]]
+name = "noise_reduction"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["clone-reference"]
+
+[[capability_profiles.controls]]
+name = "volume_normalization"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["clone-reference"]
+
+[[limitations]]
+id = "whisper-emotion-unavailable"
+summary = "Speech 2.8 does not support the whisper emotion; fluent and whisper are limited to Speech 2.6 models."
+source_ids = ["http-reference", "websocket-reference", "async-reference"]
+
+[[limitations]]
+id = "latex-chinese-only"
+summary = "LaTeX reading is available only for Chinese and forces language_boost to Chinese."
+source_ids = ["http-reference", "websocket-reference", "async-reference"]
+
+[[limitations]]
+id = "temporary-url-expiry"
+summary = "Non-streaming HTTP output URLs expire after 24 hours; asynchronous task download URLs expire after nine hours."
+source_ids = ["http-reference", "async-reference", "async-query"]
+
+[[limitations]]
+id = "unused-cloned-voice-retention"
+summary = "A cloned voice is deleted when it is not used within seven days."
+source_ids = ["clone-reference"]
 
 [pricing]
-state = "unknown"
+state = "known"
 source_ids = ["pricing"]
 
+[[pricing.charges]]
+id = "speech-2-8-hd-input"
+state = "known"
+kind = "metered"
+amount = 100
+denomination = "USD"
+per = 1000000
+unit = "input_character"
+applies_when = ["model_id=speech-2.8-hd"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "rapid-voice-cloning"
+state = "known"
+kind = "metered"
+amount = 1.5
+denomination = "USD"
+per = 1
+unit = "voice"
+profile_id = "voice-cloning"
+source_ids = ["pricing"]
+
+[[conflicts]]
+path = "capability_profiles.text-to-speech-async.reference_inputs.text_file"
+summary = "The async schema marks both text and text_file_id required, while its descriptions state that they are mutually exclusive and exactly one is required."
+handling = "Represent direct text and file input as alternate endpoint-scoped inputs; do not require both."
+source_ids = ["async-reference"]
+
+[[conflicts]]
+path = "capability_profiles.*.delivery_profiles.*.formats"
+summary = "Current request schemas accept MP3, PCM, FLAC, WAV, PCMU, and Opus, while response metadata enums on some surfaces still list only MP3, PCM, and FLAC."
+handling = "Use request-side format enums for caller capability and retain the response enum mismatch as conflicting provenance."
+source_ids = ["http-reference", "websocket-reference", "async-reference"]
+
+[[conflicts]]
+path = "capability_profiles.text-to-speech-http.reference_inputs.voice"
+summary = "The voice_setting schema marks voice_id required, while the same reference instructs callers to leave voice_id empty when timbre_weights is used."
+handling = "Represent single-voice and mixed-voice inputs separately and do not require the single voice when mixing."
+source_ids = ["http-reference"]
+
+[[conflicts]]
+path = "capability_profiles.*.controls.emotion"
+summary = "The shared emotion enum prints fluent and whisper, but its model applicability text limits both to Speech 2.6 and explicitly says Speech 2.8 does not support whisper."
+handling = "Expose the seven model-guide emotions for Speech 2.8 and list fluent and whisper as unsupported values."
+source_ids = ["model-guide", "http-reference", "websocket-reference", "async-reference"]
+
+[[conflicts]]
+path = "capability_profiles.text-to-speech-http.audio_formats.opus"
+summary = "The synchronous request lists a general sample-rate enum but does not publish the valid Opus-specific combinations; the async reference publishes a distinct Opus set including 12 kHz and 48 kHz."
+handling = "Keep synchronous Opus sample-rate combinations unknown and scope the exact Opus set to the async profile."
+source_ids = ["http-reference", "async-reference"]
+
 [[sources]]
-id = "docs"
+id = "model-guide"
+kind = "documentation"
+url = "https://platform.minimax.io/docs/guides/models-intro"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "launch"
+kind = "release_note"
+url = "https://www.minimax.io/news/minimax-speech-28"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "release-notes"
+kind = "release_note"
+url = "https://platform.minimax.io/docs/release-notes/models"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "http-reference"
 kind = "api_reference"
-url = "https://platform.minimax.io/docs/api-reference/api-overview"
-retrieved_on = 2026-08-09
+url = "https://platform.minimax.io/docs/api-reference/speech-t2a-http"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "websocket-reference"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/speech-t2a-websocket"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "websocket-guide"
+kind = "documentation"
+url = "https://platform.minimax.io/docs/guides/speech-t2a-websocket"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "async-reference"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/speech-t2a-async-create"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "async-query"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/speech-t2a-async-query"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "async-guide"
+kind = "documentation"
+url = "https://platform.minimax.io/docs/guides/speech-t2a-async"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "clone-upload"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/voice-cloning-uploadcloneaudio"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "prompt-upload"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/voice-cloning-uploadprompt"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "clone-reference"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/voice-cloning-clone"
+retrieved_on = 2026-08-10
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://platform.minimax.io/docs/guides/pricing-paygo"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "llms-docs"
+kind = "documentation"
+url = "https://platform.minimax.io/docs/llms.txt"
+retrieved_on = 2026-08-10

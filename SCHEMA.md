@@ -151,8 +151,8 @@ An exact-set duration shape will be added only when a real record requires one; 
 | Field | Type | Meaning |
 | --- | --- | --- |
 | `state` | claim state | Whether this profile accepts the input and has a usable source-backed limit. |
-| `unit` | string | `character`. |
-| `max` | integer | Published maximum characters per request. |
+| `unit` | string | `character` for ordinary character counts or `utf16_code_unit` when the source explicitly measures UTF-16 code units. |
+| `max` | integer | Published maximum input units per request. |
 | `source_ids` | string array | Model-specific source for the limit. |
 
 ### Frame rate

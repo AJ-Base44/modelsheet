@@ -467,7 +467,10 @@
           "$ref": "#/$defs/claimState"
         },
         "unit": {
-          "const": "character"
+          "enum": [
+            "character",
+            "utf16_code_unit"
+          ]
         },
         "max": {
           "type": "integer",
