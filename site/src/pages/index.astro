@@ -11,8 +11,13 @@ import {
 } from "../lib/filters.mjs";
 
 const artifactPath = path.resolve(process.cwd(), "../artifacts/api.json");
-const registry = JSON.parse(await readFile(artifactPath, "utf8"));
+const driftArtifactPath = path.resolve(process.cwd(), "../artifacts/drift.json");
+const [registry, driftFeed] = await Promise.all([
+  readFile(artifactPath, "utf8").then(JSON.parse),
+  readFile(driftArtifactPath, "utf8").then(JSON.parse),
+]);
 const models = registry.models ?? [];
+const latestDriftEvents = (driftFeed.events ?? []).slice(0, 6);
 const documentedModels = models.filter(isDocumentedRecord);
 const indexedModels = models.filter((record) => record.documentation_state === "indexed");
 const serializedRegistry = JSON.stringify({ ...registry, models: documentedModels })
@@ -96,6 +101,24 @@ function sourceDate(record) {
   return dates.sort().at(-1) ?? "Unknown";
 }
 
+function driftDate(value) {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
+function driftSummary(event) {
+  if (event.type === "model_added") return "The model record entered the registry.";
+  if (event.type === "model_removed") return "The model record was removed.";
+  if (event.type === "model_moved") return `The record moved from ${event.previous_path}.`;
+  const paths = (event.changes ?? []).slice(0, 3).map((change) => change.path);
+  const remainder = (event.changes?.length ?? 0) - paths.length;
+  return `${paths.join(", ")}${remainder > 0 ? ` and ${remainder} more` : ""}.`;
+}
+
 const cardModels = models.map((record) => ({
   record,
   documentation: getDocumentationPresentation(record),
@@ -116,18 +139,21 @@ const indexedCards = indexedModels.map((record) => ({
   primarySource: record.sources?.find((source) => source.kind !== "pricing") ?? record.sources?.[0],
 }));
 
+const homePath = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
+
 ---
 
 <SiteLayout>
   <a class="skip-link" href="#registry">Skip to registry</a>
 
   <header class="page-shell site-header">
-    <a class="wordmark" href="/" aria-label="Modelsheet home">
+    <a class="wordmark" href={homePath} aria-label="Modelsheet home">
       <span class="wordmark-mark" aria-hidden="true">M/</span>
       <span>modelsheet</span>
     </a>
     <nav class="header-nav" aria-label="Primary navigation">
       <a href="#method">Evidence rules</a>
+      <a href={`${homePath}drift/`}>Drift feed</a>
       <a class="github-link" href="https://github.com/AJ-Base44/modelsheet">View source ↗</a>
     </nav>
   </header>
@@ -149,6 +175,7 @@ const indexedCards = indexedModels.map((record) => ({
           Modelsheet is designed around a drift feed derived from data history:
           which capability changed, on which model, and when.
         </p>
+        <a class="hero-drift-link" href={`${homePath}drift/`}>Read the field-level history →</a>
       </aside>
     </section>
 
@@ -324,6 +351,39 @@ const indexedCards = indexedModels.map((record) => ({
           </li>
         ))}
       </ul>
+    </section>
+
+    <section class="page-shell drift-preview" aria-labelledby="drift-preview-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Generated from Git</span>
+          <h2 id="drift-preview-title">Recent registry drift.</h2>
+        </div>
+        <p>
+          Formatting-only commits disappear. Semantic capability, price, identity,
+          and evidence changes leave exact field paths behind.
+        </p>
+      </div>
+
+      <ol class="drift-preview-list">
+        {latestDriftEvents.map((event) => (
+          <li>
+            <div>
+              <span class="drift-preview-date">{driftDate(event.commit.date)}</span>
+              <h3>{event.model?.name ?? event.model?.id}</h3>
+              <p>{driftSummary(event)}</p>
+            </div>
+            <a href={event.commit.url} aria-label={`View ${event.model?.name ?? event.model?.id} change commit`}>
+              {event.commit.sha.slice(0, 7)} ↗
+            </a>
+          </li>
+        ))}
+      </ol>
+
+      <div class="drift-preview-actions">
+        <a class="primary-action" href={`${homePath}drift/`}>Explore all semantic changes</a>
+        <a href={`${homePath}drift.rss.xml`}>Subscribe via RSS</a>
+      </div>
     </section>
 
     <section class="page-shell evidence-strip" id="method" aria-labelledby="method-title">

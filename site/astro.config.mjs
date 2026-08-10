@@ -1,7 +1,8 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://modelsheet.dev",
+  site: "https://aj-base44.github.io",
+  base: "/modelsheet",
   output: "static",
   trailingSlash: "never",
   build: {

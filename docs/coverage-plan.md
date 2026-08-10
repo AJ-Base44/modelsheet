@@ -9,7 +9,7 @@ Every new record from this plan must carry `verification.state = "unverified"`. 
 | Modality | Official model name | Lab | Official docs | Official pricing | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Video | FLUX 3 Video | Black Forest Labs | [Docs](https://bfl.ai/models/flux-3) | [Pricing](https://bfl.ai/pricing) | Existing registry record. |
-| Video | Seedance 2.5 | ByteDance / BytePlus | [Docs](https://www.byteplus.com/en/contact-us/ai-seedance2-5-official) | Unknown - no official pricing source located | Explicit brief exception: official page says coming soon; identity-only record, lifecycle and price unknown. |
+| Video | Seedance 2.5 | ByteDance | [Docs](https://seed.bytedance.com/en/seedance2_5) | Unknown - no official pricing source located | Identity-only record; the official model page establishes the name, while lifecycle details and price remain unknown. |
 | Video | Dreamina Seedance 2.0 | ByteDance / BytePlus | [Docs](https://docs.byteplus.com/en/docs/ModelArk/2291680) | [Pricing](https://docs.byteplus.com/en/docs/ModelArk/1544106) | Exact current ModelArk model. |
 | Video | Dreamina Seedance 2.0 Fast | ByteDance / BytePlus | [Docs](https://docs.byteplus.com/en/docs/ModelArk/2291680) | [Pricing](https://docs.byteplus.com/en/docs/ModelArk/1544106) | Distinct callable tier. |
 | Video | Dreamina Seedance 2.0 Mini | ByteDance / BytePlus | [Docs](https://docs.byteplus.com/en/docs/ModelArk/2291680) | [Pricing](https://docs.byteplus.com/en/docs/ModelArk/1544106) | Distinct callable tier. |

@@ -1,0 +1,28 @@
+schema_version = 1
+documentation_state = "documented"
+
+[model]
+id = "example/video-one"
+name = "Video One"
+lab = "Example Lab"
+modality = "video"
+
+[[capability_profiles]]
+id = "generate"
+task = "text_to_video"
+
+[capability_profiles.duration]
+state = "supported"
+mode = "exact_set"
+unit = "second"
+values = [5, 10, 15]
+
+[pricing]
+state = "published"
+
+[[pricing.charges]]
+id = "standard"
+profile_id = "generate"
+amount = 1.25
+currency = "USD"
+unit = "second"

@@ -2,9 +2,11 @@
 
 Modelsheet is an open-source capability registry for generative media models. It answers two practical questions: what can this model actually produce, and what does that output cost from the lab that made it?
 
+**Live registry:** [aj-base44.github.io/modelsheet](https://aj-base44.github.io/modelsheet/)
+
 The registry is media-shaped: image sizes, video durations, reference inputs, generated audio, delivery formats, and the pricing units that apply to those capabilities. It is not an LLM registry, does not compare token context windows or reasoning features, and does not include reseller or aggregator pricing.
 
-The long-term differentiator is a drift feed derived from the Git history of the model records. Capability changes should be reviewable as ordinary data diffs rather than disappearing into a comparison page.
+The differentiator is a [drift feed](https://aj-base44.github.io/modelsheet/drift) derived automatically from the Git history of the model records. It shows the exact structured field that changed, its before and after values, the affected model, commit, and date. Contributors never maintain a second changelog.
 
 ## Coverage
 
@@ -39,12 +41,29 @@ Older records without a `[verification]` table have no recorded verification sta
 
 Contributors edit TOML only. Tooling validates the source records and builds a deterministic `artifacts/api.json` for consumers. The static site reads that artifact; there is no database or backend.
 
+Public machine-readable outputs:
+
+- [latest registry JSON](https://aj-base44.github.io/modelsheet/api.json) and [version-pinned v1 JSON](https://aj-base44.github.io/modelsheet/api/v1.json);
+- [latest semantic drift JSON](https://aj-base44.github.io/modelsheet/drift.json) and [version-pinned v1 drift JSON](https://aj-base44.github.io/modelsheet/drift/v1.json);
+- [RSS drift feed](https://aj-base44.github.io/modelsheet/drift.rss.xml); and
+- [source v1 JSON Schema](https://aj-base44.github.io/modelsheet/schema/source-v1.schema.json).
+
+The unversioned URLs follow the latest compatible contract. Consumers that need a fixed shape should use the version-pinned URLs; the policy is recorded in [decision 0002](docs/decisions/0002-versioning-and-distribution.md).
+
+The repository also includes a typed, dependency-free package at [`packages/registry`](packages/registry) with ESM, CommonJS, raw JSON, and TypeScript exports. `@modelsheet/registry` is publish-ready but intentionally not published until a maintainer chooses a release cadence. The offline [`modelsheet` agent skill](skills/modelsheet/SKILL.md) can query documented models, constraints, prices, and provenance directly from the local artifact.
+
 After installing Node.js 22 or newer:
 
 ```powershell
 npm.cmd install
+npm.cmd ci --prefix packages/registry
+npm.cmd ci --prefix site
 npm.cmd run check
+npm.cmd run package:check
+npm.cmd run check --prefix site
 ```
+
+`npm.cmd run build` creates deterministic registry, drift JSON, and RSS artifacts. It requires full Git history and fails loudly in a shallow clone rather than publishing a partial feed.
 
 ## Contribute
 
@@ -53,3 +72,5 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) and [SCHEMA.md](SCHEMA.md) before openin
 ## Licence
 
 Modelsheet is released under the [MIT License](LICENSE).
+
+The static site is deployed through GitHub Pages at the repository URL above. No custom domain, `CNAME`, DNS configuration, backend, or runtime data lookup is required.

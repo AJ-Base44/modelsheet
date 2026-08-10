@@ -1,0 +1,15 @@
+schema_version = 1
+documentation_state = "indexed"
+
+[model]
+id = "example/image-two"
+name = "Image Two"
+lab = "Example Lab"
+modality = "image"
+
+[[capability_profiles]]
+id = "generate"
+task = "text_to_image"
+
+[pricing]
+state = "unknown"

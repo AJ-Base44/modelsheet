@@ -14,6 +14,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # The drift feed is derived from the complete model-record history.
+          # A shallow checkout must fail rather than publish a partial feed.
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -22,6 +26,7 @@ jobs:
           cache: npm
           cache-dependency-path: |
             package-lock.json
+            packages/registry/package-lock.json
             site/package-lock.json
 
       - name: Install dependencies
@@ -29,6 +34,9 @@ jobs:
 
       - name: Install site dependencies
         run: npm ci --prefix site
+
+      - name: Install package dependencies
+        run: npm ci --prefix packages/registry
 
       - name: Validate source records
         run: npm run validate
@@ -39,11 +47,17 @@ jobs:
       - name: Check generated README coverage
         run: npm run check:readme
 
-      - name: Build deterministic API artifact
+      - name: Build deterministic registry and drift artifacts
         run: npm run build
+
+      - name: Check typed registry package
+        run: npm run package:check
 
       - name: Run site acceptance tests
         run: npm test --prefix site
 
       - name: Build static site
         run: npm run build --prefix site
+
+      - name: Test GitHub Pages output
+        run: npm run test:dist --prefix site
