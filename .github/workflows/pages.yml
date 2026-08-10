@@ -31,6 +31,7 @@ jobs:
           cache: npm
           cache-dependency-path: |
             package-lock.json
+            packages/registry/package-lock.json
             site/package-lock.json
 
       - name: Install registry dependencies
@@ -39,8 +40,14 @@ jobs:
       - name: Install site dependencies
         run: npm ci --prefix site
 
+      - name: Install package dependencies
+        run: npm ci --prefix packages/registry
+
       - name: Validate registry and tooling
         run: npm run check
+
+      - name: Check typed registry package
+        run: npm run package:check
 
       - name: Build and test the static site
         run: npm run check --prefix site

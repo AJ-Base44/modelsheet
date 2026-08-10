@@ -13,11 +13,14 @@
     "build:registry": "node scripts/build.mjs",
     "coverage": "node scripts/build.mjs",
     "drift": "node scripts/drift.mjs",
+    "package:sync": "npm --prefix packages/registry run sync-data",
+    "package:check-data": "npm --prefix packages/registry run check:data",
+    "package:check": "npm --prefix packages/registry run check",
     "check:readme": "node scripts/check-readme-counts.mjs",
     "watch": "node scripts/watch.mjs",
     "test": "node --test",
     "test:drift": "node --test test/drift.test.mjs",
-    "check": "npm run validate && npm test && npm run check:readme && npm run build"
+    "check": "npm run validate && npm test && npm run check:readme && npm run build && npm run package:check-data"
   },
   "dependencies": {
     "@iarna/toml": "^2.2.5",

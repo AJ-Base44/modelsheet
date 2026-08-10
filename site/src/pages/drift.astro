@@ -1,0 +1,258 @@
+---
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const artifactPath = path.resolve(process.cwd(), "../artifacts/drift.json");
+const feed = JSON.parse(await readFile(artifactPath, "utf8"));
+const events = feed.events ?? [];
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/`;
+const sitePath = (value) => `${baseUrl}${value.replace(/^\//, "")}`;
+
+const modelsChanged = new Set(events.map((event) => event.model?.id).filter(Boolean));
+const capabilityEvents = events.filter((event) =>
+  event.changes?.some((change) => change.path.startsWith("capability_profiles")),
+);
+const pricingEvents = events.filter((event) =>
+  event.changes?.some((change) => change.path.startsWith("pricing")),
+);
+
+const eventLabels = {
+  model_added: "Model added",
+  model_updated: "Model updated",
+  model_removed: "Model removed",
+  model_moved: "Record moved",
+};
+
+function formatDate(value) {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
+function formatValue(value) {
+  if (value === undefined) return "Not present";
+  if (value === null) return "null";
+  if (typeof value === "string") return JSON.stringify(value);
+  return JSON.stringify(value);
+}
+
+function changeCategory(change) {
+  if (change.path.startsWith("capability_profiles")) return "capability";
+  if (change.path.startsWith("pricing")) return "pricing";
+  if (change.path.startsWith("model") || change.path.startsWith("api_identifiers")) return "identity";
+  if (
+    change.path.startsWith("sources") ||
+    change.path.startsWith("conflicts") ||
+    change.path.startsWith("limitations") ||
+    change.path.startsWith("verification")
+  ) return "evidence";
+  return "record";
+}
+
+function eventCategories(event) {
+  const categories = [...new Set((event.changes ?? []).map(changeCategory))];
+  return categories.length ? categories : ["record"];
+}
+---
+
+<SiteLayout
+  title="Drift feed — Modelsheet"
+  description="A git-derived, field-level history of capability and lab-price changes in the Modelsheet registry."
+  canonicalPath="drift/"
+  rssPath="drift.rss.xml"
+>
+  <a class="skip-link" href="#drift-events">Skip to drift events</a>
+
+  <header class="page-shell site-header">
+    <a class="wordmark" href={sitePath("")} aria-label="Modelsheet home">
+      <span class="wordmark-mark" aria-hidden="true">M/</span>
+      <span>modelsheet</span>
+    </a>
+    <nav class="header-nav" aria-label="Primary navigation">
+      <a href={sitePath("")}>Registry</a>
+      <a class="github-link" href="https://github.com/AJ-Base44/modelsheet">View source ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-shell drift-hero" aria-labelledby="drift-title">
+      <div>
+        <p class="eyebrow">Git history, made legible</p>
+        <h1 id="drift-title">The drift <span class="hero-accent">feed.</span></h1>
+        <p class="hero-copy">
+          Every entry below is generated from a semantic diff of the model TOML files.
+          Contributors never maintain a second changelog.
+        </p>
+      </div>
+      <aside class="drift-downloads" aria-label="Machine-readable drift formats">
+        <span class="section-kicker">Subscribe or inspect</span>
+        <a href={sitePath("drift.json")}>Latest JSON feed</a>
+        <a href={sitePath("drift/v1.json")}>Version-pinned JSON</a>
+        <a href={sitePath("drift.rss.xml")}>RSS feed</a>
+      </aside>
+    </section>
+
+    <section class="page-shell metrics" aria-label="Drift feed coverage">
+      <div class="metric">
+        <span class="metric-label">Semantic events</span>
+        <strong class="metric-value">{events.length}</strong>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Models represented</span>
+        <strong class="metric-value">{modelsChanged.size}</strong>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Capability / pricing events</span>
+        <strong class="metric-value">{new Set([...capabilityEvents, ...pricingEvents]).size}</strong>
+      </div>
+    </section>
+
+    <section class="page-shell drift-section" id="drift-events" aria-labelledby="events-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Newest first</span>
+          <h2 id="events-title">What changed, exactly.</h2>
+        </div>
+        <p>
+          Paths identify the exact structured field. Formatting-only TOML commits do not appear.
+        </p>
+      </div>
+
+      <form class="drift-filters" id="drift-filters" aria-label="Filter drift events">
+        <div class="field">
+          <label for="drift-search">Search model or field</label>
+          <input id="drift-search" type="search" placeholder="Model, lab, or field path" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="drift-category">Change category</label>
+          <select id="drift-category">
+            <option value="all">All changes</option>
+            <option value="capability">Capability</option>
+            <option value="pricing">Pricing</option>
+            <option value="identity">Identity</option>
+            <option value="evidence">Evidence</option>
+            <option value="record">Other record fields</option>
+          </select>
+        </div>
+        <button class="clear-button" type="reset">Clear filters</button>
+      </form>
+
+      <p class="results-bar" id="drift-summary" aria-live="polite">{events.length} semantic events shown</p>
+
+      <ol class="drift-list" id="drift-list">
+        {events.map((event) => {
+          const categories = eventCategories(event);
+          const searchable = [
+            event.model?.id,
+            event.model?.name,
+            event.model?.lab,
+            event.model?.modality,
+            event.type,
+            ...(event.changes ?? []).map((change) => change.path),
+          ].filter(Boolean).join(" ").toLowerCase();
+
+          return (
+            <li
+              class="drift-event"
+              data-drift-event
+              data-categories={categories.join(" ")}
+              data-search={searchable}
+            >
+              <article>
+                <div class="drift-event-topline">
+                  <span class="drift-type">{eventLabels[event.type] ?? event.type}</span>
+                  <time datetime={event.commit.date}>{formatDate(event.commit.date)}</time>
+                </div>
+
+                <h3>{event.model?.name ?? event.model?.id ?? "Unknown model"}</h3>
+                <p class="drift-model-meta">
+                  {event.model?.lab ?? "Unknown lab"} · {event.model?.modality ?? "Unknown modality"}
+                </p>
+
+                {event.type === "model_added" && <p class="drift-summary-copy">The model record entered the registry.</p>}
+                {event.type === "model_removed" && <p class="drift-summary-copy">The model record was removed from the registry.</p>}
+                {event.type === "model_moved" && (
+                  <p class="drift-summary-copy">Record moved from <code>{event.previous_path}</code>.</p>
+                )}
+
+                {event.changes?.length ? (
+                  <details class="change-details" open={event.changes.length <= 4}>
+                    <summary>{event.changes.length} exact field {event.changes.length === 1 ? "change" : "changes"}</summary>
+                    <ol class="change-list">
+                      {event.changes.map((change) => (
+                        <li>
+                          <div class="change-heading">
+                            <span class="change-kind">{change.kind}</span>
+                            <code>{change.path}</code>
+                          </div>
+                          <div class="change-values">
+                            {change.kind !== "added" && (
+                              <div><span>Before</span><code>{formatValue(change.before)}</code></div>
+                            )}
+                            {change.kind !== "removed" && (
+                              <div><span>After</span><code>{formatValue(change.after)}</code></div>
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  </details>
+                ) : null}
+
+                <a class="commit-link" href={event.commit.url}>
+                  {event.commit.message} · {event.commit.sha.slice(0, 7)} ↗
+                </a>
+              </article>
+            </li>
+          );
+        })}
+      </ol>
+
+      <div class="empty-state" id="drift-empty" hidden>
+        <strong>No semantic events match.</strong>
+        <span>Clear the filters to return to the full history.</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-shell site-footer">
+    <p>Generated from model-file Git history. Never hand-authored.</p>
+    <p><a href={sitePath("")}>Return to the registry</a></p>
+  </footer>
+
+  <script>
+    const filters = document.querySelector("#drift-filters");
+    const search = document.querySelector("#drift-search");
+    const category = document.querySelector("#drift-category");
+    const events = [...document.querySelectorAll("[data-drift-event]")];
+    const summary = document.querySelector("#drift-summary");
+    const empty = document.querySelector("#drift-empty");
+
+    function applyDriftFilters() {
+      const query = search?.value.trim().toLowerCase() ?? "";
+      const selectedCategory = category?.value ?? "all";
+      let visible = 0;
+
+      events.forEach((event) => {
+        const matchesSearch = !query || event.dataset.search?.includes(query);
+        const matchesCategory = selectedCategory === "all" ||
+          event.dataset.categories?.split(" ").includes(selectedCategory);
+        event.hidden = !(matchesSearch && matchesCategory);
+        if (!event.hidden) visible += 1;
+      });
+
+      if (summary) summary.textContent = `${visible} of ${events.length} semantic events shown`;
+      if (empty) empty.hidden = visible !== 0;
+    }
+
+    filters?.addEventListener("input", applyDriftFilters);
+    filters?.addEventListener("change", applyDriftFilters);
+    filters?.addEventListener("reset", () => window.setTimeout(applyDriftFilters));
+    applyDriftFilters();
+  </script>
+</SiteLayout>

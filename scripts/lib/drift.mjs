@@ -387,7 +387,7 @@ function commitMetadata(repositoryDirectory, sha, repositoryUrl) {
   const output = gitText(repositoryDirectory, [
     "show",
     "-s",
-    "--format=%P%x00%cI%x00%B",
+    "--format=%P%x00%cI%x00%s",
     sha,
   ]);
   const firstSeparator = output.indexOf("\0");

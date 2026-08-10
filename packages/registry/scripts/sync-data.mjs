@@ -56,13 +56,13 @@ async function main() {
       target = await readFile(TARGET_FILE, "utf8");
     } catch {
       throw new Error(
-        `Missing package snapshot. Run "npm run sync-data" in packages/registry.`,
+        `Missing package snapshot. Run "npm run package:sync" from the repository root.`,
       );
     }
 
     if (target !== source) {
       throw new Error(
-        `Package snapshot is stale. Run "npm run sync-data" in packages/registry.`,
+        `Package snapshot is stale. Run "npm run package:sync" from the repository root.`,
       );
     }
 

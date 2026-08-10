@@ -15,6 +15,22 @@ export async function publishStaticData({
       destination: path.join(outputDir, "api.json"),
     },
     {
+      source: path.join(repositoryRoot, "artifacts", "api.json"),
+      destination: path.join(outputDir, "api", "v1.json"),
+    },
+    {
+      source: path.join(repositoryRoot, "artifacts", "drift.json"),
+      destination: path.join(outputDir, "drift.json"),
+    },
+    {
+      source: path.join(repositoryRoot, "artifacts", "drift.json"),
+      destination: path.join(outputDir, "drift", "v1.json"),
+    },
+    {
+      source: path.join(repositoryRoot, "artifacts", "drift.rss.xml"),
+      destination: path.join(outputDir, "drift.rss.xml"),
+    },
+    {
       source: path.join(repositoryRoot, "schema", "source-v1.schema.json"),
       destination: path.join(outputDir, "schema", "source-v1.schema.json"),
     },

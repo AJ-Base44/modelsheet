@@ -4,6 +4,7 @@ import "../styles/global.css";
 const {
   title = "Modelsheet — Generative media capability registry",
   description = "A source-linked, machine-readable registry of image, video, and audio model capabilities and lab pricing.",
+  rssPath,
 } = Astro.props;
 
 const configuredBase = import.meta.env.BASE_URL.replace(/\/+$/, "");
@@ -15,6 +16,7 @@ const currentPath = Astro.url.pathname === configuredBase || Astro.url.pathname 
     ? Astro.url.pathname.slice(basePath.length)
     : Astro.url.pathname.replace(/^\/+/, "");
 const canonicalUrl = new URL(currentPath, publicationBase);
+const rssUrl = rssPath ? new URL(rssPath, publicationBase) : null;
 ---
 
 <!doctype html>
@@ -30,6 +32,7 @@ const canonicalUrl = new URL(currentPath, publicationBase);
     <meta property="og:url" content={canonicalUrl.href} />
     <meta name="twitter:card" content="summary" />
     <link rel="canonical" href={canonicalUrl.href} />
+    {rssUrl && <link rel="alternate" type="application/rss+xml" title="Modelsheet drift feed" href={rssUrl.href} />}
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%23191412%22/><path d=%22M8 22V10h3.2l4.8 6.7 4.8-6.7H24v12h-3.2v-7.1L16 21.4l-4.8-6.5V22z%22 fill=%22%23d8ff4f%22/></svg>" />
     <title>{title}</title>
   </head>

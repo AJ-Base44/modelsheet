@@ -1,6 +1,8 @@
 node_modules/
 artifacts/
+.astro/
 .watch-state/
+.worktrees/
 
 # Operating-system files
 .DS_Store
