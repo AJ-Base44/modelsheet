@@ -20,6 +20,12 @@ source_ids = ["docs"]
 state = "unknown"
 source_ids = ["pricing"]
 
+[[conflicts]]
+path = "api_identifiers"
+summary = "The official model guide and pricing catalog use different identifier prefixes for this model."
+handling = "Omit the API identifier until a human reconciles the two official BytePlus surfaces."
+source_ids = ["docs", "pricing"]
+
 [[sources]]
 id = "docs"
 kind = "documentation"
