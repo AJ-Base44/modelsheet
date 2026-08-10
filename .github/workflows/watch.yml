@@ -19,15 +19,15 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
       - name: Restore prior source hashes
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: .watch-state
           key: modelsheet-watch-${{ github.run_id }}
@@ -43,7 +43,7 @@ jobs:
 
       - name: Save source hashes
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: .watch-state
           key: modelsheet-watch-${{ github.run_id }}
