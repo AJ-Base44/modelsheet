@@ -139,7 +139,7 @@ GitHub CLI reported an invalid token for the configured `AJ-Base44` account. All
 
 Created `scripts/watch.mjs`, `watch/targets.json`, watcher tests, and `.github/workflows/watch.yml`.
 
-- Fourteen maintained first-party targets prefer changelogs/release notes, then BFL/xAI `llms.txt`, then documentation pages.
+- Fourteen maintained first-party targets prefer changelogs/release notes, then `llms.txt` where available (including BFL and xAI), then documentation pages.
 - The workflow runs daily at 03:17 UTC and by manual dispatch, with one-second request spacing and a descriptive user agent.
 - A first successful response creates a baseline without opening an issue. A later hash change opens a GitHub issue containing the URL, retrieval time, prior successful check, and both hashes.
 - State is persisted with GitHub Actions cache. Failed, partial, empty, undersized, truncated, wrong-content-type, or suspiciously shrunken responses do not advance state and cannot become changes.
