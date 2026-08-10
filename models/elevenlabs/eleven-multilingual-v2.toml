@@ -1,13 +1,57 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "elevenlabs/eleven-multilingual-v2"
 name = "Eleven Multilingual v2"
 lab = "ElevenLabs"
 modality = "audio"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["models", "llms-root", "llms-docs"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "eleven_multilingual_v2"
+source_ids = ["models", "tts-reference", "llms-docs"]
+
+[language_support]
+state = "supported"
+scope = "speech_output"
+published_label = "29 languages"
+listed_count = 29
+languages = [
+  { name = "English", code = "en" },
+  { name = "Japanese", code = "ja" },
+  { name = "Chinese", code = "zh" },
+  { name = "German", code = "de" },
+  { name = "Hindi", code = "hi" },
+  { name = "French", code = "fr" },
+  { name = "Korean", code = "ko" },
+  { name = "Portuguese", code = "pt" },
+  { name = "Italian", code = "it" },
+  { name = "Spanish", code = "es" },
+  { name = "Indonesian", code = "id" },
+  { name = "Dutch", code = "nl" },
+  { name = "Turkish", code = "tr" },
+  { name = "Filipino", code = "fil" },
+  { name = "Polish", code = "pl" },
+  { name = "Swedish", code = "sv" },
+  { name = "Bulgarian", code = "bg" },
+  { name = "Romanian", code = "ro" },
+  { name = "Arabic", code = "ar" },
+  { name = "Czech", code = "cs" },
+  { name = "Greek", code = "el" },
+  { name = "Finnish", code = "fi" },
+  { name = "Croatian", code = "hr" },
+  { name = "Malay", code = "ms" },
+  { name = "Slovak", code = "sk" },
+  { name = "Danish", code = "da" },
+  { name = "Tamil", code = "ta" },
+  { name = "Ukrainian", code = "uk" },
+  { name = "Russian", code = "ru" },
+]
+source_ids = ["models", "llms-docs"]
 
 [verification]
 state = "unverified"
@@ -15,20 +59,290 @@ state = "unverified"
 [[capability_profiles]]
 id = "text-to-speech"
 task = "text_to_speech"
-source_ids = ["docs"]
+endpoint = "POST /v1/text-to-speech/{voice_id}"
+source_ids = ["tts-reference", "tts-overview"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["models"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 10000
+source_ids = ["models"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["models"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["models"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["models"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [22050]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32]
+source_ids = ["tts-reference", "tts-stream-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [24000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [48]
+source_ids = ["tts-reference", "tts-stream-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["tts-reference", "tts-stream-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+encoding = "s16le"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100, 48000]
+bit_depth_unit = "bit"
+bit_depths = [16]
+source_ids = ["tts-reference", "tts-stream-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 22050, 24000, 32000, 44100, 48000]
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [48000]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 96, 128, 192]
+source_ids = ["tts-reference", "tts-stream-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "ulaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["tts-reference", "tts-stream-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "alaw"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000]
+source_ids = ["tts-reference", "tts-stream-reference"]
+
+[[capability_profiles.audio_format_access]]
+format_ids = ["mp3_44100_192"]
+minimum_plan = "Creator"
+source_ids = ["tts-reference"]
+
+[[capability_profiles.audio_format_access]]
+format_ids = ["pcm_44100", "wav_44100"]
+minimum_plan = "Pro"
+source_ids = ["tts-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice"
+media_type = "voice_id"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["tts-reference", "websocket-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["tts-reference", "websocket-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "buffered-http"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v1/text-to-speech/{voice_id}"
+formats = [
+  "mp3_22050_32", "mp3_24000_48", "mp3_44100_32", "mp3_44100_64",
+  "mp3_44100_96", "mp3_44100_128", "mp3_44100_192",
+  "pcm_8000", "pcm_16000", "pcm_22050", "pcm_24000", "pcm_32000",
+  "pcm_44100", "pcm_48000",
+  "wav_8000", "wav_16000", "wav_22050", "wav_24000", "wav_32000",
+  "wav_44100", "wav_48000",
+  "opus_48000_32", "opus_48000_64", "opus_48000_96", "opus_48000_128",
+  "opus_48000_192", "ulaw_8000", "alaw_8000",
+]
+default_format = "mp3_44100_128"
+source_ids = ["tts-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "streaming-http"
+state = "supported"
+transport = "http_chunked"
+endpoint = "POST /v1/text-to-speech/{voice_id}/stream"
+formats = [
+  "mp3_22050_32", "mp3_24000_48", "mp3_44100_32", "mp3_44100_64",
+  "mp3_44100_96", "mp3_44100_128", "mp3_44100_192",
+  "pcm_8000", "pcm_16000", "pcm_22050", "pcm_24000", "pcm_32000",
+  "pcm_44100", "pcm_48000",
+  "opus_48000_32", "opus_48000_64", "opus_48000_96", "opus_48000_128",
+  "opus_48000_192", "ulaw_8000", "alaw_8000",
+]
+default_format = "mp3_44100_128"
+source_ids = ["tts-stream-reference", "streaming-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "websocket-input"
+state = "supported"
+transport = "websocket"
+endpoint = "GET /v1/text-to-speech/{voice_id}/stream-input"
+source_ids = ["websocket-reference", "websocket-guide"]
+
+[[capability_profiles.controls]]
+name = "seed"
+state = "supported"
+mode = "range"
+min = 0
+max = 4294967295
+step = 1
+unit = "integer"
+source_ids = ["tts-reference"]
+
+[[capability_profiles.controls]]
+name = "apply_text_normalization"
+state = "supported"
+mode = "exact_set"
+values = ["auto", "on", "off"]
+default = "auto"
+source_ids = ["tts-reference"]
+
+[[capability_profiles.controls]]
+name = "language_code"
+state = "unsupported"
+source_ids = ["tts-reference", "tts-stream-reference", "websocket-reference"]
+
+[capability_profiles.timing]
+state = "supported"
+granularity = "character"
+delivery_profile_ids = ["buffered-http", "streaming-http"]
+endpoints = [
+  "POST /v1/text-to-speech/{voice_id}/with-timestamps",
+  "POST /v1/text-to-speech/{voice_id}/stream/with-timestamps",
+]
+metadata = ["alignment", "normalized_alignment"]
+source_ids = ["tts-timing-reference", "tts-stream-timing-reference"]
 
 [pricing]
-state = "unknown"
+state = "known"
 source_ids = ["pricing"]
 
+[[pricing.charges]]
+id = "tts-api-input"
+state = "known"
+kind = "metered"
+amount = 0.10
+denomination = "USD"
+per = 1000
+unit = "input_character"
+profile_id = "text-to-speech"
+source_ids = ["pricing"]
+
+[[conflicts]]
+path = "language_support,capability_profiles.text-to-speech.text_input.max"
+summary = "The model-specific documentation lists 29 languages and a 10,000-character limit, while the grouped Multilingual v2/v3 pricing card says 32 languages and a 40,000-character limit."
+handling = "Use the model-specific values for this record and retain the grouped pricing-card claims only as conflicting provenance."
+source_ids = ["models", "pricing"]
+
 [[sources]]
-id = "docs"
+id = "models"
 kind = "documentation"
 url = "https://elevenlabs.io/docs/overview/models"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "tts-overview"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/overview/capabilities/text-to-speech"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "tts-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-speech/convert.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "tts-stream-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-speech/stream.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "tts-timing-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-speech/convert-with-timestamps.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "tts-stream-timing-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-speech/stream-with-timestamps.md"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "websocket-reference"
+kind = "api_reference"
+url = "https://elevenlabs.io/docs/api-reference/text-to-speech/v-1-text-to-speech-voice-id-stream-input"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "websocket-guide"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/eleven-api/guides/how-to/websockets/realtime-tts"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "streaming-guide"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/eleven-api/guides/how-to/text-to-speech/streaming"
+retrieved_on = 2026-08-10
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
-url = "https://elevenlabs.io/pricing/api"
-retrieved_on = 2026-08-09
+url = "https://elevenlabs.io/pricing/api?price.platform=api"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "llms-root"
+kind = "documentation"
+url = "https://elevenlabs.io/llms.txt"
+retrieved_on = 2026-08-10
+
+[[sources]]
+id = "llms-docs"
+kind = "documentation"
+url = "https://elevenlabs.io/docs/llms.txt"
+retrieved_on = 2026-08-10
