@@ -9,11 +9,14 @@
   },
   "scripts": {
     "validate": "node scripts/validate.mjs",
-    "build": "node scripts/build.mjs",
+    "build": "npm run build:registry && npm run drift",
+    "build:registry": "node scripts/build.mjs",
     "coverage": "node scripts/build.mjs",
+    "drift": "node scripts/drift.mjs",
     "check:readme": "node scripts/check-readme-counts.mjs",
     "watch": "node scripts/watch.mjs",
     "test": "node --test",
+    "test:drift": "node --test test/drift.test.mjs",
     "check": "npm run validate && npm test && npm run check:readme && npm run build"
   },
   "dependencies": {

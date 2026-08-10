@@ -14,6 +14,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # The drift feed is derived from the complete model-record history.
+          # A shallow checkout must fail rather than publish a partial feed.
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -39,7 +43,7 @@ jobs:
       - name: Check generated README coverage
         run: npm run check:readme
 
-      - name: Build deterministic API artifact
+      - name: Build deterministic registry and drift artifacts
         run: npm run build
 
       - name: Run site acceptance tests
