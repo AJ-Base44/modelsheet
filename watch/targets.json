@@ -44,10 +44,10 @@
       "minimum_bytes": 256
     },
     {
-      "id": "xai-docs-index",
+      "id": "xai-release-notes",
       "lab": "xAI",
-      "kind": "llms_txt",
-      "url": "https://docs.x.ai/llms.txt",
+      "kind": "release_notes",
+      "url": "https://docs.x.ai/developers/release-notes.md",
       "minimum_bytes": 256
     },
     {
