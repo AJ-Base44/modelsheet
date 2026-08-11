@@ -1,34 +1,426 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "bytedance/seedream-5-0-lite"
 name = "Seedream 5.0 Lite"
 lab = "ByteDance"
 modality = "image"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-page", "model-list"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "seedream-5-0-lite-260128"
+source_ids = ["image-api", "image-guide", "pricing"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "image-generation"
-task = "image_generation"
-source_ids = ["docs"]
+id = "text-to-image"
+task = "text_to_image"
+endpoint = "POST /api/v3/images/generations"
+api_mode = "sequential_image_generation=disabled"
+source_ids = ["image-api", "image-guide"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["image-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+default = "2048x2048"
+min_total_pixels = 3686400
+max_total_pixels = 16777216
+max_long_to_short_ratio = 16
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 2848
+height = 1600
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 1600
+height = 2848
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 3072
+height = 3072
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 4096
+height = 2304
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 2304
+height = 4096
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 4096
+height = 4096
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.delivery_profiles]]
+id = "url"
+state = "supported"
+transport = "url"
+formats = ["jpeg", "png"]
+default_format = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-json"
+state = "supported"
+transport = "base64_json"
+formats = ["jpeg", "png"]
+default_format = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "server-sent-events"
+state = "supported"
+transport = "server_sent_events"
+endpoint = "POST /api/v3/images/generations"
+formats = ["jpeg", "png"]
+default_format = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.controls]]
+name = "size_preset"
+state = "supported"
+mode = "exact_set"
+values = ["2K", "3K", "4K"]
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["jpeg", "png"]
+default = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.controls]]
+name = "watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "true"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.controls]]
+name = "guidance_scale"
+state = "unsupported"
+source_ids = ["image-api"]
+
+[[capability_profiles.controls]]
+name = "prompt_optimization_mode"
+state = "supported"
+mode = "exact_set"
+values = ["standard"]
+default = "standard"
+unsupported_values = ["fast"]
+source_ids = ["image-api"]
+
+[[capability_profiles]]
+id = "image-edit"
+task = "image_edit"
+endpoint = "POST /api/v3/images/generations"
+api_mode = "sequential_image_generation=disabled"
+source_ids = ["image-api", "image-guide"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["image-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+default = "2048x2048"
+min_total_pixels = 3686400
+max_total_pixels = 16777216
+max_long_to_short_ratio = 16
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 3072
+height = 3072
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 4096
+height = 4096
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 14
+formats = ["jpeg", "png", "webp", "bmp", "tiff", "gif", "heic", "heif"]
+encodings = ["url", "base64_data_url"]
+constraints = ["width_to_height_ratio>0.0625", "width_to_height_ratio<16", "width_px>14", "height_px>14", "size_bytes<=30000000", "total_pixels<=36000000"]
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "url"
+state = "supported"
+transport = "url"
+formats = ["jpeg", "png"]
+default_format = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-json"
+state = "supported"
+transport = "base64_json"
+formats = ["jpeg", "png"]
+default_format = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "server-sent-events"
+state = "supported"
+transport = "server_sent_events"
+endpoint = "POST /api/v3/images/generations"
+formats = ["jpeg", "png"]
+default_format = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.controls]]
+name = "size_preset"
+state = "supported"
+mode = "exact_set"
+values = ["2K", "3K", "4K"]
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["jpeg", "png"]
+default = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.controls]]
+name = "watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "true"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.controls]]
+name = "guidance_scale"
+state = "unsupported"
+source_ids = ["image-api"]
+
+[[capability_profiles]]
+id = "batch-image-generation"
+task = "batch_image_generation"
+endpoint = "POST /api/v3/images/generations"
+api_mode = "sequential_image_generation=auto"
+source_ids = ["image-api", "image-guide"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "range"
+unit = "pixel"
+default = "2048x2048"
+min_total_pixels = 3686400
+max_total_pixels = 16777216
+max_long_to_short_ratio = 16
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.size.examples]]
+width = 2048
+height = 2048
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 3072
+height = 3072
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-api"]
+
+[[capability_profiles.size.examples]]
+width = 4096
+height = 4096
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["image-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 14
+formats = ["jpeg", "png", "webp", "bmp", "tiff", "gif", "heic", "heif"]
+encodings = ["url", "base64_data_url"]
+constraints = ["input_image_count+generated_image_count<=15", "width_to_height_ratio>0.0625", "width_to_height_ratio<16", "width_px>14", "height_px>14", "size_bytes<=30000000", "total_pixels<=36000000"]
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "server-sent-events"
+state = "supported"
+transport = "server_sent_events"
+endpoint = "POST /api/v3/images/generations"
+formats = ["jpeg", "png"]
+default_format = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "buffered-url"
+state = "supported"
+transport = "url"
+formats = ["jpeg", "png"]
+default_format = "jpeg"
+source_ids = ["image-api", "image-guide"]
+
+[[capability_profiles.controls]]
+name = "maximum_output_images"
+state = "supported"
+mode = "range"
+min = 1
+max = 15
+step = 1
+default = 15
+unit = "image"
+source_ids = ["image-api"]
 
 [pricing]
-state = "unknown"
+state = "known"
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "input-image"
+state = "known"
+kind = "metered"
+amount = 0
+denomination = "USD"
+per = 1
+unit = "input_image"
+qualifier = "BytePlus lists image inputs as free."
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "output-image"
+state = "known"
+kind = "metered"
+amount = 0.035
+denomination = "USD"
+per = 1
+unit = "successfully_generated_image"
+qualifier = "Batch requests are billed by the actual number of images successfully generated; outputs rejected by moderation or otherwise unsuccessful are not billed."
 source_ids = ["pricing"]
 
 [[sources]]
-id = "docs"
+id = "model-page"
 kind = "documentation"
-url = "https://seed.bytedance.com/seedream5_0_lite"
-retrieved_on = 2026-08-09
+url = "https://seed.bytedance.com/en/seedream5_0_lite"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "model-list"
+kind = "documentation"
+url = "https://docs.byteplus.com/en/docs/ModelArk/1330310"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "image-api"
+kind = "api_reference"
+url = "https://docs.byteplus.com/en/docs/ModelArk/1541523"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "image-guide"
+kind = "documentation"
+url = "https://docs.byteplus.com/en/docs/ModelArk/1824121"
+retrieved_on = 2026-08-11
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
-url = "https://docs.byteplus.com/docs/ModelArk/1099320"
-retrieved_on = 2026-08-09
+url = "https://docs.byteplus.com/en/docs/ModelArk/1544106"
+retrieved_on = 2026-08-11

@@ -1,35 +1,526 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "google/gemini-3-1-flash-lite-image"
 name = "Gemini 3.1 Flash Lite Image"
 aliases = ["Nano Banana 2 Lite"]
 lab = "Google"
 modality = "image"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-page", "image-guide", "model-card", "changelog"]
 
 [verification]
 state = "unverified"
 
+[[api_identifiers]]
+kind = "model_id"
+value = "gemini-3.1-flash-lite-image"
+source_ids = ["model-page", "image-guide", "pricing", "changelog"]
+
+[language_support]
+state = "supported"
+scope = "prompt_input"
+published_label = "Best performance languages"
+listed_count = 15
+languages = [
+  { name = "English", code = "EN" },
+  { name = "Arabic (Egypt)", code = "ar-EG" },
+  { name = "German (Germany)", code = "de-DE" },
+  { name = "Spanish (Mexico)", code = "es-MX" },
+  { name = "French (France)", code = "fr-FR" },
+  { name = "Hindi (India)", code = "hi-IN" },
+  { name = "Indonesian (Indonesia)", code = "id-ID" },
+  { name = "Italian (Italy)", code = "it-IT" },
+  { name = "Japanese (Japan)", code = "ja-JP" },
+  { name = "Korean (South Korea)", code = "ko-KR" },
+  { name = "Portuguese (Brazil)", code = "pt-BR" },
+  { name = "Russian (Russia)", code = "ru-RU" },
+  { name = "Ukrainian (Ukraine)", code = "ua-UA" },
+  { name = "Vietnamese (Vietnam)", code = "vi-VN" },
+  { name = "Chinese (China)", code = "zh-CN" },
+]
+source_ids = ["image-guide"]
+
 [[capability_profiles]]
-id = "image-generation"
-task = "image_generation"
-source_ids = ["docs"]
+id = "interactions-text-to-image"
+task = "text_to_image"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/interactions"
+api_mode = "gemini-3.1-flash-lite-image"
+source_ids = ["model-page", "image-guide", "interactions-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+examples = [
+  { width = 1024, height = 1024, unit = "pixel", aspect_ratio = "1:1", source_ids = ["model-page"] },
+]
+source_ids = ["model-page", "image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "interactions-inline"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/interactions"
+formats = ["jpeg"]
+default_format = "jpeg"
+source_ids = ["interactions-api"]
+
+[[capability_profiles.controls]]
+name = "response_modalities"
+state = "supported"
+mode = "exact_set"
+values = ["text_and_image", "image_only"]
+default = "text_and_image"
+source_ids = ["image-guide"]
+
+[[capability_profiles.controls]]
+name = "thinking_level"
+state = "supported"
+mode = "exact_set"
+values = ["minimal", "high"]
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "search_grounding"
+state = "unsupported"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "input_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["65536"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "output_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["4096"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles]]
+id = "interactions-image-edit"
+task = "image_edit"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/interactions"
+api_mode = "gemini-3.1-flash-lite-image"
+source_ids = ["model-page", "image-guide", "interactions-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["model-page", "image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "object_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 14
+formats = ["png", "jpeg", "webp", "heic", "heif", "gif", "bmp", "tiff"]
+source_ids = ["model-page", "image-guide", "interactions-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "character_reference"
+media_type = "image"
+state = "not_applicable"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "style_reference"
+media_type = "image"
+state = "not_applicable"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "video_reference"
+media_type = "video"
+state = "unsupported"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "interactions-inline"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/interactions"
+formats = ["jpeg"]
+default_format = "jpeg"
+source_ids = ["interactions-api"]
+
+[[capability_profiles.controls]]
+name = "input_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["65536"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "output_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["4096"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles]]
+id = "generate-content-image-generation"
+task = "multimodal_image_generation"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-image:generateContent"
+api_mode = "gemini-3.1-flash-lite-image"
+source_ids = ["model-page", "legacy-guide", "generate-content-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["model-page", "legacy-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "object_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 14
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "character_reference"
+media_type = "image"
+state = "not_applicable"
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "style_reference"
+media_type = "image"
+state = "not_applicable"
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "video_reference"
+media_type = "video"
+state = "unsupported"
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "generate-content-inline"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/models/{model}:generateContent"
+formats = ["png"]
+source_ids = ["legacy-guide"]
+
+[[capability_profiles.controls]]
+name = "thinking_level"
+state = "supported"
+mode = "exact_set"
+values = ["minimal", "high"]
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "search_grounding"
+state = "unsupported"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "input_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["65536"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "output_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["4096"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[limitations]]
+id = "hallucinations"
+summary = "Google says generated images can contain hallucinated content."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "latency-and-timeouts"
+summary = "Google reports that some requests can be slow or time out."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "small-long-and-page-length-text"
+summary = "Google says small, long, or page-length text can render poorly."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "character-consistency"
+summary = "Google says character consistency across generations is not always maintained."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "masked-and-doodle-edits"
+summary = "Google says masked or doodle edits can follow instructions only partially or leave persistent marks."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "input-copying"
+summary = "Google reports infrequent cases where generated output copies and pastes the input image."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "spatial-reasoning"
+summary = "Google reports occasional left-right confusion and limitations in spatial or 3D reasoning."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "factual-and-world-knowledge"
+summary = "Google says limited world knowledge can produce factual inaccuracies in generated images."
+source_ids = ["model-card"]
 
 [pricing]
-state = "unknown"
+state = "known"
 source_ids = ["pricing"]
 
+[[pricing.charges]]
+id = "image-token-usage-1k"
+state = "known"
+kind = "usage_increment"
+amount = 1120
+denomination = "image_output_token"
+per = 1
+unit = "output_image"
+applies_when = ["size=1K"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-input"
+state = "known"
+kind = "metered"
+amount = 0.25
+denomination = "USD"
+per = 1000000
+unit = "text_image_or_video_input_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-output-text-thinking"
+state = "known"
+kind = "metered"
+amount = 1.50
+denomination = "USD"
+per = 1000000
+unit = "text_or_thinking_output_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-output-image-tokens"
+state = "known"
+kind = "metered"
+amount = 30.00
+denomination = "USD"
+per = 1000000
+unit = "image_output_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-output-image-1k"
+state = "known"
+kind = "metered"
+amount = 0.0336
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "size=1K"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-input"
+state = "known"
+kind = "metered"
+amount = 0.125
+denomination = "USD"
+per = 1000000
+unit = "text_image_or_video_input_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-output-text-thinking"
+state = "known"
+kind = "metered"
+amount = 0.75
+denomination = "USD"
+per = 1000000
+unit = "text_or_thinking_output_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-output-image-tokens"
+state = "known"
+kind = "metered"
+amount = 15.00
+denomination = "USD"
+per = 1000000
+unit = "image_output_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-output-image-1k"
+state = "known"
+kind = "metered"
+amount = 0.0168
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=batch", "size=1K"]
+source_ids = ["pricing"]
+
+[[conflicts]]
+path = "capability_profiles.*.size.options.1K.aspect_ratios"
+summary = "The model page says the 1K tier has 14 aspect ratios but explicitly names only 10 of them."
+handling = "Record only the 10 ratios enumerated on the model-specific page; do not import the four additional ratios from a generic endpoint enum."
+source_ids = ["model-page", "interactions-api"]
+
+[[conflicts]]
+path = "capability_profiles.*.delivery_profiles.*.formats"
+summary = "The Interactions API response-format reference lists JPEG, while official GenerateContent guide examples return PNG."
+handling = "Keep the formats scoped to their serving endpoints rather than selecting a single model-wide output format."
+source_ids = ["interactions-api", "legacy-guide"]
+
+[[conflicts]]
+path = "capability_profiles.*.reference_inputs.video_reference,capability_profiles.*.reference_inputs.audio_reference"
+summary = "The DeepMind model card describes broader audio and video comprehension, while the model-specific image API page and task guide expose text and image inputs for image generation."
+handling = "Use the model-specific image serving surface and mark audio and video references unsupported on these profiles; retain the broader model-card claim as a conflict."
+source_ids = ["model-card", "model-page", "image-guide"]
+
+[[conflicts]]
+path = "capability_profiles.*.controls.input_token_limit,capability_profiles.*.controls.output_token_limit"
+summary = "The model page publishes 65,536 input tokens and 4,096 output tokens, while the model card describes a broader 1M-token context and 64K text output."
+handling = "Use the model-specific API page limits and retain the differently scoped model-card figures as a conflict."
+source_ids = ["model-page", "model-card"]
+
 [[sources]]
-id = "docs"
+id = "model-page"
 kind = "documentation"
 url = "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite-image"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "image-guide"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/image-generation"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "legacy-guide"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/generate-content/image-generation"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "interactions-api"
+kind = "api_reference"
+url = "https://ai.google.dev/api/interactions-api-v1"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "generate-content-api"
+kind = "api_reference"
+url = "https://ai.google.dev/api/generate-content"
+retrieved_on = 2026-08-11
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://ai.google.dev/gemini-api/docs/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "changelog"
+kind = "changelog"
+url = "https://ai.google.dev/gemini-api/docs/changelog"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "model-card"
+kind = "documentation"
+url = "https://deepmind.google/models/model-cards/gemini-3-1-flash-lite-image/"
+retrieved_on = 2026-08-11

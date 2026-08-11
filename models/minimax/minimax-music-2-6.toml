@@ -1,13 +1,24 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "minimax/minimax-music-2-6"
 name = "MiniMax Music 2.6"
 lab = "MiniMax"
 modality = "audio"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["music-reference", "paygo-pricing"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "music-2.6"
+source_ids = ["music-reference", "paygo-pricing"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "music-2.6-free"
+source_ids = ["music-reference", "paygo-pricing"]
 
 [verification]
 state = "unverified"
@@ -15,20 +26,183 @@ state = "unverified"
 [[capability_profiles]]
 id = "music-generation"
 task = "music_generation"
-source_ids = ["docs"]
+endpoint = "POST https://api.minimax.io/v1/music_generation"
+api_mode = "music-2.6"
+api_mode_aliases = ["music-2.6-free"]
+source_ids = ["music-reference"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["music-reference", "paygo-pricing"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 2000
+source_ids = ["music-reference"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["music-reference"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["music-reference"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["music-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [16000, 24000, 32000, 44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 128, 256]
+source_ids = ["music-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [16000, 24000, 32000, 44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 128, 256]
+source_ids = ["music-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [16000, 24000, 32000, 44100]
+bitrate_mode = "exact_set"
+bitrate_unit = "kilobit_per_second"
+bitrates = [32, 64, 128, 256]
+source_ids = ["music-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "hex-response"
+state = "supported"
+transport = "hex_in_response"
+endpoint = "POST /v1/music_generation"
+formats = ["hex"]
+default_format = "hex"
+source_ids = ["music-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "temporary-url"
+state = "supported"
+transport = "temporary_url"
+endpoint = "POST /v1/music_generation"
+formats = ["url"]
+source_ids = ["music-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "streaming-hex"
+state = "supported"
+transport = "http_stream"
+endpoint = "POST /v1/music_generation"
+formats = ["hex"]
+source_ids = ["music-reference"]
+
+[[capability_profiles.controls]]
+name = "lyrics_length_when_present"
+state = "supported"
+mode = "range"
+min = 1
+max = 3500
+step = 1
+unit = "character"
+source_ids = ["music-reference"]
+
+[[capability_profiles.controls]]
+name = "stream"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["music-reference"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["url", "hex"]
+default = "hex"
+source_ids = ["music-reference"]
+
+[[capability_profiles.controls]]
+name = "sample_rate"
+state = "supported"
+mode = "exact_set"
+values = ["16000", "24000", "32000", "44100"]
+unit = "hertz"
+source_ids = ["music-reference"]
+
+[[capability_profiles.controls]]
+name = "bitrate"
+state = "supported"
+mode = "exact_set"
+values = ["32000", "64000", "128000", "256000"]
+unit = "bit_per_second"
+source_ids = ["music-reference"]
+
+[[capability_profiles.controls]]
+name = "audio_format"
+state = "supported"
+mode = "exact_set"
+values = ["mp3", "wav", "pcm"]
+source_ids = ["music-reference"]
+
+[[capability_profiles.controls]]
+name = "lyrics_optimizer"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["music-reference"]
+
+[[capability_profiles.controls]]
+name = "is_instrumental"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["music-reference"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["paygo-pricing"]
+
+[[pricing.charges]]
+id = "paid-generation"
+state = "known"
+kind = "metered"
+amount = 0.15
+denomination = "USD"
+per = 1
+unit = "music_generation"
+profile_id = "music-generation"
+applies_when = ["model_id=music-2.6", "output_duration<=5_minutes"]
+source_ids = ["paygo-pricing"]
+
+[[conflicts]]
+path = "capability_profiles.music-generation.duration"
+summary = "MiniMax prices each paid generation as up to five minutes of music, but the live request schema exposes no duration control or explicit output-duration constraint."
+handling = "Keep the capability duration unknown and preserve the five-minute phrase only as a billing qualifier."
+source_ids = ["music-reference", "paygo-pricing"]
 
 [[sources]]
-id = "docs"
+id = "music-reference"
 kind = "api_reference"
-url = "https://platform.minimax.io/docs/api-reference/api-overview"
-retrieved_on = 2026-08-09
+url = "https://platform.minimax.io/docs/api-reference/music-generation"
+retrieved_on = 2026-08-11
 
 [[sources]]
-id = "pricing"
+id = "paygo-pricing"
 kind = "pricing"
 url = "https://platform.minimax.io/docs/guides/pricing-paygo"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11

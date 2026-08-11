@@ -1,34 +1,409 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "google/gemini-3-1-flash-tts-preview"
-name = "Gemini 3.1 Flash TTS Preview"
+name = "Gemini 3.1 Flash Text-to-Speech Preview"
+aliases = ["Gemini 3.1 Flash TTS Preview"]
 lab = "Google"
 modality = "audio"
 status = "preview"
-source_ids = ["docs"]
+source_ids = ["model-page", "tts-guide", "pricing", "changelog"]
 
 [verification]
 state = "unverified"
 
+[[api_identifiers]]
+kind = "model_id"
+value = "gemini-3.1-flash-tts-preview"
+source_ids = ["model-page", "pricing", "changelog"]
+
+[language_support]
+state = "supported"
+scope = "speech_output"
+published_label = "Supported languages"
+listed_count = 78
+languages = [
+  { name = "Arabic", code = "ar" },
+  { name = "Filipino", code = "fil" },
+  { name = "Bangla", code = "bn" },
+  { name = "Finnish", code = "fi" },
+  { name = "Dutch", code = "nl" },
+  { name = "Galician", code = "gl" },
+  { name = "English", code = "en" },
+  { name = "Georgian", code = "ka" },
+  { name = "French", code = "fr" },
+  { name = "Greek", code = "el" },
+  { name = "German", code = "de" },
+  { name = "Gujarati", code = "gu" },
+  { name = "Hindi", code = "hi" },
+  { name = "Haitian Creole", code = "ht" },
+  { name = "Indonesian", code = "id" },
+  { name = "Hebrew", code = "he" },
+  { name = "Italian", code = "it" },
+  { name = "Hungarian", code = "hu" },
+  { name = "Japanese", code = "ja" },
+  { name = "Icelandic", code = "is" },
+  { name = "Korean", code = "ko" },
+  { name = "Javanese", code = "jv" },
+  { name = "Marathi", code = "mr" },
+  { name = "Kannada", code = "kn" },
+  { name = "Polish", code = "pl" },
+  { name = "Konkani", code = "kok" },
+  { name = "Portuguese", code = "pt" },
+  { name = "Lao", code = "lo" },
+  { name = "Romanian", code = "ro" },
+  { name = "Latin", code = "la" },
+  { name = "Russian", code = "ru" },
+  { name = "Latvian", code = "lv" },
+  { name = "Spanish", code = "es" },
+  { name = "Lithuanian", code = "lt" },
+  { name = "Tamil", code = "ta" },
+  { name = "Luxembourgish", code = "lb" },
+  { name = "Telugu", code = "te" },
+  { name = "Macedonian", code = "mk" },
+  { name = "Thai", code = "th" },
+  { name = "Maithili", code = "mai" },
+  { name = "Turkish", code = "tr" },
+  { name = "Malagasy", code = "mg" },
+  { name = "Ukrainian", code = "uk" },
+  { name = "Malay", code = "ms" },
+  { name = "Vietnamese", code = "vi" },
+  { name = "Malayalam", code = "ml" },
+  { name = "Afrikaans", code = "af" },
+  { name = "Mongolian", code = "mn" },
+  { name = "Albanian", code = "sq" },
+  { name = "Nepali", code = "ne" },
+  { name = "Amharic", code = "am" },
+  { name = "Norwegian, Bokmål", code = "nb" },
+  { name = "Armenian", code = "hy" },
+  { name = "Norwegian, Nynorsk", code = "nn" },
+  { name = "Azerbaijani", code = "az" },
+  { name = "Odia", code = "or" },
+  { name = "Basque", code = "eu" },
+  { name = "Pashto", code = "ps" },
+  { name = "Belarusian", code = "be" },
+  { name = "Persian", code = "fa" },
+  { name = "Bulgarian", code = "bg" },
+  { name = "Punjabi", code = "pa" },
+  { name = "Burmese", code = "my" },
+  { name = "Serbian", code = "sr" },
+  { name = "Catalan", code = "ca" },
+  { name = "Sindhi", code = "sd" },
+  { name = "Cebuano", code = "ceb" },
+  { name = "Sinhala", code = "si" },
+  { name = "Chinese, Mandarin", code = "cmn" },
+  { name = "Slovak", code = "sk" },
+  { name = "Croatian", code = "hr" },
+  { name = "Slovenian", code = "sl" },
+  { name = "Czech", code = "cs" },
+  { name = "Swahili", code = "sw" },
+  { name = "Danish", code = "da" },
+  { name = "Swedish", code = "sv" },
+  { name = "Estonian", code = "et" },
+  { name = "Urdu", code = "ur" },
+]
+source_ids = ["tts-guide"]
+
 [[capability_profiles]]
-id = "text-to-speech"
+id = "interactions-text-to-speech"
 task = "text_to_speech"
-source_ids = ["docs"]
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/interactions"
+api_mode = "gemini-3.1-flash-tts-preview"
+source_ids = ["model-page", "tts-guide", "interactions-api"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["tts-guide", "model-card"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+encoding = "s16le"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [24000]
+bit_depth_unit = "bit"
+bit_depths = [16]
+source_ids = ["tts-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "interactions-inline-pcm"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/interactions"
+formats = ["pcm_s16le_24000_mono"]
+default_format = "pcm_s16le_24000_mono"
+source_ids = ["tts-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "interactions-streaming"
+state = "supported"
+transport = "http_streaming"
+endpoint = "POST /v1beta/interactions with stream=true"
+formats = ["pcm_s16le_24000_mono"]
+source_ids = ["tts-guide", "interactions-api", "changelog"]
+
+[[capability_profiles.controls]]
+name = "voice"
+state = "supported"
+mode = "exact_set"
+values = ["Zephyr", "Puck", "Charon", "Kore", "Fenrir", "Leda", "Orus", "Aoede", "Callirrhoe", "Autonoe", "Enceladus", "Iapetus", "Umbriel", "Algieba", "Despina", "Erinome", "Algenib", "Rasalgethi", "Laomedeia", "Achernar", "Alnilam", "Schedar", "Gacrux", "Pulcherrima", "Achird", "Zubenelgenubi", "Vindemiatrix", "Sadachbia", "Sadaltager", "Sulafat"]
+source_ids = ["tts-guide"]
+
+[[capability_profiles.controls]]
+name = "speaker_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 2
+step = 1
+unit = "speaker"
+source_ids = ["tts-guide"]
+
+[[capability_profiles.controls]]
+name = "input_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["8192"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "output_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["16384"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles]]
+id = "generate-content-text-to-speech"
+task = "text_to_speech"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+api_mode = "gemini-3.1-flash-tts-preview"
+source_ids = ["model-page", "legacy-tts-guide", "generate-content-api"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["legacy-tts-guide", "model-card"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+encoding = "s16le"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [24000]
+bit_depth_unit = "bit"
+bit_depths = [16]
+source_ids = ["legacy-tts-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "generate-content-inline-pcm"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/models/{model}:generateContent"
+formats = ["pcm_s16le_24000_mono"]
+default_format = "pcm_s16le_24000_mono"
+source_ids = ["legacy-tts-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "generate-content-streaming"
+state = "supported"
+transport = "http_streaming"
+endpoint = "POST /v1beta/models/{model}:streamGenerateContent"
+formats = ["pcm_s16le_24000_mono"]
+source_ids = ["tts-guide", "legacy-tts-guide", "generate-content-api", "changelog"]
+
+[[capability_profiles.controls]]
+name = "voice"
+state = "supported"
+mode = "exact_set"
+values = ["Zephyr", "Puck", "Charon", "Kore", "Fenrir", "Leda", "Orus", "Aoede", "Callirrhoe", "Autonoe", "Enceladus", "Iapetus", "Umbriel", "Algieba", "Despina", "Erinome", "Algenib", "Rasalgethi", "Laomedeia", "Achernar", "Alnilam", "Schedar", "Gacrux", "Pulcherrima", "Achird", "Zubenelgenubi", "Vindemiatrix", "Sadachbia", "Sadaltager", "Sulafat"]
+source_ids = ["tts-guide", "legacy-tts-guide"]
+
+[[capability_profiles.controls]]
+name = "speaker_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 2
+step = 1
+unit = "speaker"
+source_ids = ["tts-guide", "legacy-tts-guide"]
+
+[[capability_profiles.controls]]
+name = "language_code"
+state = "supported"
+mode = "exact_set"
+values = ["de-DE", "en-AU", "en-GB", "en-IN", "en-US", "es-US", "fr-FR", "hi-IN", "pt-BR", "ar-XA", "es-ES", "fr-CA", "id-ID", "it-IT", "ja-JP", "tr-TR", "vi-VN", "bn-IN", "gu-IN", "kn-IN", "ml-IN", "mr-IN", "ta-IN", "te-IN", "nl-NL", "ko-KR", "cmn-CN", "pl-PL", "ru-RU", "th-TH"]
+source_ids = ["generate-content-api"]
+
+[[capability_profiles.controls]]
+name = "input_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["8192"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "output_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["16384"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[limitations]]
+id = "text-only-input-audio-only-output"
+summary = "Google says this TTS model accepts only text input and produces only audio output."
+source_ids = ["tts-guide"]
+
+[[limitations]]
+id = "voice-prompt-mismatch"
+summary = "Google says the generated voice can fail to match the requested prompt or assigned speaker."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "long-output-quality-drift"
+summary = "Google says quality and consistency can drift when output continues beyond a few minutes."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "text-token-server-errors"
+summary = "Google says the model can occasionally return text tokens instead of audio and cause an HTTP 500 response; retrying is advised."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "vague-prompt-handling"
+summary = "Google says vague prompts can trigger false PROHIBITED_CONTENT rejections or cause instructions to be read aloud."
+source_ids = ["model-card"]
 
 [pricing]
-state = "unknown"
+state = "known"
 source_ids = ["pricing"]
 
+[[pricing.charges]]
+id = "audio-token-usage"
+state = "known"
+kind = "usage_increment"
+amount = 25
+denomination = "audio_output_token"
+per = 1
+unit = "generated_audio_second"
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-text-input"
+state = "known"
+kind = "metered"
+amount = 1.00
+denomination = "USD"
+per = 1000000
+unit = "text_input_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-audio-output"
+state = "known"
+kind = "metered"
+amount = 20.00
+denomination = "USD"
+per = 1000000
+unit = "audio_output_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-text-input"
+state = "known"
+kind = "metered"
+amount = 0.50
+denomination = "USD"
+per = 1000000
+unit = "text_input_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-audio-output"
+state = "known"
+kind = "metered"
+amount = 10.00
+denomination = "USD"
+per = 1000000
+unit = "audio_output_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[conflicts]]
+path = "capability_profiles.*.controls.input_token_limit,capability_profiles.*.controls.output_token_limit"
+summary = "The model page publishes 8,192 input tokens and 16,384 output tokens; the general TTS guide describes a 32k-token session window; the model card describes up to 16K text input tokens and 32K audio output tokens."
+handling = "Keep the model-page limits because they are model-specific API limits and retain the differently scoped official claims as a conflict."
+source_ids = ["model-page", "tts-guide", "model-card"]
+
 [[sources]]
-id = "docs"
+id = "model-page"
 kind = "documentation"
 url = "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-tts-preview"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "tts-guide"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/speech-generation"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "legacy-tts-guide"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/generate-content/speech-generation"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "interactions-api"
+kind = "api_reference"
+url = "https://ai.google.dev/api/interactions-api-v1"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "generate-content-api"
+kind = "api_reference"
+url = "https://ai.google.dev/api/generate-content"
+retrieved_on = 2026-08-11
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://ai.google.dev/gemini-api/docs/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "changelog"
+kind = "changelog"
+url = "https://ai.google.dev/gemini-api/docs/changelog"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "model-card"
+kind = "documentation"
+url = "https://deepmind.google/models/model-cards/gemini-3-1-flash-audio/"
+retrieved_on = 2026-08-11
