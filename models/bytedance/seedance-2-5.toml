@@ -8,7 +8,12 @@ name = "Seedance 2.5"
 lab = "ByteDance"
 modality = "video"
 status = "unknown"
-source_ids = ["model-page"]
+source_ids = ["model-page", "pricing"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "dreamina-seedance-2-5-260628"
+source_ids = ["pricing"]
 
 [verification]
 state = "unverified"
@@ -19,14 +24,38 @@ task = "text_to_video"
 source_ids = ["model-page"]
 
 [pricing]
-state = "unknown"
+state = "known"
 source_ids = ["pricing"]
 
 [[pricing.charges]]
-id = "lab-price-not-published"
-state = "unknown"
-qualifier = "The current BytePlus ModelArk pricing table does not publish a Seedance 2.5 charge."
+id = "online-without-video-input"
+state = "known"
+kind = "metered"
+amount = 10.7
+denomination = "USD"
+per = 1000000
+unit = "video_generation_token"
+applies_when = ["output_resolution=480p_or_720p", "input_video=false", "service_tier=default"]
+qualifier = "The current ModelArk pricing table publishes this online-inference rate and marks offline inference as not supported."
 source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "online-with-video-input"
+state = "known"
+kind = "metered"
+amount = 6.4
+denomination = "USD"
+per = 1000000
+unit = "video_generation_token"
+applies_when = ["output_resolution=480p_or_720p", "input_video=true", "service_tier=default"]
+qualifier = "The current ModelArk pricing table publishes this online-inference rate and marks offline inference as not supported."
+source_ids = ["pricing"]
+
+[[conflicts]]
+path = "capability_profiles"
+summary = "ByteDance's model page publishes Seedance 2.5 and the ModelArk pricing table publishes its model ID and token rates, but the current ModelArk Video Generation API reference and tutorial do not include Seedance 2.5 in their supported-model parameter tables."
+handling = "Keep the record indexed and do not reuse Seedance 2.0 duration, resolution, reference-input, audio, or control values until BytePlus publishes a Seedance 2.5 serving contract."
+source_ids = ["model-page", "pricing", "video-api", "video-guide"]
 
 [[sources]]
 id = "model-page"
@@ -38,4 +67,16 @@ retrieved_on = 2026-08-11
 id = "pricing"
 kind = "pricing"
 url = "https://docs.byteplus.com/en/docs/ModelArk/1544106"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "video-api"
+kind = "api_reference"
+url = "https://docs.byteplus.com/en/docs/ModelArk/1520757"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "video-guide"
+kind = "documentation"
+url = "https://docs.byteplus.com/en/docs/ModelArk/2298881"
 retrieved_on = 2026-08-11

@@ -1,34 +1,489 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "stability-ai/stable-audio-2-5"
 name = "Stable Audio 2.5"
 lab = "Stability AI"
 modality = "audio"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["launch", "api-reference", "pricing"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "stable-audio-2.5"
+source_ids = ["api-reference"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "audio-generation"
-task = "audio_generation"
-source_ids = ["docs"]
+id = "text-to-audio"
+task = "text_to_audio"
+endpoint = "POST /v2beta/audio/stable-audio-2/text-to-audio"
+source_ids = ["api-reference", "prompt-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 1
+max = 190
+source_ids = ["api-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 10000
+source_ids = ["api-reference"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["api-reference"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["api-reference"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["api-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+source_ids = ["api-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+source_ids = ["api-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "binary-http-response"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v2beta/audio/stable-audio-2/text-to-audio"
+formats = ["mp3", "wav"]
+default_format = "mp3"
+source_ids = ["api-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-json-response"
+state = "supported"
+transport = "json_base64"
+endpoint = "POST /v2beta/audio/stable-audio-2/text-to-audio"
+formats = ["mp3", "wav"]
+default_format = "mp3"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "duration"
+state = "supported"
+mode = "range"
+min = 1
+max = 190
+default = 190
+unit = "second"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "seed"
+state = "supported"
+mode = "range"
+min = 0
+max = 4294967294
+default = 0
+unit = "integer"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "steps"
+state = "supported"
+mode = "range"
+min = 4
+max = 8
+step = 1
+default = 8
+unit = "sampling_step"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "cfg_scale"
+state = "supported"
+mode = "range"
+min = 1
+max = 25
+default = 1
+unit = "guidance_scale"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["mp3", "wav"]
+default = "mp3"
+source_ids = ["api-reference"]
+
+[[capability_profiles]]
+id = "audio-to-audio"
+task = "audio_to_audio"
+endpoint = "POST /v2beta/audio/stable-audio-2/audio-to-audio"
+source_ids = ["api-reference", "audio-to-audio-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 1
+max = 190
+source_ids = ["api-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 10000
+source_ids = ["api-reference"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["api-reference"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["api-reference"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["api-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+source_ids = ["api-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+source_ids = ["api-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "supported"
+min_count = 1
+max_count = 1
+max_duration = 190
+duration_unit = "second"
+formats = ["mp3", "wav"]
+constraints = ["minimum_duration_seconds=6", "maximum_request_size=50MB"]
+source_ids = ["api-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "binary-http-response"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v2beta/audio/stable-audio-2/audio-to-audio"
+formats = ["mp3", "wav"]
+default_format = "mp3"
+source_ids = ["api-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-json-response"
+state = "supported"
+transport = "json_base64"
+endpoint = "POST /v2beta/audio/stable-audio-2/audio-to-audio"
+formats = ["mp3", "wav"]
+default_format = "mp3"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "duration"
+state = "supported"
+mode = "range"
+min = 1
+max = 190
+default = 190
+unit = "second"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "seed"
+state = "supported"
+mode = "range"
+min = 0
+max = 4294967294
+default = 0
+unit = "integer"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "steps"
+state = "supported"
+mode = "range"
+min = 4
+max = 8
+step = 1
+default = 8
+unit = "sampling_step"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "cfg_scale"
+state = "supported"
+mode = "range"
+min = 1
+max = 25
+default = 1
+unit = "guidance_scale"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "strength"
+state = "supported"
+mode = "range"
+min = 0.01
+max = 1
+default = 1
+unit = "ratio"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["mp3", "wav"]
+default = "mp3"
+source_ids = ["api-reference"]
+
+[[capability_profiles]]
+id = "audio-inpaint"
+task = "audio_inpaint"
+endpoint = "POST /v2beta/audio/stable-audio-2/inpaint"
+source_ids = ["api-reference", "prompt-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 1
+max = 190
+source_ids = ["api-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 10000
+source_ids = ["api-reference"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["api-reference"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["api-reference"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["api-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+source_ids = ["api-reference"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [44100]
+source_ids = ["api-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "supported"
+min_count = 1
+max_count = 1
+max_duration = 190
+duration_unit = "second"
+formats = ["mp3", "wav"]
+constraints = ["minimum_duration_seconds=6", "maximum_request_size=50MB"]
+source_ids = ["api-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "binary-http-response"
+state = "supported"
+transport = "http_response"
+endpoint = "POST /v2beta/audio/stable-audio-2/inpaint"
+formats = ["mp3", "wav"]
+default_format = "mp3"
+source_ids = ["api-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-json-response"
+state = "supported"
+transport = "json_base64"
+endpoint = "POST /v2beta/audio/stable-audio-2/inpaint"
+formats = ["mp3", "wav"]
+default_format = "mp3"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "duration"
+state = "supported"
+mode = "range"
+min = 1
+max = 190
+default = 190
+unit = "second"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "seed"
+state = "supported"
+mode = "range"
+min = 0
+max = 4294967294
+default = 0
+unit = "integer"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "steps"
+state = "supported"
+mode = "range"
+min = 4
+max = 8
+step = 1
+default = 8
+unit = "sampling_step"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "mask_start"
+state = "supported"
+mode = "range"
+min = 0
+max = 190
+default = 30
+unit = "second"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "mask_end"
+state = "supported"
+mode = "range"
+min = 0
+max = 190
+default = 190
+unit = "second"
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["mp3", "wav"]
+default = "mp3"
+source_ids = ["api-reference"]
+
+[[limitations]]
+id = "copyrighted-upload-restriction"
+summary = "The Stability API does not allow copyrighted audio to be uploaded for audio-to-audio or inpaint requests."
+source_ids = ["api-reference"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["pricing", "api-reference"]
+
+[[pricing.charges]]
+id = "text-to-audio-generation"
+state = "known"
+kind = "metered"
+amount = 20
+denomination = "credit"
+per = 1
+unit = "successful_generation"
+profile_id = "text-to-audio"
+qualifier = "Flat rate per successful result; failed generations are not charged."
+source_ids = ["pricing", "api-reference"]
+
+[[pricing.charges]]
+id = "audio-to-audio-generation"
+state = "known"
+kind = "metered"
+amount = 20
+denomination = "credit"
+per = 1
+unit = "successful_generation"
+profile_id = "audio-to-audio"
+qualifier = "Flat rate per successful result; failed generations are not charged."
+source_ids = ["pricing", "api-reference"]
+
+[[pricing.charges]]
+id = "audio-inpaint-generation"
+state = "known"
+kind = "metered"
+amount = 20
+denomination = "credit"
+per = 1
+unit = "successful_generation"
+profile_id = "audio-inpaint"
+qualifier = "Flat rate per successful result; failed generations are not charged."
+source_ids = ["pricing", "api-reference"]
+
+[[conflicts]]
+path = "capability_profiles.*.duration"
+summary = "The model overview and pricing page describe output as up to three minutes, while the endpoint parameter tables accept output duration through 190 seconds."
+handling = "Use the exact 1-to-190-second API parameter range and retain the rounded three-minute prose as conflicting provenance."
+source_ids = ["api-reference", "pricing", "launch"]
+
+[[conflicts]]
+path = "capability_profiles.text-to-audio.controls.cfg_scale, capability_profiles.audio-to-audio.controls.cfg_scale"
+summary = "The endpoint overview says cfg_scale applies only to stable-audio-2, while the same request schema publishes a Stable Audio 2.5 default of 1."
+handling = "Expose the model-specific range and default from the parameter table and retain the applicability wording as conflicting provenance."
+source_ids = ["api-reference"]
 
 [[sources]]
-id = "docs"
+id = "launch"
+kind = "release_note"
+url = "https://stability.ai/news-updates/stability-ai-introduces-stable-audio-25-the-first-audio-model-built-for-enterprise-sound-production-at-scale"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "api-reference"
 kind = "api_reference"
 url = "https://platform.stability.ai/docs/api-reference"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "prompt-guide"
+kind = "documentation"
+url = "https://stability.ai/guides/stable-audio-25-prompt-guide"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "audio-to-audio-guide"
+kind = "documentation"
+url = "https://kb.stability.ai/knowledge-base/tips-for-using-the-audio-to-audio-api"
+retrieved_on = 2026-08-11
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://platform.stability.ai/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11

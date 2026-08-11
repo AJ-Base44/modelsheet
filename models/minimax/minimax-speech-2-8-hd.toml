@@ -587,66 +587,6 @@ values = ["1", "2"]
 default = "2"
 source_ids = ["async-reference"]
 
-[[capability_profiles]]
-id = "voice-cloning"
-task = "voice_cloning"
-endpoint = "POST /v1/voice_clone"
-source_ids = ["clone-reference", "clone-upload", "prompt-upload"]
-
-[capability_profiles.text_input]
-state = "supported"
-unit = "character"
-max = 1000
-source_ids = ["clone-reference"]
-
-[[capability_profiles.reference_inputs]]
-role = "voice_clone_source"
-media_type = "audio"
-state = "supported"
-min_count = 1
-max_count = 1
-max_duration = 300
-duration_unit = "second"
-formats = ["mp3", "m4a", "wav"]
-constraints = ["minimum_duration_seconds=10", "maximum_size=20MB"]
-source_ids = ["clone-upload", "clone-reference"]
-
-[[capability_profiles.reference_inputs]]
-role = "voice_clone_prompt"
-media_type = "audio"
-state = "supported"
-min_count = 0
-max_count = 1
-formats = ["mp3", "m4a", "wav"]
-constraints = ["duration_seconds<8", "maximum_size=20MB"]
-source_ids = ["prompt-upload", "clone-reference"]
-
-[[capability_profiles.controls]]
-name = "accuracy"
-state = "supported"
-mode = "range"
-min = 0
-max = 1
-default = 0.7
-unit = "ratio"
-source_ids = ["clone-reference"]
-
-[[capability_profiles.controls]]
-name = "noise_reduction"
-state = "supported"
-mode = "exact_set"
-values = ["true", "false"]
-default = "false"
-source_ids = ["clone-reference"]
-
-[[capability_profiles.controls]]
-name = "volume_normalization"
-state = "supported"
-mode = "exact_set"
-values = ["true", "false"]
-default = "false"
-source_ids = ["clone-reference"]
-
 [[limitations]]
 id = "whisper-emotion-unavailable"
 summary = "Speech 2.8 does not support the whisper emotion; fluent and whisper are limited to Speech 2.6 models."
@@ -662,11 +602,6 @@ id = "temporary-url-expiry"
 summary = "Non-streaming HTTP output URLs expire after 24 hours; asynchronous task download URLs expire after nine hours."
 source_ids = ["http-reference", "async-reference", "async-query"]
 
-[[limitations]]
-id = "unused-cloned-voice-retention"
-summary = "A cloned voice is deleted when it is not used within seven days."
-source_ids = ["clone-reference"]
-
 [pricing]
 state = "known"
 source_ids = ["pricing"]
@@ -680,17 +615,6 @@ denomination = "USD"
 per = 1000000
 unit = "input_character"
 applies_when = ["model_id=speech-2.8-hd"]
-source_ids = ["pricing"]
-
-[[pricing.charges]]
-id = "rapid-voice-cloning"
-state = "known"
-kind = "metered"
-amount = 1.5
-denomination = "USD"
-per = 1
-unit = "voice"
-profile_id = "voice-cloning"
 source_ids = ["pricing"]
 
 [[conflicts]]
@@ -775,24 +699,6 @@ retrieved_on = 2026-08-10
 id = "async-guide"
 kind = "documentation"
 url = "https://platform.minimax.io/docs/guides/speech-t2a-async"
-retrieved_on = 2026-08-10
-
-[[sources]]
-id = "clone-upload"
-kind = "api_reference"
-url = "https://platform.minimax.io/docs/api-reference/voice-cloning-uploadcloneaudio"
-retrieved_on = 2026-08-10
-
-[[sources]]
-id = "prompt-upload"
-kind = "api_reference"
-url = "https://platform.minimax.io/docs/api-reference/voice-cloning-uploadprompt"
-retrieved_on = 2026-08-10
-
-[[sources]]
-id = "clone-reference"
-kind = "api_reference"
-url = "https://platform.minimax.io/docs/api-reference/voice-cloning-clone"
 retrieved_on = 2026-08-10
 
 [[sources]]
