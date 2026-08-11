@@ -1,8 +1,10 @@
-# Coverage plan
+# Coverage source ledger
 
-Survey date: 2026-08-09
+Initial survey date: 2026-08-09
 
-This plan selects **53 models**: 18 video, 18 image, and 17 audio. Three already exist on `main`; the other 50 are assigned to ten five-record data branches. Selection uses first-party lab documentation only. A listed pricing URL establishes where a later human review should read the lab price; it does not mean an autonomous record may claim that price.
+This ledger records the first-party sources used to select the registry's **53 models**: 18 video, 18 image, and 17 audio. All 53 records are now on `main`. The table and batch map below preserve the original selection history; they are not a live progress tracker. Use the generated coverage block in `README.md` or `api.json` for current documented/indexed counts.
+
+A listed pricing URL identifies the lab surface that must be checked; it does not by itself establish a price claim. Model records may only contain values actually read from the cited first-party source.
 
 Every new record from this plan must carry `verification.state = "unverified"`. Omitted capability details remain unknown. Reseller and aggregator offerings are excluded.
 
@@ -106,7 +108,9 @@ These models met the source bar but are not part of the ten batches in this run.
 | Transcription-only models | Their output is text rather than generative media. |
 | OpenAI Realtime/GPT Audio and Google native-audio dialogue models | General conversational language models are outside Modelsheet's non-LLM scope. |
 
-## Batch map
+## Historical batch map
+
+These branches were the initial indexing batches and have already been integrated. They are retained here only to make the registry's selection history auditable.
 
 | Branch | Models |
 | --- | --- |

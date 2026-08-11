@@ -1,12 +1,12 @@
-# Modelsheet completion report
+# Modelsheet project status
 
-- Snapshot date: 2026-08-10
+- Snapshot date: 2026-08-11
 - Repository: <https://github.com/AJ-Base44/modelsheet>
-- Main completion commit: `c9f0dc2`
+- Public site: <https://aj-base44.github.io/modelsheet/>
 
 ## Registry state
 
-Modelsheet contains 53 model records: 13 documented and 40 indexed.
+Modelsheet contains 53 model records: 52 documented and one indexed.
 
 | Modality | Records |
 | --- | ---: |
@@ -14,51 +14,38 @@ Modelsheet contains 53 model records: 13 documented and 40 indexed.
 | Video | 18 |
 | Audio | 17 |
 
-`documented` means the record contains at least one sourced capability constraint and non-unknown lab pricing. `indexed` means the official model identity and first-party source links are recorded, but the model is not yet comparison-ready. The complete model inventory and source plan are in [coverage-plan.md](coverage-plan.md).
+`documented` means a record contains at least one sourced capability constraint and non-unknown lab-direct pricing. `indexed` records establish an official identity and first-party sources without claiming comparison-ready capability data. The generated coverage block in `README.md` and the counts in `api.json` are the authoritative live totals.
 
-Verification remains deliberately conservative. Fifty records explicitly say `verification.state = "unverified"`; the three original seed records have no recorded verification state. No record in the built data claims `verified`. Consumers display that distinction instead of inferring confidence from the presence of a citation.
+Seedance 2.5 is the sole indexed record. ByteDance publishes an official model page, serving identifier, and price surface, but no model-specific API parameter contract from which Modelsheet can safely record exact capability constraints. The record preserves that gap instead of borrowing values from another Seedance model.
 
-## Completed work
+Verification remains separate from documentation depth. Fifty records explicitly say `verification.state = "unverified"`; the three original seed records have no recorded verification state. No record in the built registry claims `verified`.
 
-- The source contract is documented in `SCHEMA.md` and enforced by `schema/source-v1.schema.json` plus `scripts/validate.mjs`. Unknown keys, duplicate IDs, missing evidence, unresolved pricing profiles, and false `documented` claims fail validation.
-- `scripts/build.mjs` emits deterministically ordered `artifacts/api.json` without a wall-clock timestamp and generates the README coverage block from the artifact counts.
-- CI installs, validates, tests, checks generated coverage, builds the data, checks the typed package, builds the site, and tests the deploy output. `main` is protected by a strict required `validate-build-test` check, pull-request-only changes, blocked force pushes/deletion, and squash-only merging.
-- The hash-only watcher monitors 14 first-party changelog, release-note, `llms.txt`, or documentation URLs. It opens an issue on a safe content-hash change and never extracts values, edits TOML, opens a pull request, or merges anything.
-- The Astro site separates the 13 documented records from the 40 indexed records, exposes capability filtering and comparison, and labels verification state in text. It reads generated static artifacts only; there is no backend, database, or runtime provider lookup.
-- The Git-derived drift pipeline emits deterministic `drift.json` and `drift.rss.xml` artifacts. The current artifact contains 117 semantic model events with exact field paths, before/after values, commit metadata, and no formatting-only events. The site includes a searchable drift page and RSS discovery metadata.
-- Public-output generation includes latest and version-pinned registry and drift JSON, RSS, and the source JSON Schema. Contract versioning is recorded in [decision 0002](decisions/0002-versioning-and-distribution.md).
-- `packages/registry` is a publish-ready, typed `@modelsheet/registry` package with ESM, CommonJS, raw JSON, query helpers, tests, and data-sync checks. It has not been published to npm.
-- `skills/modelsheet` is a dependency-free, read-only agent skill for querying documented capabilities, prices, provenance, and verification state from the local artifact.
-- GitHub Pages is live at <https://aj-base44.github.io/modelsheet/>. No custom domain, `CNAME`, DNS work, Vercel deployment, or domain purchase is part of the project.
+## Shipped system
 
-No model TOML record was changed by the completion work described above.
+- One TOML record per official lab model, validated by `schema/source-v1.schema.json` and `scripts/validate.mjs`.
+- Deterministic `api.json`, version-pinned registry output, semantic git-history drift JSON, and RSS with no wall-clock build data.
+- CI validation, tests, package synchronization, static-site builds, and deploy-output checks on every pull request.
+- Strict protected `main`, pull-request-only changes, required up-to-date CI, squash-only merges, and blocked force pushes/deletion.
+- A detection-only watcher over first-party changelogs, release notes, `llms.txt`, and documentation. It can open issues, but cannot extract claims, write TOML, open pull requests, or merge.
+- A static Astro comparison site that displays only documented records in filters and comparisons, while listing indexed records separately with text labels.
+- Public latest and versioned registry/drift artifacts, RSS, and source schema on GitHub Pages. No custom domain, DNS, backend, database, auth, or runtime provider lookup is required.
+- A typed, dependency-free `@modelsheet/registry` package source with ESM, CommonJS, raw JSON, TypeScript declarations, query helpers, and tests.
+- A dependency-free local agent skill for querying documented capabilities, lab prices, provenance, and uncertainty.
 
-## Evidence at this snapshot
+## Integrity guarantees
 
-- The full root check passed all 53 records and 39 tests; the package passed seven tests plus TypeScript checking; the site passed six acceptance and five deployed-output tests.
-- The built artifact reports exactly 53 total, 13 documented, 40 indexed, with 18 image, 18 video, and 17 audio records.
-- The post-merge CI run on `main` (`c9f0dc2`) passed.
-- The repository reports MIT licensing, squash-only merging, strict branch protection, no force pushes, and no branch deletion on `main`.
-- There were no open pull requests when this report was written.
-- GitHub Pages deployment run `31391683526` passed. The home page, drift page, latest and v1 registry JSON, latest and v1 drift JSON, RSS, and source schema all returned HTTP 200. The deployed registry, drift JSON, and RSS bytes matched the deterministic local artifacts by SHA-256.
-
-The completion work was squash-merged through protected PR #23. GitHub Pages is enabled with `build_type = "workflow"`, HTTPS enforced, and no custom domain.
-
-## Human work that remains
-
-1. Review unverified records against their cited live first-party pages. Only a human may change a record to `verified`.
-2. Deepen the 40 indexed records with exact capability constraints and lab-direct pricing, leaving unsupported or unstated claims explicitly unknown.
-3. Inspect each watcher issue and decide whether an official source change requires a model-data pull request. Detection never substitutes for review.
-4. Choose an npm release cadence and publish `@modelsheet/registry` when maintainers are ready. Publication is intentionally not automated.
-5. A custom domain can be added later if desired; the GitHub Pages project URL is the no-cost default.
-6. Redundant historical deep-data branches remain on the remote. Their records are already present on `main`; deleting those branches is optional repository housekeeping, not a product blocker.
-
-## Integrity summary
-
-- Every comparison-visible model is `documented`; indexed records stay in a separate labelled list.
-- No new model is marked verified.
-- No reseller pricing or invented currency conversion is included.
+- Every stated model claim carries first-party source IDs that resolve to URLs and retrieval dates in the same record.
+- Lab-direct pricing only; reseller and aggregator prices are excluded.
 - Unknown, unsupported, and not applicable remain distinct.
-- The watcher is detection-only and cannot write records or open pull requests.
-- Drift artifacts are generated from Git history rather than a contributor-maintained changelog.
-- The typed package is not published, the Pages site is live at the repository URL, and no custom domain work was attempted.
+- A record cannot claim `documented` without real capability constraints and non-unknown pricing.
+- Formatting-only TOML changes do not alter `api.json` or create drift events.
+- The watcher treats failed, partial, or suspicious responses as failures rather than changes.
+- Verification state is visible in text and is never inferred from the presence of citations.
+
+## Deliberately human-only or future work
+
+1. A maintainer may compare an unverified record with every cited live page and explicitly assign `verified`; agents and automation cannot do that.
+2. Seedance 2.5 can become documented if ByteDance publishes a model-specific serving contract with exact parameter constraints.
+3. `@modelsheet/registry` remains unpublished until the maintainer chooses an npm release cadence and performs the first release.
+4. A custom domain remains optional. The GitHub Pages project URL is the complete no-cost deployment.
+5. Models listed as deferred in `coverage-plan.md` are future coverage candidates, not unfinished records in the current 53-model registry.

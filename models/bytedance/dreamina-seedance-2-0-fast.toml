@@ -1,33 +1,634 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "bytedance/dreamina-seedance-2-0-fast"
 name = "Dreamina Seedance 2.0 Fast"
+aliases = ["Seedance 2.0 fast"]
 lab = "ByteDance"
 modality = "video"
 status = "unknown"
-source_ids = ["docs"]
+source_ids = ["series-tutorial", "model-list", "release-notes"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "dreamina-seedance-2-0-fast-260128"
+source_ids = ["series-tutorial", "model-list", "pricing"]
 
 [verification]
 state = "unverified"
 
+[language_support]
+state = "supported"
+scope = "prompt_input"
+published_label = "English, Spanish, Indonesian, Portuguese, and Japanese"
+listed_count = 5
+languages = [
+  { name = "English" },
+  { name = "Spanish" },
+  { name = "Indonesian" },
+  { name = "Portuguese" },
+  { name = "Japanese" },
+]
+source_ids = ["video-api"]
+
 [[capability_profiles]]
 id = "text-to-video"
 task = "text_to_video"
-source_ids = ["docs"]
+endpoint = "POST /api/v3/contents/generations/tasks"
+source_ids = ["model-list", "video-api", "series-tutorial", "prompt-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 15
+step = 1
+automatic = true
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["video-api", "prompt-guide"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-list"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "720p"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[[capability_profiles.size.options]]
+id = "480p"
+label = "480p"
+aspect_ratios = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles.size.options.examples]]
+width = 864
+height = 496
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 752
+height = 560
+unit = "pixel"
+aspect_ratio = "4:3"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 640
+height = 640
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 560
+height = 752
+unit = "pixel"
+aspect_ratio = "3:4"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 496
+height = 864
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 992
+height = 432
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+label = "720p"
+aspect_ratios = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles.size.options.examples]]
+width = 1280
+height = 720
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 1112
+height = 834
+unit = "pixel"
+aspect_ratio = "4:3"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 960
+height = 960
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 834
+height = 1112
+unit = "pixel"
+aspect_ratio = "3:4"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 720
+height = 1280
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["video-api"]
+
+[[capability_profiles.size.options.examples]]
+width = 1470
+height = 630
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["video-api"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["video-api", "series-tutorial", "prompt-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "mp4-task-result"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9", "adaptive"]
+default = "adaptive"
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles.controls]]
+name = "watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["video-api"]
+
+[[capability_profiles.controls]]
+name = "return_last_frame"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles]]
+id = "first-frame-to-video"
+task = "image_to_video"
+endpoint = "POST /api/v3/contents/generations/tasks"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 15
+step = 1
+automatic = true
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["video-api", "prompt-guide"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-list"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "720p"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[[capability_profiles.size.options]]
+id = "480p"
+label = "480p"
+aspect_ratios = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+label = "720p"
+aspect_ratios = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+source_ids = ["video-api", "series-tutorial"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["video-api", "series-tutorial", "prompt-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpeg", "png", "webp", "bmp", "tiff", "gif", "heic", "heif"]
+encodings = ["url", "base64_data_url", "asset_id"]
+constraints = ["width_to_height_ratio>=0.4", "width_to_height_ratio<=2.5", "width_px>=300", "width_px<=6000", "height_px>=300", "height_px<=6000", "size_megabytes<30", "request_body_megabytes<=64"]
+source_ids = ["video-api", "release-notes"]
+
+[[capability_profiles.delivery_profiles]]
+id = "mp4-task-result"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9", "adaptive"]
+default = "adaptive"
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles.controls]]
+name = "watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["video-api"]
+
+[[capability_profiles.controls]]
+name = "return_last_frame"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles]]
+id = "first-last-frame-to-video"
+task = "first_last_frame_to_video"
+endpoint = "POST /api/v3/contents/generations/tasks"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 15
+step = 1
+automatic = true
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["video-api", "prompt-guide"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-list"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "720p"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[[capability_profiles.size.options]]
+id = "480p"
+label = "480p"
+aspect_ratios = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+label = "720p"
+aspect_ratios = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+source_ids = ["video-api", "series-tutorial"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["video-api", "series-tutorial", "prompt-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpeg", "png", "webp", "bmp", "tiff", "gif", "heic", "heif"]
+encodings = ["url", "base64_data_url", "asset_id"]
+constraints = ["width_to_height_ratio>=0.4", "width_to_height_ratio<=2.5", "width_px>=300", "width_px<=6000", "height_px>=300", "height_px<=6000", "size_megabytes<30", "request_body_megabytes<=64"]
+source_ids = ["video-api", "release-notes"]
+
+[[capability_profiles.reference_inputs]]
+role = "end_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpeg", "png", "webp", "bmp", "tiff", "gif", "heic", "heif"]
+encodings = ["url", "base64_data_url", "asset_id"]
+constraints = ["width_to_height_ratio>=0.4", "width_to_height_ratio<=2.5", "width_px>=300", "width_px<=6000", "height_px>=300", "height_px<=6000", "size_megabytes<30", "request_body_megabytes<=64", "cropped_to_start_image_ratio_when_ratios_differ=true"]
+source_ids = ["video-api", "release-notes"]
+
+[[capability_profiles.delivery_profiles]]
+id = "mp4-task-result"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9", "adaptive"]
+default = "adaptive"
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles.controls]]
+name = "watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["video-api"]
+
+[[capability_profiles.controls]]
+name = "return_last_frame"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles]]
+id = "omni-reference-to-video"
+task = "omni_reference_to_video"
+endpoint = "POST /api/v3/contents/generations/tasks"
+source_ids = ["model-list", "video-api", "series-tutorial", "prompt-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 15
+step = 1
+automatic = true
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["video-api", "prompt-guide"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-list"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "720p"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[[capability_profiles.size.options]]
+id = "480p"
+label = "480p"
+aspect_ratios = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+label = "720p"
+aspect_ratios = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9"]
+source_ids = ["video-api", "series-tutorial"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["video-api", "series-tutorial", "prompt-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 9
+formats = ["jpeg", "png", "webp", "bmp", "tiff", "gif", "heic", "heif"]
+encodings = ["url", "base64_data_url", "asset_id"]
+constraints = ["width_to_height_ratio>=0.4", "width_to_height_ratio<=2.5", "width_px>=300", "width_px<=6000", "height_px>=300", "height_px<=6000", "size_megabytes<30", "request_body_megabytes<=64"]
+source_ids = ["video-api", "series-tutorial", "release-notes"]
+
+[[capability_profiles.reference_inputs]]
+role = "video_reference"
+media_type = "video"
+state = "supported"
+min_count = 0
+max_count = 3
+max_duration = 15
+duration_unit = "second"
+formats = ["mp4", "mov"]
+encodings = ["url", "asset_id"]
+constraints = ["duration_seconds>=2", "aggregate_duration_seconds<=15", "resolution_tiers=480p,720p,1080p,4k", "width_to_height_ratio>=0.4", "width_to_height_ratio<=2.5", "width_px>=300", "width_px<=6000", "height_px>=300", "height_px<=6000", "total_pixels>=409600", "total_pixels<=8295044", "size_megabytes<=200", "frame_rate_fps>=24", "frame_rate_fps<=60", "video_codecs=H.264/AVC,H.265/HEVC", "audio_codecs=AAC,MP3"]
+source_ids = ["video-api", "series-tutorial", "prompt-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "supported"
+min_count = 0
+max_count = 3
+max_duration = 15
+duration_unit = "second"
+formats = ["wav", "mp3"]
+encodings = ["url", "base64_data_url", "asset_id"]
+constraints = ["duration_seconds>=2", "aggregate_duration_seconds<=15", "size_megabytes<=15", "request_body_megabytes<=64", "audio_only_input=false"]
+source_ids = ["video-api", "series-tutorial", "prompt-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "mp4-task-result"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["model-list", "video-api", "series-tutorial"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["16:9", "4:3", "1:1", "3:4", "9:16", "21:9", "adaptive"]
+default = "adaptive"
+source_ids = ["video-api", "series-tutorial"]
+
+[[capability_profiles.controls]]
+name = "watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["video-api"]
+
+[[capability_profiles.controls]]
+name = "return_last_frame"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["video-api", "series-tutorial"]
+
+[[limitations]]
+id = "direct-real-human-face-input"
+summary = "BytePlus states that Seedance 2.0 series models do not support directly uploaded reference images or videos containing real human faces; trusted generated outputs, preset digital characters, or authorized real-person assets are the documented alternatives."
+source_ids = ["video-api"]
+
+[[limitations]]
+id = "generated-audio-mono"
+summary = "BytePlus states that generated videos with audio use mono output regardless of the input audio channel count."
+source_ids = ["video-api"]
+
+[[limitations]]
+id = "precise-timing-instability"
+summary = "BytePlus states that precise prompt timing such as 0–3 second segments is unstable and that forcing strict segment durations may cause abnormal generation results."
+source_ids = ["prompt-guide"]
+
+[[limitations]]
+id = "narration-end-noise"
+summary = "BytePlus states that videos with narration are likely to contain abrupt clicks or cut-off noise at the end."
+source_ids = ["prompt-guide"]
 
 [pricing]
+state = "partial"
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "online-list-480p-without-video-input"
+state = "known"
+kind = "metered"
+amount = 5.6
+denomination = "USD"
+per = 1000000
+unit = "video_generation_token"
+applies_when = ["service_tier=default", "resolution=480p", "input_video=false"]
+qualifier = "Original list rate. BytePlus states that a 25% time-limited discount applies from 2026-08-07 14:00 UTC+8 through 2026-09-07 14:00 UTC+8."
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "online-list-480p-with-video-input"
+state = "known"
+kind = "metered"
+amount = 3.3
+denomination = "USD"
+per = 1000000
+unit = "video_generation_token"
+applies_when = ["service_tier=default", "resolution=480p", "input_video=true"]
+qualifier = "Original list rate. BytePlus states that a 25% time-limited discount applies from 2026-08-07 14:00 UTC+8 through 2026-09-07 14:00 UTC+8. A minimum token-consumption rule also applies when the input includes video."
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "online-list-720p-without-video-input"
+state = "known"
+kind = "metered"
+amount = 5.6
+denomination = "USD"
+per = 1000000
+unit = "video_generation_token"
+applies_when = ["service_tier=default", "resolution=720p", "input_video=false"]
+qualifier = "Original list rate. BytePlus states that a 25% time-limited discount applies from 2026-08-07 14:00 UTC+8 through 2026-09-07 14:00 UTC+8."
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "online-list-720p-with-video-input"
+state = "known"
+kind = "metered"
+amount = 3.3
+denomination = "USD"
+per = 1000000
+unit = "video_generation_token"
+applies_when = ["service_tier=default", "resolution=720p", "input_video=true"]
+qualifier = "Original list rate. BytePlus states that a 25% time-limited discount applies from 2026-08-07 14:00 UTC+8 through 2026-09-07 14:00 UTC+8. A minimum token-consumption rule also applies when the input includes video."
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "current-discounted-token-rates"
 state = "unknown"
+qualifier = "BytePlus publishes the temporary discount as 25% off the list rate but does not separately state the discounted USD-per-million-token amounts."
 source_ids = ["pricing"]
 
 [[sources]]
-id = "docs"
+id = "model-list"
+kind = "documentation"
+url = "https://docs.byteplus.com/en/docs/ModelArk/1330310"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "video-api"
+kind = "api_reference"
+url = "https://docs.byteplus.com/en/docs/ModelArk/1520757"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "series-tutorial"
 kind = "documentation"
 url = "https://docs.byteplus.com/en/docs/ModelArk/2291680"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "prompt-guide"
+kind = "documentation"
+url = "https://docs.byteplus.com/en/docs/ModelArk/2222480"
+retrieved_on = 2026-08-11
+
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://docs.byteplus.com/en/docs/ModelArk/1544106"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "release-notes"
+kind = "release_note"
+url = "https://docs.byteplus.com/en/docs/ModelArk/1159177"
+retrieved_on = 2026-08-11

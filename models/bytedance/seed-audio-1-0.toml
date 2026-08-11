@@ -1,34 +1,759 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "bytedance/seed-audio-1-0"
 name = "Seed Audio 1.0"
 lab = "ByteDance"
 modality = "audio"
 status = "unknown"
-source_ids = ["docs"]
+source_ids = ["lab-page", "audio-api", "pricing"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "seed-audio-1.0"
+source_ids = ["audio-api"]
 
 [verification]
 state = "unverified"
 
+[language_support]
+state = "supported"
+scope = "speech_output"
+published_label = "English, Chinese, Japanese, Korean, Mexican Spanish, Indonesian, German, Brazilian Portuguese, French, Thai, Vietnamese, Malay, Filipino, Italian, Russian, Dutch, Polish, Turkish, Swedish, and Castilian Spanish"
+listed_count = 20
+languages = [
+  { name = "English" },
+  { name = "Chinese" },
+  { name = "Japanese" },
+  { name = "Korean" },
+  { name = "Mexican Spanish" },
+  { name = "Indonesian" },
+  { name = "German" },
+  { name = "Brazilian Portuguese" },
+  { name = "French" },
+  { name = "Thai" },
+  { name = "Vietnamese" },
+  { name = "Malay" },
+  { name = "Filipino" },
+  { name = "Italian" },
+  { name = "Russian" },
+  { name = "Dutch" },
+  { name = "Polish" },
+  { name = "Turkish" },
+  { name = "Swedish" },
+  { name = "Castilian Spanish" },
+]
+source_ids = ["audio-api"]
+
 [[capability_profiles]]
-id = "timbre-audio-generation"
-task = "timbre_audio_generation"
-source_ids = ["docs"]
+id = "text-to-audio"
+task = "text_to_audio"
+endpoint = "POST https://voice.ap-southeast-1.bytepluses.com/api/v3/tts/create"
+api_mode = "references omitted"
+source_ids = ["audio-api"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["audio-api"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 3000
+source_ids = ["audio-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-response"
+state = "supported"
+transport = "base64_inline"
+endpoint = "POST /api/v3/tts/create"
+formats = ["wav", "mp3", "pcm", "ogg_opus"]
+default_format = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "temporary-url"
+state = "supported"
+transport = "temporary_url"
+endpoint = "POST /api/v3/tts/create"
+formats = ["wav", "mp3", "pcm", "ogg_opus"]
+default_format = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["wav", "mp3", "pcm", "ogg_opus"]
+default = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "sample_rate"
+state = "supported"
+mode = "exact_set"
+values = ["8000", "16000", "24000", "32000", "44100", "48000"]
+unit = "hertz"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "pitch_rate"
+state = "supported"
+mode = "range"
+min = -12
+max = 12
+step = 1
+default = 0
+unit = "pitch_step"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "speech_rate"
+state = "supported"
+mode = "range"
+min = -50
+max = 100
+step = 1
+default = 0
+unit = "rate_adjustment"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "loudness_rate"
+state = "supported"
+mode = "range"
+min = -50
+max = 100
+step = 1
+default = 0
+unit = "volume_adjustment"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "enable_subtitle"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "aigc_watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "implicit_metadata_watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[capability_profiles.timing]
+state = "supported"
+granularity = "word"
+delivery_profile_ids = ["base64-response", "temporary-url"]
+endpoints = ["POST /api/v3/tts/create"]
+metadata = ["subtitle.sentences.start_time", "subtitle.sentences.end_time", "subtitle.words.start_time", "subtitle.words.end_time"]
+source_ids = ["audio-api"]
+
+[[capability_profiles]]
+id = "reference-audio-to-audio"
+task = "reference_audio_to_audio"
+endpoint = "POST https://voice.ap-southeast-1.bytepluses.com/api/v3/tts/create"
+api_mode = "references contains audio_url or audio_data"
+source_ids = ["audio-api"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["audio-api"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 3000
+source_ids = ["audio-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "supported"
+min_count = 1
+max_count = 3
+max_duration = 30
+duration_unit = "second"
+formats = ["wav", "mp3", "pcm", "ogg_opus"]
+encodings = ["url", "base64_data"]
+constraints = ["size_bytes<=10000000", "one_source_selector_per_reference", "cannot_mix_with_image_reference"]
+source_ids = ["audio-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-response"
+state = "supported"
+transport = "base64_inline"
+endpoint = "POST /api/v3/tts/create"
+formats = ["wav", "mp3", "pcm", "ogg_opus"]
+default_format = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "temporary-url"
+state = "supported"
+transport = "temporary_url"
+endpoint = "POST /api/v3/tts/create"
+formats = ["wav", "mp3", "pcm", "ogg_opus"]
+default_format = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["wav", "mp3", "pcm", "ogg_opus"]
+default = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "sample_rate"
+state = "supported"
+mode = "exact_set"
+values = ["8000", "16000", "24000", "32000", "44100", "48000"]
+unit = "hertz"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "pitch_rate"
+state = "supported"
+mode = "range"
+min = -12
+max = 12
+step = 1
+default = 0
+unit = "pitch_step"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "speech_rate"
+state = "supported"
+mode = "range"
+min = -50
+max = 100
+step = 1
+default = 0
+unit = "rate_adjustment"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "loudness_rate"
+state = "supported"
+mode = "range"
+min = -50
+max = 100
+step = 1
+default = 0
+unit = "volume_adjustment"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "enable_subtitle"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "aigc_watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "implicit_metadata_watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[capability_profiles.timing]
+state = "supported"
+granularity = "word"
+delivery_profile_ids = ["base64-response", "temporary-url"]
+endpoints = ["POST /api/v3/tts/create"]
+metadata = ["subtitle.sentences.start_time", "subtitle.sentences.end_time", "subtitle.words.start_time", "subtitle.words.end_time"]
+source_ids = ["audio-api"]
+
+[[capability_profiles]]
+id = "speaker-conditioned-audio"
+task = "speaker_conditioned_audio"
+endpoint = "POST https://voice.ap-southeast-1.bytepluses.com/api/v3/tts/create"
+api_mode = "references contains speaker"
+source_ids = ["audio-api"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["audio-api"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 3000
+source_ids = ["audio-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "voice"
+media_type = "voice_id"
+state = "supported"
+min_count = 1
+max_count = 1
+constraints = ["tts_2_0_voice_or_cloned_voice", "cannot_mix_with_image_reference", "one_source_selector_per_reference"]
+source_ids = ["audio-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-response"
+state = "supported"
+transport = "base64_inline"
+endpoint = "POST /api/v3/tts/create"
+formats = ["wav", "mp3", "pcm", "ogg_opus"]
+default_format = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "temporary-url"
+state = "supported"
+transport = "temporary_url"
+endpoint = "POST /api/v3/tts/create"
+formats = ["wav", "mp3", "pcm", "ogg_opus"]
+default_format = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["wav", "mp3", "pcm", "ogg_opus"]
+default = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "sample_rate"
+state = "supported"
+mode = "exact_set"
+values = ["8000", "16000", "24000", "32000", "44100", "48000"]
+unit = "hertz"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "pitch_rate"
+state = "supported"
+mode = "range"
+min = -12
+max = 12
+step = 1
+default = 0
+unit = "pitch_step"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "speech_rate"
+state = "supported"
+mode = "range"
+min = -50
+max = 100
+step = 1
+default = 0
+unit = "rate_adjustment"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "loudness_rate"
+state = "supported"
+mode = "range"
+min = -50
+max = 100
+step = 1
+default = 0
+unit = "volume_adjustment"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "enable_subtitle"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "aigc_watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "implicit_metadata_watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[capability_profiles.timing]
+state = "supported"
+granularity = "word"
+delivery_profile_ids = ["base64-response", "temporary-url"]
+endpoints = ["POST /api/v3/tts/create"]
+metadata = ["subtitle.sentences.start_time", "subtitle.sentences.end_time", "subtitle.words.start_time", "subtitle.words.end_time"]
+source_ids = ["audio-api"]
+
+[[capability_profiles]]
+id = "image-to-audio"
+task = "image_to_audio"
+endpoint = "POST https://voice.ap-southeast-1.bytepluses.com/api/v3/tts/create"
+api_mode = "references contains image_url or image_data"
+source_ids = ["audio-api"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["audio-api"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 3000
+source_ids = ["audio-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[capability_profiles.size]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "wav"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "mp3"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "pcm"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.audio_formats]]
+family = "opus"
+sample_rate_mode = "exact_set"
+sample_rate_unit = "hertz"
+sample_rates = [8000, 16000, 24000, 32000, 44100, 48000]
+source_ids = ["audio-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpeg", "png", "webp"]
+encodings = ["url", "base64_data"]
+constraints = ["size_bytes<=10000000", "one_source_selector_per_reference", "cannot_mix_with_audio_reference"]
+source_ids = ["audio-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "base64-response"
+state = "supported"
+transport = "base64_inline"
+endpoint = "POST /api/v3/tts/create"
+formats = ["wav", "mp3", "pcm", "ogg_opus"]
+default_format = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "temporary-url"
+state = "supported"
+transport = "temporary_url"
+endpoint = "POST /api/v3/tts/create"
+formats = ["wav", "mp3", "pcm", "ogg_opus"]
+default_format = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "output_format"
+state = "supported"
+mode = "exact_set"
+values = ["wav", "mp3", "pcm", "ogg_opus"]
+default = "wav"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "sample_rate"
+state = "supported"
+mode = "exact_set"
+values = ["8000", "16000", "24000", "32000", "44100", "48000"]
+unit = "hertz"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "pitch_rate"
+state = "supported"
+mode = "range"
+min = -12
+max = 12
+step = 1
+default = 0
+unit = "pitch_step"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "speech_rate"
+state = "supported"
+mode = "range"
+min = -50
+max = 100
+step = 1
+default = 0
+unit = "rate_adjustment"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "loudness_rate"
+state = "supported"
+mode = "range"
+min = -50
+max = 100
+step = 1
+default = 0
+unit = "volume_adjustment"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "enable_subtitle"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "aigc_watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[[capability_profiles.controls]]
+name = "implicit_metadata_watermark"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["audio-api"]
+
+[capability_profiles.timing]
+state = "supported"
+granularity = "word"
+delivery_profile_ids = ["base64-response", "temporary-url"]
+endpoints = ["POST /api/v3/tts/create"]
+metadata = ["subtitle.sentences.start_time", "subtitle.sentences.end_time", "subtitle.words.start_time", "subtitle.words.end_time"]
+source_ids = ["audio-api"]
+
+[[limitations]]
+id = "maximum-output-duration"
+summary = "BytePlus states that generated audio is limited to 120 seconds, but does not publish a complete minimum-to-maximum duration range; original_duration is capped at 120 seconds and is the billing duration."
+source_ids = ["audio-api"]
+
+[[limitations]]
+id = "non-streaming-api"
+summary = "BytePlus describes the HTTP Audio 1.0 endpoint as non-streaming."
+source_ids = ["audio-api"]
+
+[[limitations]]
+id = "temporary-url-expiry"
+summary = "Returned audio URLs are valid for two hours."
+source_ids = ["audio-api"]
 
 [pricing]
-state = "unknown"
+state = "known"
 source_ids = ["pricing"]
 
+[[pricing.charges]]
+id = "timbre-audio-generation"
+state = "known"
+kind = "metered"
+amount = 14
+denomination = "point"
+per = 1
+unit = "original_audio_second"
+qualifier = "BytePlus Dramagic publishes 14 points per second and labels this as equivalent to USD 0.14 per second; billing uses the model's original_duration before speed adjustment or post-processing."
+source_ids = ["audio-api", "pricing"]
+
+[[conflicts]]
+path = "capability_profiles.audio_formats.sample_rates"
+summary = "The API reference lists valid sample rates as 8000, 16000, 24000, 32000, 44100, and 48000 Hz, but separately states a 40000 Hz default for WAV and PCM, which is absent from that valid-value list."
+handling = "Record only the explicit valid-value set and leave per-format defaults unmodeled until BytePlus resolves the contradiction."
+source_ids = ["audio-api"]
+
 [[sources]]
-id = "docs"
+id = "lab-page"
 kind = "documentation"
-url = "https://docs.byteplus.com/en/docs/Dramagic/PlansPackages"
-retrieved_on = 2026-08-09
+url = "https://seed.bytedance.com/en/seedaudio1_0"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "audio-api"
+kind = "api_reference"
+url = "https://docs.byteplus.com/en/docs/byteplusvoice/seedaudio-01?lang=en"
+retrieved_on = 2026-08-11
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://docs.byteplus.com/en/docs/Dramagic/PlansPackages"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
