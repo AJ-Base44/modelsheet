@@ -1,34 +1,123 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "google/lyria-3-pro-preview"
 name = "Lyria 3 Pro Preview"
 lab = "Google"
 modality = "audio"
 status = "preview"
-source_ids = ["docs"]
+source_ids = ["model-page", "music-guide", "gemini-changelog"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "lyria-3-pro-preview"
+source_ids = ["music-guide", "gemini-pricing", "gemini-changelog"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "music-generation"
+id = "interactions-music-generation"
 task = "music_generation"
-source_ids = ["docs"]
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/interactions"
+api_mode = "lyria-3-pro-preview"
+source_ids = ["model-page", "music-guide"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["music-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page", "music-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 10
+source_ids = ["music-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "interactions-audio"
+state = "supported"
+transport = "base64_json"
+formats = ["mp3", "wav"]
+default_format = "mp3"
+source_ids = ["model-page", "music-guide"]
+
+[[limitations]]
+id = "safety-filter-blocking"
+summary = "Google says prompts can be blocked by safety filters, including requests for specific artist voices or copyrighted lyrics."
+source_ids = ["music-guide"]
+
+[[limitations]]
+id = "single-turn-generation"
+summary = "Google says Lyria 3 music generation is single-turn and does not support iterative multi-turn editing or refinement."
+source_ids = ["music-guide"]
+
+[[limitations]]
+id = "non-deterministic-output"
+summary = "Google says results may vary between calls even when the prompt is unchanged."
+source_ids = ["music-guide"]
+
+[[limitations]]
+id = "duration-not-exact"
+summary = "Google describes Pro output as lasting a couple of minutes and says prompts or timestamps can influence duration, but publishes no exact minimum or maximum."
+source_ids = ["music-guide"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "paid-tier-song"
+state = "known"
+kind = "metered"
+amount = 0.08
+denomination = "USD"
+per = 1
+unit = "request"
+profile_id = "interactions-music-generation"
+applies_when = ["service=gemini_developer", "tier=paid"]
+qualifier = "The pricing table labels this a full song and says the free tier is unavailable."
+source_ids = ["gemini-pricing"]
+
+[[conflicts]]
+path = "capability_profiles.interactions-music-generation.audio_formats"
+summary = "The model page and launch changelog state 48 kHz stereo output, while the current music-generation guide states 44.1 kHz stereo output."
+handling = "Keep the exact sample rate unresolved; record only the unambiguous MP3 and WAV delivery formats."
+source_ids = ["model-page", "music-guide", "gemini-changelog"]
+
+[[conflicts]]
+path = "api_identifiers"
+summary = "The Lyria 3 Pro model page labels its model-code row as lyria-3-clip-preview, while the guide, pricing page, changelog, page URL, and examples identify the Pro request value as lyria-3-pro-preview."
+handling = "Use lyria-3-pro-preview as the callable identifier and preserve the model-page typo as conflicting provenance."
+source_ids = ["model-page", "music-guide", "gemini-pricing", "gemini-changelog"]
 
 [[sources]]
-id = "docs"
+id = "model-page"
 kind = "documentation"
-url = "https://ai.google.dev/gemini-api/docs/music-generation"
-retrieved_on = 2026-08-09
+url = "https://ai.google.dev/gemini-api/docs/models/lyria-3-pro-preview"
+retrieved_on = 2026-08-11
 
 [[sources]]
-id = "pricing"
+id = "music-guide"
+kind = "api_reference"
+url = "https://ai.google.dev/gemini-api/docs/music-generation"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "gemini-pricing"
 kind = "pricing"
 url = "https://ai.google.dev/gemini-api/docs/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "gemini-changelog"
+kind = "changelog"
+url = "https://ai.google.dev/gemini-api/docs/changelog"
+retrieved_on = 2026-08-11

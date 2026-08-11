@@ -1,34 +1,534 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "ideogram/ideogram-3-0"
 name = "Ideogram 3.0"
 lab = "Ideogram"
 modality = "image"
 status = "unknown"
-source_ids = ["docs"]
+source_ids = ["model-page", "generate-api"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
 id = "image-generation"
-task = "image_generation"
-source_ids = ["docs"]
+task = "text_to_image"
+endpoint = "POST /v1/ideogram-v3/generate"
+source_ids = ["generate-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["generate-api"]
+
+[capability_profiles.text_input]
+state = "unknown"
+source_ids = ["generate-api"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["generate-api"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "pixel"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "512x1536"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "576x1408"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "576x1472"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "576x1536"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "640x1344"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "640x1408"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "640x1472"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "640x1536"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "704x1152"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "704x1216"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "704x1280"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "704x1344"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "704x1408"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "704x1472"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "736x1312"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "768x1088"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "768x1216"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "768x1280"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "768x1344"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "800x1280"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "832x960"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "832x1024"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "832x1088"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "832x1152"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "832x1216"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "832x1248"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "864x1152"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "896x960"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "896x1024"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "896x1088"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "896x1120"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "896x1152"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "960x832"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "960x896"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "960x1024"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "960x1088"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1024x832"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1024x896"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1024x960"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1024x1024"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1088x768"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1088x832"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1088x896"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1088x960"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1120x896"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1152x704"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1152x832"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1152x864"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1152x896"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1216x704"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1216x768"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1216x832"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1248x832"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1280x704"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1280x768"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1280x800"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1312x736"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1344x640"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1344x704"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1344x768"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1408x576"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1408x640"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1408x704"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1472x576"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1472x640"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1472x704"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1536x512"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1536x576"
+source_ids = ["generate-api"]
+
+[[capability_profiles.size.options]]
+id = "1536x640"
+source_ids = ["generate-api"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["generate-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "style_reference"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 3
+formats = ["jpeg", "png", "webp"]
+constraints = ["aggregate_max_file_size=10 MB"]
+source_ids = ["model-page", "generate-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "character_reference"
+media_type = "image"
+state = "supported"
+min_count = 0
+max_count = 1
+formats = ["jpeg", "png", "webp"]
+constraints = ["aggregate_max_file_size=10 MB"]
+source_ids = ["generate-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "character_reference_mask"
+media_type = "image_mask"
+state = "supported"
+min_count = 0
+max_count = 1
+formats = ["jpeg", "png", "webp"]
+constraints = [
+  "count_must_match_character_reference_images=true",
+  "image_mode=grayscale",
+  "dimensions_must_match_corresponding_character_reference=true",
+]
+source_ids = ["generate-api"]
+
+[[capability_profiles.delivery_profiles]]
+id = "synchronous-temporary-url"
+state = "supported"
+transport = "temporary_url"
+endpoint = "POST /v1/ideogram-v3/generate"
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "prompt_input_mode"
+state = "supported"
+mode = "exact_set"
+values = ["text_prompt"]
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "request_seed"
+state = "supported"
+mode = "range"
+min = 0
+max = 2147483647
+step = 1
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "rendering_speed"
+state = "supported"
+mode = "exact_set"
+values = ["FLASH", "TURBO", "DEFAULT", "QUALITY"]
+default = "DEFAULT"
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "magic_prompt"
+state = "supported"
+mode = "exact_set"
+values = ["AUTO", "ON", "OFF"]
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 8
+step = 1
+default = 1
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "style_type"
+state = "supported"
+mode = "exact_set"
+values = ["AUTO", "GENERAL", "REALISTIC", "DESIGN", "FICTION"]
+default = "GENERAL"
+source_ids = ["generate-api"]
+
+[[capability_profiles.controls]]
+name = "enable_copyright_detection"
+state = "supported"
+mode = "exact_set"
+values = ["false", "true"]
+source_ids = ["generate-api"]
+
+[[limitations]]
+id = "temporary-hosted-output-links"
+summary = "Ideogram says generated image links remain available only for a limited period and must be downloaded for durable storage."
+source_ids = ["generate-api"]
 
 [pricing]
+state = "partial"
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "text-to-image-flash"
+state = "known"
+kind = "metered"
+amount = 0.03
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-generation"
+applies_when = ["rendering_speed=FLASH", "character_reference_images=absent"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "text-to-image-turbo"
+state = "known"
+kind = "metered"
+amount = 0.03
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-generation"
+applies_when = ["rendering_speed=TURBO", "character_reference_images=absent"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "text-to-image-default"
+state = "known"
+kind = "metered"
+amount = 0.06
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-generation"
+applies_when = ["rendering_speed=DEFAULT", "character_reference_images=absent"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "text-to-image-quality"
+state = "known"
+kind = "metered"
+amount = 0.09
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-generation"
+applies_when = ["rendering_speed=QUALITY", "character_reference_images=absent"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "character-reference-flash"
 state = "unknown"
+profile_id = "image-generation"
+applies_when = ["rendering_speed=FLASH", "character_reference_images=present"]
+qualifier = "The pricing table lists no Flash rate for generations using Character Reference."
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "character-reference-turbo"
+state = "known"
+kind = "metered"
+amount = 0.10
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-generation"
+applies_when = ["rendering_speed=TURBO", "character_reference_images=present"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "character-reference-default"
+state = "known"
+kind = "metered"
+amount = 0.15
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-generation"
+applies_when = ["rendering_speed=DEFAULT", "character_reference_images=present"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "character-reference-quality"
+state = "known"
+kind = "metered"
+amount = 0.20
+denomination = "USD"
+per = 1
+unit = "output_image"
+profile_id = "image-generation"
+applies_when = ["rendering_speed=QUALITY", "character_reference_images=present"]
 source_ids = ["pricing"]
 
 [[sources]]
-id = "docs"
+id = "model-page"
+kind = "documentation"
+url = "https://ideogram.ai/models/3.0/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "generate-api"
 kind = "api_reference"
 url = "https://developer.ideogram.ai/api-reference/api-reference/generate-v3"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://ideogram.ai/api-pricing/"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11

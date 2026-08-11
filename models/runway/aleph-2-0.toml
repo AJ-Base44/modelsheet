@@ -1,34 +1,223 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "runway/aleph-2-0"
 name = "Aleph 2.0"
 lab = "Runway"
 modality = "video"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-catalog", "api-changelog", "product-page", "prompting-guide"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "aleph2"
+source_ids = ["model-catalog", "api-reference", "api-changelog"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "aleph2_alpha"
+resolves_to = "aleph2"
+source_ids = ["api-changelog"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "video-edit"
+id = "api-video-edit"
 task = "video_edit"
-source_ids = ["docs"]
+endpoint = "POST /v1/video_to_video"
+api_mode = "aleph2"
+source_ids = ["model-catalog", "api-reference", "api-changelog"]
+
+[capability_profiles.duration]
+state = "unknown"
+source_ids = ["api-reference", "input-guide"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "utf16_code_unit"
+max = 1000
+source_ids = ["api-reference"]
+
+[capability_profiles.frame_rate]
+state = "unknown"
+source_ids = ["api-reference", "input-guide"]
+
+[capability_profiles.size]
+state = "unknown"
+source_ids = ["input-guide", "product-page"]
+
+[capability_profiles.native_audio]
+state = "unknown"
+source_ids = ["api-reference", "product-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_video"
+media_type = "video"
+state = "supported"
+min_count = 1
+max_count = 1
+max_duration = 30
+duration_unit = "second"
+formats = ["mp4", "mov", "mkv", "webm", "3gp", "ogv", "avi", "flv", "mpg", "mpeg"]
+encodings = ["https_url", "base64_data_uri", "runway_uri"]
+constraints = [
+  "minimum_duration=2_seconds",
+  "maximum_input_frame_rate=30_fps",
+  "output_resolution=preserve_input_up_to_1080p",
+  "https_url_max_bytes=33554432",
+  "base64_data_uri_max_encoded_bytes=16777216",
+  "runway_uri_min_bytes=512",
+  "runway_uri_max_bytes=209715200",
+  "https_url_max_characters=2048",
+  "https_url_host=domain_only",
+  "https_url_head_request=required",
+  "https_url_content_headers=required",
+  "https_url_redirects=unsupported",
+]
+source_ids = ["api-reference", "input-guide", "api-changelog", "product-page"]
+
+[[capability_profiles.reference_inputs]]
+role = "keyframe_sequence"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 5
+formats = ["jpeg", "png", "webp"]
+encodings = ["https_url", "base64_data_uri", "runway_uri"]
+constraints = [
+  "timestamp_mode=absolute_seconds_or_fraction",
+  "absolute_seconds_min=0",
+  "absolute_seconds_max=30",
+  "fraction_min=0",
+  "fraction_max=1",
+  "edit_window_bounds=whole_seconds",
+  "edit_window_end=exclusive",
+  "all_keyframes_edit_window_consistency=required",
+  "https_url_max_bytes=16777216",
+  "base64_data_uri_max_encoded_bytes=5242880",
+  "runway_uri_min_bytes=512",
+  "runway_uri_max_bytes=209715200",
+  "gif=unsupported",
+]
+source_ids = ["api-reference", "input-guide", "api-changelog"]
+
+[[capability_profiles.delivery_profiles]]
+id = "task-output-url"
+state = "supported"
+transport = "ephemeral_url"
+endpoint = "GET /v1/tasks/{id}"
+source_ids = ["output-guide"]
+
+[[capability_profiles.controls]]
+name = "seed"
+state = "supported"
+mode = "range"
+min = 0
+max = 4294967295
+step = 1
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "target_aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["16:9", "4:3", "3:2", "1:1", "2:3", "3:4", "9:16", "21:9"]
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "public_figure_threshold"
+state = "supported"
+mode = "exact_set"
+values = ["auto", "low"]
+source_ids = ["api-reference"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["api-pricing", "api-setup"]
+
+[[pricing.charges]]
+id = "aleph2-output"
+state = "known"
+kind = "metered"
+amount = 28
+denomination = "credit"
+per = 1
+unit = "output_second"
+profile_id = "api-video-edit"
+qualifier = "Runway publishes a minimum charge of 56 credits per generation."
+source_ids = ["api-pricing"]
+
+[[pricing.charges]]
+id = "api-credit-purchase"
+state = "known"
+kind = "metered"
+amount = 0.01
+denomination = "USD"
+per = 1
+unit = "credit"
+applies_when = ["channel=developer_api"]
+qualifier = "Developer API credits; sales tax may apply."
+source_ids = ["api-pricing", "api-setup"]
+
+[[conflicts]]
+path = "capability_profiles.api-video-edit.size"
+summary = "Runway says Aleph 2.0 preserves the input resolution up to 1080p, but the registry's size schema cannot encode a relational preserve-input constraint as a legal output-size set or numeric range."
+handling = "Keep structured output size unknown and preserve the exact relationship on the start-video reference constraint."
+source_ids = ["input-guide", "product-page"]
 
 [[sources]]
-id = "docs"
+id = "model-catalog"
 kind = "documentation"
 url = "https://docs.dev.runwayml.com/guides/models/"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
 
 [[sources]]
-id = "pricing"
+id = "api-reference"
+kind = "api_reference"
+url = "https://docs.dev.runwayml.com/api/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "input-guide"
+kind = "documentation"
+url = "https://docs.dev.runwayml.com/assets/inputs/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "output-guide"
+kind = "documentation"
+url = "https://docs.dev.runwayml.com/assets/outputs/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "api-pricing"
 kind = "pricing"
 url = "https://docs.dev.runwayml.com/guides/pricing/"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "api-changelog"
+kind = "changelog"
+url = "https://docs.dev.runwayml.com/api-details/api_changelog/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "api-setup"
+kind = "documentation"
+url = "https://docs.dev.runwayml.com/guides/using-the-api/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "product-page"
+kind = "documentation"
+url = "https://runway.com/product/aleph-2"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "prompting-guide"
+kind = "documentation"
+url = "https://help.runwayml.com/hc/en-us/articles/52150503729171-Aleph-2-0-Prompting-Guide"
+retrieved_on = 2026-08-11

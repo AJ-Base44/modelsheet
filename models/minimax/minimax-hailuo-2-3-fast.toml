@@ -1,34 +1,282 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "minimax/minimax-hailuo-2-3-fast"
 name = "MiniMax Hailuo 2.3 Fast"
 lab = "MiniMax"
 modality = "video"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-catalog", "i2v-reference", "model-release-notes"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "MiniMax-Hailuo-2.3-Fast"
+source_ids = ["model-catalog", "i2v-reference"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "video-generation"
-task = "video_generation"
-source_ids = ["docs"]
+id = "api-image-to-video"
+task = "image_to_video"
+endpoint = "POST https://api.minimax.io/v1/video_generation"
+api_mode = "MiniMax-Hailuo-2.3-Fast"
+source_ids = ["i2v-reference", "model-catalog"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 6
+max = 10
+step = 4
+source_ids = ["i2v-reference"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 2000
+source_ids = ["i2v-reference"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-catalog"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "768P"
+source_ids = ["i2v-reference"]
+
+[[capability_profiles.size.options]]
+id = "768P"
+render_modes = ["duration=6_seconds", "duration=10_seconds"]
+source_ids = ["i2v-reference"]
+
+[[capability_profiles.size.options]]
+id = "1080P"
+render_modes = ["duration=6_seconds"]
+source_ids = ["i2v-reference"]
+
+[capability_profiles.native_audio]
+state = "unknown"
+source_ids = ["model-catalog", "i2v-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpg", "jpeg", "png", "webp"]
+encodings = ["https_url", "base64_data_uri"]
+constraints = [
+  "file_size_less_than=20MB",
+  "short_edge_greater_than=300px",
+  "input_aspect_ratio_min=2:5",
+  "input_aspect_ratio_max=5:2",
+]
+source_ids = ["i2v-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "end_image"
+media_type = "image"
+state = "unknown"
+source_ids = ["i2v-reference", "fl2v-reference"]
+
+[[capability_profiles.reference_inputs]]
+role = "image_reference"
+media_type = "image"
+state = "unknown"
+source_ids = ["i2v-reference", "s2v-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "task-query"
+state = "supported"
+transport = "asynchronous_task_status"
+endpoint = "GET /v1/query/video_generation?task_id={task_id}"
+source_ids = ["query-reference"]
+
+[[capability_profiles.delivery_profiles]]
+id = "file-download"
+state = "supported"
+transport = "download_url"
+endpoint = "GET /v1/files/retrieve?file_id={file_id}"
+source_ids = ["download-reference"]
+
+[[capability_profiles.controls]]
+name = "duration"
+state = "supported"
+mode = "exact_set"
+values = ["6", "10"]
+default = "6"
+unit = "second"
+source_ids = ["i2v-reference"]
+
+[[capability_profiles.controls]]
+name = "resolution"
+state = "supported"
+mode = "exact_set"
+values = ["768P", "1080P"]
+default = "768P"
+source_ids = ["i2v-reference"]
+
+[[capability_profiles.controls]]
+name = "prompt_optimizer"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "true"
+source_ids = ["i2v-reference"]
+
+[[capability_profiles.controls]]
+name = "fast_pretreatment"
+state = "supported"
+mode = "exact_set"
+values = ["true", "false"]
+default = "false"
+source_ids = ["i2v-reference"]
+
+[[capability_profiles.controls]]
+name = "camera_motion_command"
+state = "supported"
+mode = "exact_set"
+values = [
+  "[Truck left]",
+  "[Truck right]",
+  "[Pan left]",
+  "[Pan right]",
+  "[Push in]",
+  "[Pull out]",
+  "[Pedestal up]",
+  "[Pedestal down]",
+  "[Tilt up]",
+  "[Tilt down]",
+  "[Zoom in]",
+  "[Zoom out]",
+  "[Shake]",
+  "[Tracking shot]",
+  "[Static shot]",
+]
+source_ids = ["i2v-reference", "video-guide"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["paygo-pricing"]
+
+[[pricing.charges]]
+id = "768p-6s-output"
+state = "known"
+kind = "metered"
+amount = 0.19
+denomination = "USD"
+per = 1
+unit = "video"
+applies_when = ["resolution=768P", "duration=6_seconds"]
+source_ids = ["paygo-pricing"]
+
+[[pricing.charges]]
+id = "768p-10s-output"
+state = "known"
+kind = "metered"
+amount = 0.32
+denomination = "USD"
+per = 1
+unit = "video"
+applies_when = ["resolution=768P", "duration=10_seconds"]
+source_ids = ["paygo-pricing"]
+
+[[pricing.charges]]
+id = "1080p-6s-output"
+state = "known"
+kind = "metered"
+amount = 0.33
+denomination = "USD"
+per = 1
+unit = "video"
+applies_when = ["resolution=1080P", "duration=6_seconds"]
+source_ids = ["paygo-pricing"]
+
+[[conflicts]]
+path = "model.status"
+summary = "MiniMax places Hailuo 2.3 Fast under Legacy Models while its exact model ID remains accepted by the live image-to-video API and remains present in current lab pricing."
+handling = "Use available for current callable access and preserve the lab's Legacy label as conflicting lifecycle provenance."
+source_ids = ["model-catalog", "i2v-reference", "paygo-pricing"]
 
 [[sources]]
-id = "docs"
+id = "model-catalog"
+kind = "documentation"
+url = "https://platform.minimax.io/docs/guides/models-intro"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "video-guide"
 kind = "documentation"
 url = "https://platform.minimax.io/docs/guides/video-generation"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
 
 [[sources]]
-id = "pricing"
+id = "i2v-reference"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/video-generation-i2v"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "fl2v-reference"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/video-generation-fl2v"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "s2v-reference"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/video-generation-s2v"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "query-reference"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/video-generation-query"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "download-reference"
+kind = "api_reference"
+url = "https://platform.minimax.io/docs/api-reference/video-generation-download"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "paygo-pricing"
 kind = "pricing"
 url = "https://platform.minimax.io/docs/guides/pricing-paygo"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "video-package-pricing"
+kind = "pricing"
+url = "https://platform.minimax.io/docs/guides/pricing-video"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "api-release-notes"
+kind = "release_note"
+url = "https://platform.minimax.io/docs/release-notes/apis"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "model-release-notes"
+kind = "release_note"
+url = "https://platform.minimax.io/docs/release-notes/models"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "llms"
+kind = "api_schema"
+url = "https://platform.minimax.io/docs/llms.txt"
+retrieved_on = 2026-08-11

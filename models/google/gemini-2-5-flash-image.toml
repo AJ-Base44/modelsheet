@@ -1,34 +1,469 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "google/gemini-2-5-flash-image"
 name = "Gemini 2.5 Flash Image"
+aliases = ["Nano Banana"]
 lab = "Google"
 modality = "image"
 status = "available"
-source_ids = ["docs"]
+source_ids = ["model-page", "image-guide", "model-card", "changelog"]
 
 [verification]
 state = "unverified"
 
+[[api_identifiers]]
+kind = "model_id"
+value = "gemini-2.5-flash-image"
+source_ids = ["model-page", "image-guide", "pricing"]
+
+[language_support]
+state = "supported"
+scope = "prompt_input"
+published_label = "Best performance languages"
+listed_count = 15
+languages = [
+  { name = "English", code = "EN" },
+  { name = "Arabic (Egypt)", code = "ar-EG" },
+  { name = "German (Germany)", code = "de-DE" },
+  { name = "Spanish (Mexico)", code = "es-MX" },
+  { name = "French (France)", code = "fr-FR" },
+  { name = "Hindi (India)", code = "hi-IN" },
+  { name = "Indonesian (Indonesia)", code = "id-ID" },
+  { name = "Italian (Italy)", code = "it-IT" },
+  { name = "Japanese (Japan)", code = "ja-JP" },
+  { name = "Korean (South Korea)", code = "ko-KR" },
+  { name = "Portuguese (Brazil)", code = "pt-BR" },
+  { name = "Russian (Russia)", code = "ru-RU" },
+  { name = "Ukrainian (Ukraine)", code = "ua-UA" },
+  { name = "Vietnamese (Vietnam)", code = "vi-VN" },
+  { name = "Chinese (China)", code = "zh-CN" },
+]
+source_ids = ["image-guide"]
+
 [[capability_profiles]]
-id = "image-generation"
-task = "image_generation"
-source_ids = ["docs"]
+id = "interactions-text-to-image"
+task = "text_to_image"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/interactions"
+api_mode = "gemini-2.5-flash-image"
+source_ids = ["model-page", "image-guide", "interactions-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+examples = [
+  { width = 1024, height = 1024, unit = "pixel", aspect_ratio = "1:1", source_ids = ["image-guide"] },
+  { width = 832, height = 1248, unit = "pixel", aspect_ratio = "2:3", source_ids = ["image-guide"] },
+  { width = 1248, height = 832, unit = "pixel", aspect_ratio = "3:2", source_ids = ["image-guide"] },
+  { width = 864, height = 1184, unit = "pixel", aspect_ratio = "3:4", source_ids = ["image-guide"] },
+  { width = 1184, height = 864, unit = "pixel", aspect_ratio = "4:3", source_ids = ["image-guide"] },
+  { width = 896, height = 1152, unit = "pixel", aspect_ratio = "4:5", source_ids = ["image-guide"] },
+  { width = 1152, height = 896, unit = "pixel", aspect_ratio = "5:4", source_ids = ["image-guide"] },
+  { width = 768, height = 1344, unit = "pixel", aspect_ratio = "9:16", source_ids = ["image-guide"] },
+  { width = 1344, height = 768, unit = "pixel", aspect_ratio = "16:9", source_ids = ["image-guide"] },
+  { width = 1536, height = 672, unit = "pixel", aspect_ratio = "21:9", source_ids = ["image-guide"] },
+]
+source_ids = ["image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "interactions-inline"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/interactions"
+formats = ["jpeg"]
+default_format = "jpeg"
+source_ids = ["interactions-api"]
+
+[[capability_profiles.controls]]
+name = "response_modalities"
+state = "supported"
+mode = "exact_set"
+values = ["text_and_image", "image_only"]
+default = "text_and_image"
+source_ids = ["image-guide"]
+
+[[capability_profiles.controls]]
+name = "input_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["65536"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "output_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["32768"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles]]
+id = "interactions-image-edit"
+task = "image_edit"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/interactions"
+api_mode = "gemini-2.5-flash-image"
+source_ids = ["model-page", "image-guide", "interactions-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["image-guide"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "all_image_references"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count_state = "unknown"
+formats = ["png", "jpeg", "webp", "heic", "heif", "gif", "bmp", "tiff"]
+constraints = ["recommended_count_less_than_or_equal_to=3"]
+source_ids = ["image-guide", "interactions-api"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "video_reference"
+media_type = "video"
+state = "unsupported"
+source_ids = ["model-page", "image-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "interactions-inline"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/interactions"
+formats = ["jpeg"]
+default_format = "jpeg"
+source_ids = ["interactions-api"]
+
+[[capability_profiles.controls]]
+name = "input_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["65536"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "output_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["32768"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles]]
+id = "generate-content-image-generation"
+task = "multimodal_image_generation"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent"
+api_mode = "gemini-2.5-flash-image"
+source_ids = ["model-page", "legacy-guide", "generate-content-api"]
+
+[capability_profiles.duration]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.frame_rate]
+state = "not_applicable"
+source_ids = ["model-page"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "1K"
+source_ids = ["legacy-guide", "image-guide"]
+
+[[capability_profiles.size.options]]
+id = "1K"
+aspect_ratios = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"]
+source_ids = ["legacy-guide", "image-guide"]
+
+[capability_profiles.native_audio]
+state = "not_applicable"
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "all_image_references"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count_state = "unknown"
+constraints = ["recommended_count_less_than_or_equal_to=3"]
+source_ids = ["legacy-guide", "image-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "audio_reference"
+media_type = "audio"
+state = "unsupported"
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "video_reference"
+media_type = "video"
+state = "unsupported"
+source_ids = ["model-page", "legacy-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "generate-content-inline"
+state = "supported"
+transport = "inline"
+endpoint = "POST /v1beta/models/{model}:generateContent"
+formats = ["png"]
+source_ids = ["legacy-guide"]
+
+[[capability_profiles.controls]]
+name = "input_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["65536"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[capability_profiles.controls]]
+name = "output_token_limit"
+state = "supported"
+mode = "exact_set"
+values = ["32768"]
+unit = "token"
+source_ids = ["model-page"]
+
+[[limitations]]
+id = "long-form-text-rendering"
+summary = "Google reports limitations when rendering long-form text in generated images."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "fine-detail-factuality"
+summary = "Google reports that fine image details may not be represented factually."
+source_ids = ["model-card"]
+
+[[limitations]]
+id = "output-count-following"
+summary = "Google says the model may not follow an exact requested number of output images."
+source_ids = ["image-guide"]
 
 [pricing]
-state = "unknown"
+state = "known"
 source_ids = ["pricing"]
 
+[[pricing.charges]]
+id = "image-token-usage-1k"
+state = "known"
+kind = "usage_increment"
+amount = 1290
+denomination = "image_output_token"
+per = 1
+unit = "output_image"
+applies_when = ["size=1K"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-input"
+state = "known"
+kind = "metered"
+amount = 0.30
+denomination = "USD"
+per = 1000000
+unit = "text_or_image_input_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-image-output-tokens"
+state = "known"
+kind = "metered"
+amount = 30.00
+denomination = "USD"
+per = 1000000
+unit = "image_output_token"
+applies_when = ["service=standard"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "standard-image-output"
+state = "known"
+kind = "metered"
+amount = 0.039
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=standard", "size=1K"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-input"
+state = "known"
+kind = "metered"
+amount = 0.15
+denomination = "USD"
+per = 1000000
+unit = "text_or_image_input_token"
+applies_when = ["service=batch"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "batch-image-output"
+state = "known"
+kind = "metered"
+amount = 0.0195
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=batch", "size=1K"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "flex-input"
+state = "known"
+kind = "metered"
+amount = 0.15
+denomination = "USD"
+per = 1000000
+unit = "text_or_image_input_token"
+applies_when = ["service=flex"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "flex-image-output"
+state = "known"
+kind = "metered"
+amount = 0.0195
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=flex", "size=1K"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "priority-input"
+state = "known"
+kind = "metered"
+amount = 0.54
+denomination = "USD"
+per = 1000000
+unit = "text_or_image_input_token"
+applies_when = ["service=priority"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "priority-image-output"
+state = "known"
+kind = "metered"
+amount = 0.0702
+denomination = "USD"
+per = 1
+unit = "output_image"
+applies_when = ["service=priority", "size=1K"]
+source_ids = ["pricing"]
+
+[[conflicts]]
+path = "capability_profiles.*.delivery_profiles.*.formats"
+summary = "The Interactions API response-format reference lists JPEG, while official GenerateContent guide examples return PNG."
+handling = "Keep the formats scoped to their serving endpoints rather than selecting a single model-wide output format."
+source_ids = ["interactions-api", "legacy-guide"]
+
+[[conflicts]]
+path = "capability_profiles.*.reference_inputs.video_reference,capability_profiles.*.reference_inputs.audio_reference"
+summary = "The Gemini 2.5 Flash model card describes the broader base model as accepting audio and video, while the image-model page and image-generation guide expose text and image inputs for this image endpoint."
+handling = "Use the image-model-specific API surface and mark audio and video references unsupported on these profiles; do not transfer base-model modalities to the image endpoint."
+source_ids = ["model-card", "model-page", "image-guide"]
+
+[[conflicts]]
+path = "capability_profiles.*.controls.output_count"
+summary = "Google says the model may not follow an exact requested image count and publishes no dependable model-specific maximum."
+handling = "Keep output-count constraints unknown rather than inferring a limit."
+source_ids = ["image-guide"]
+
 [[sources]]
-id = "docs"
+id = "model-page"
 kind = "documentation"
 url = "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash-image"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "image-guide"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/image-generation"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "legacy-guide"
+kind = "documentation"
+url = "https://ai.google.dev/gemini-api/docs/generate-content/image-generation"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "interactions-api"
+kind = "api_reference"
+url = "https://ai.google.dev/api/interactions-api-v1"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "generate-content-api"
+kind = "api_reference"
+url = "https://ai.google.dev/api/generate-content"
+retrieved_on = 2026-08-11
 
 [[sources]]
 id = "pricing"
 kind = "pricing"
 url = "https://ai.google.dev/gemini-api/docs/pricing"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "changelog"
+kind = "changelog"
+url = "https://ai.google.dev/gemini-api/docs/changelog"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "model-card"
+kind = "documentation"
+url = "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Flash-Model-Card.pdf"
+retrieved_on = 2026-08-11

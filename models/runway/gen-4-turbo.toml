@@ -1,34 +1,347 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "runway/gen-4-turbo"
 name = "Gen-4 Turbo"
 lab = "Runway"
 modality = "video"
-status = "unknown"
-source_ids = ["docs"]
+status = "available"
+source_ids = ["model-catalog", "api-reference", "api-changelog", "model-guide"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "gen4_turbo"
+source_ids = ["model-catalog", "api-reference", "api-pricing"]
 
 [verification]
 state = "unverified"
 
 [[capability_profiles]]
-id = "video-generation"
-task = "video_generation"
-source_ids = ["docs"]
+id = "api-image-to-video"
+task = "image_to_video"
+endpoint = "POST /v1/image_to_video"
+api_mode = "gen4_turbo"
+source_ids = ["model-catalog", "api-reference"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 2
+max = 10
+step = 1
+source_ids = ["api-reference", "api-changelog"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "utf16_code_unit"
+max = 1000
+source_ids = ["api-reference"]
+
+[capability_profiles.frame_rate]
+state = "unknown"
+source_ids = ["api-reference"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "pixel"
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options]]
+id = "1280:720"
+aspect_ratios = ["16:9"]
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1280
+height = 720
+unit = "pixel"
+aspect_ratio = "16:9"
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options]]
+id = "720:1280"
+aspect_ratios = ["9:16"]
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 720
+height = 1280
+unit = "pixel"
+aspect_ratio = "9:16"
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options]]
+id = "1104:832"
+aspect_ratios = ["4:3"]
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1104
+height = 832
+unit = "pixel"
+aspect_ratio = "4:3"
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options]]
+id = "960:960"
+aspect_ratios = ["1:1"]
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 960
+height = 960
+unit = "pixel"
+aspect_ratio = "1:1"
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options]]
+id = "832:1104"
+aspect_ratios = ["3:4"]
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 832
+height = 1104
+unit = "pixel"
+aspect_ratio = "3:4"
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options]]
+id = "1584:672"
+aspect_ratios = ["21:9"]
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.size.options.examples]]
+width = 1584
+height = 672
+unit = "pixel"
+aspect_ratio = "21:9"
+source_ids = ["api-reference", "input-guide"]
+
+[capability_profiles.native_audio]
+state = "unknown"
+source_ids = ["api-reference", "model-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+formats = ["jpeg", "png", "webp"]
+encodings = ["https_url", "base64_data_uri", "runway_uri"]
+constraints = [
+  "position=first",
+  "input_aspect_ratio_min=0.5",
+  "input_aspect_ratio_max=2.358",
+  "https_url_max_bytes=16777216",
+  "base64_data_uri_max_encoded_bytes=5242880",
+  "runway_uri_min_bytes=512",
+  "runway_uri_max_bytes=209715200",
+  "https_url_max_characters=2048",
+  "https_url_host=domain_only",
+  "https_url_head_request=required",
+  "https_url_content_headers=required",
+  "https_url_redirects=unsupported",
+  "gif=unsupported",
+]
+source_ids = ["api-reference", "input-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "task-output-url"
+state = "supported"
+transport = "ephemeral_url"
+endpoint = "GET /v1/tasks/{id}"
+source_ids = ["output-guide"]
+
+[[capability_profiles.controls]]
+name = "duration"
+state = "supported"
+mode = "range"
+min = 2
+max = 10
+step = 1
+unit = "second"
+source_ids = ["api-reference", "api-changelog"]
+
+[[capability_profiles.controls]]
+name = "ratio"
+state = "supported"
+mode = "exact_set"
+values = ["1280:720", "720:1280", "1104:832", "960:960", "832:1104", "1584:672"]
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "seed"
+state = "supported"
+mode = "range"
+min = 0
+max = 4294967295
+step = 1
+source_ids = ["api-reference"]
+
+[[capability_profiles.controls]]
+name = "public_figure_threshold"
+state = "supported"
+mode = "exact_set"
+values = ["auto", "low"]
+source_ids = ["api-reference"]
+
+[[capability_profiles]]
+id = "web-image-to-video"
+task = "image_to_video"
+source_ids = ["model-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 5
+max = 10
+step = 5
+source_ids = ["model-guide"]
+
+[capability_profiles.text_input]
+state = "supported"
+unit = "character"
+max = 1000
+source_ids = ["model-guide"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["model-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "pixel"
+source_ids = ["model-guide"]
+
+[[capability_profiles.size.options]]
+id = "1280:720"
+aspect_ratios = ["16:9"]
+source_ids = ["model-guide"]
+
+[[capability_profiles.size.options]]
+id = "720:1280"
+aspect_ratios = ["9:16"]
+source_ids = ["model-guide"]
+
+[[capability_profiles.size.options]]
+id = "960:960"
+aspect_ratios = ["1:1"]
+source_ids = ["model-guide"]
+
+[[capability_profiles.size.options]]
+id = "1104:832"
+aspect_ratios = ["4:3"]
+source_ids = ["model-guide"]
+
+[[capability_profiles.size.options]]
+id = "832:1104"
+aspect_ratios = ["3:4"]
+source_ids = ["model-guide"]
+
+[[capability_profiles.size.options]]
+id = "1584:672"
+aspect_ratios = ["21:9"]
+source_ids = ["model-guide"]
+
+[capability_profiles.native_audio]
+state = "unknown"
+source_ids = ["model-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["model-guide"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "known"
+source_ids = ["api-pricing", "model-guide", "api-setup"]
+
+[[pricing.charges]]
+id = "gen4-turbo-output"
+state = "known"
+kind = "metered"
+amount = 5
+denomination = "credit"
+per = 1
+unit = "output_second"
+source_ids = ["api-pricing", "model-guide"]
+
+[[pricing.charges]]
+id = "api-credit-purchase"
+state = "known"
+kind = "metered"
+amount = 0.01
+denomination = "USD"
+per = 1
+unit = "credit"
+applies_when = ["channel=developer_api"]
+qualifier = "Developer API credits; sales tax may apply."
+source_ids = ["api-pricing", "api-setup"]
+
+[[conflicts]]
+path = "capability_profiles.*.duration"
+summary = "The current API reference and October 2025 changelog permit every integer duration from two through ten seconds, while the web-product guide still lists only five- and ten-second outputs."
+handling = "Keep the flexible range on the API profile and the two web choices on the separate web profile."
+source_ids = ["api-reference", "api-changelog", "model-guide"]
 
 [[sources]]
-id = "docs"
+id = "model-catalog"
 kind = "documentation"
 url = "https://docs.dev.runwayml.com/guides/models/"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
 
 [[sources]]
-id = "pricing"
+id = "api-reference"
+kind = "api_reference"
+url = "https://docs.dev.runwayml.com/api/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "input-guide"
+kind = "documentation"
+url = "https://docs.dev.runwayml.com/assets/inputs/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "output-guide"
+kind = "documentation"
+url = "https://docs.dev.runwayml.com/assets/outputs/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "api-pricing"
 kind = "pricing"
 url = "https://docs.dev.runwayml.com/guides/pricing/"
-retrieved_on = 2026-08-09
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "api-changelog"
+kind = "changelog"
+url = "https://docs.dev.runwayml.com/api-details/api_changelog/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "api-setup"
+kind = "documentation"
+url = "https://docs.dev.runwayml.com/guides/using-the-api/"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "model-guide"
+kind = "documentation"
+url = "https://help.runwayml.com/hc/en-us/articles/37327109429011-Creating-with-Gen-4-Video"
+retrieved_on = 2026-08-11

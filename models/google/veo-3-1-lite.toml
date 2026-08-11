@@ -1,46 +1,656 @@
 schema_version = 1
 
-documentation_state = "indexed"
+documentation_state = "documented"
+
 [model]
 id = "google/veo-3-1-lite"
 name = "Veo 3.1 Lite"
 lab = "Google"
 modality = "video"
 status = "preview"
-source_ids = ["vertex-docs", "gemini-docs"]
+source_ids = ["gemini-model", "gemini-guide", "gemini-changelog", "agent-model", "cloud-release"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "veo-3.1-lite-generate-preview"
+source_ids = ["gemini-model", "gemini-guide", "gemini-changelog"]
+
+[[api_identifiers]]
+kind = "model_id"
+value = "veo-3.1-lite-generate-001"
+source_ids = ["agent-model"]
 
 [verification]
 state = "unverified"
 
+[language_support]
+state = "supported"
+scope = "prompt_input"
+published_label = "English is fully supported; other languages have not been evaluated."
+listed_count = 1
+languages = [{ name = "English" }]
+source_ids = ["gemini-guide"]
+
 [[capability_profiles]]
-id = "text-to-video"
+id = "gemini-text-to-video"
 task = "text_to_video"
-source_ids = ["vertex-docs", "gemini-docs"]
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-lite-generate-preview:predictLongRunning"
+api_mode = "veo-3.1-lite-generate-preview"
+source_ids = ["gemini-model", "gemini-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 8
+step = 2
+source_ids = ["gemini-guide"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["gemini-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "720p"
+source_ids = ["gemini-model", "gemini-guide"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+render_modes = ["duration=8_seconds"]
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["gemini-guide"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["gemini-model", "gemini-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "gemini-mp4"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["16:9", "9:16"]
+default = "16:9"
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.controls]]
+name = "person_generation"
+state = "supported"
+mode = "exact_set"
+values = ["allow_all"]
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 1
+step = 1
+default = 1
+unit = "video"
+source_ids = ["gemini-model", "gemini-guide"]
+
+[[capability_profiles]]
+id = "gemini-image-to-video"
+task = "image_to_video"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-lite-generate-preview:predictLongRunning"
+api_mode = "veo-3.1-lite-generate-preview"
+source_ids = ["gemini-model", "gemini-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 8
+step = 2
+source_ids = ["gemini-guide"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["gemini-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "720p"
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+render_modes = ["duration=8_seconds"]
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["gemini-guide"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["gemini-model", "gemini-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "gemini-mp4"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["16:9", "9:16"]
+default = "16:9"
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.controls]]
+name = "person_generation"
+state = "supported"
+mode = "exact_set"
+values = ["allow_adult"]
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 1
+step = 1
+default = 1
+unit = "video"
+source_ids = ["gemini-model", "gemini-guide"]
+
+[[capability_profiles]]
+id = "gemini-first-last-frame"
+task = "first_last_frame_to_video"
+endpoint = "POST https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-lite-generate-preview:predictLongRunning"
+api_mode = "veo-3.1-lite-generate-preview"
+source_ids = ["gemini-guide"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 8
+step = 2
+source_ids = ["gemini-guide"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["gemini-guide"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+default = "720p"
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+render_modes = ["duration=8_seconds"]
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["gemini-guide"]
+
+[capability_profiles.native_audio]
+state = "supported"
+default = true
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.reference_inputs]]
+role = "end_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.delivery_profiles]]
+id = "gemini-mp4"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+default_format = "mp4"
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.controls]]
+name = "aspect_ratio"
+state = "supported"
+mode = "exact_set"
+values = ["16:9", "9:16"]
+default = "16:9"
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.controls]]
+name = "person_generation"
+state = "supported"
+mode = "exact_set"
+values = ["allow_adult"]
+source_ids = ["gemini-guide"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 1
+step = 1
+default = 1
+unit = "video"
+source_ids = ["gemini-model", "gemini-guide"]
+
+[[capability_profiles]]
+id = "agent-text-to-video"
+task = "text_to_video"
+api_mode = "veo-3.1-lite-generate-001"
+source_ids = ["agent-model"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 8
+step = 2
+source_ids = ["agent-model"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["agent-model"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["agent-model"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["agent-model"]
+
+[capability_profiles.native_audio]
+state = "supported"
+source_ids = ["agent-model"]
+
+[[capability_profiles.delivery_profiles]]
+id = "agent-mp4"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 4
+step = 1
+unit = "video"
+source_ids = ["agent-model"]
+
+[[capability_profiles]]
+id = "agent-image-to-video"
+task = "image_to_video"
+api_mode = "veo-3.1-lite-generate-001"
+source_ids = ["agent-model"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 8
+step = 2
+source_ids = ["agent-model"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["agent-model"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["agent-model"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["agent-model"]
+
+[capability_profiles.native_audio]
+state = "supported"
+source_ids = ["agent-model"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+constraints = ["file_size_less_than_or_equal_to=20MB", "input_resolution=720p_or_1080p"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.delivery_profiles]]
+id = "agent-mp4"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 4
+step = 1
+unit = "video"
+source_ids = ["agent-model"]
+
+[[capability_profiles]]
+id = "agent-first-last-frame"
+task = "first_last_frame_to_video"
+api_mode = "veo-3.1-lite-generate-001"
+source_ids = ["agent-model"]
+
+[capability_profiles.duration]
+state = "supported"
+mode = "range"
+unit = "second"
+min = 4
+max = 8
+step = 2
+source_ids = ["agent-model"]
+
+[capability_profiles.frame_rate]
+state = "supported"
+mode = "exact_set"
+unit = "frame_per_second"
+values = [24]
+source_ids = ["agent-model"]
+
+[capability_profiles.size]
+state = "supported"
+mode = "exact_set"
+unit = "resolution_tier"
+source_ids = ["agent-model"]
+
+[[capability_profiles.size.options]]
+id = "720p"
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.size.options]]
+id = "1080p"
+aspect_ratios = ["16:9", "9:16"]
+source_ids = ["agent-model"]
+
+[capability_profiles.native_audio]
+state = "supported"
+source_ids = ["agent-model"]
+
+[[capability_profiles.reference_inputs]]
+role = "start_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+constraints = ["file_size_less_than_or_equal_to=20MB", "input_resolution=720p_or_1080p"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.reference_inputs]]
+role = "end_image"
+media_type = "image"
+state = "supported"
+min_count = 1
+max_count = 1
+constraints = ["file_size_less_than_or_equal_to=20MB", "input_resolution=720p_or_1080p"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.delivery_profiles]]
+id = "agent-mp4"
+state = "supported"
+transport = "long_running_operation"
+formats = ["mp4"]
+source_ids = ["agent-model"]
+
+[[capability_profiles.controls]]
+name = "output_count"
+state = "supported"
+mode = "range"
+min = 1
+max = 4
+step = 1
+unit = "video"
+source_ids = ["agent-model"]
+
+[[limitations]]
+id = "request-latency"
+summary = "Google documents request latency ranging from eleven seconds to six minutes during peak hours."
+source_ids = ["gemini-guide"]
+
+[[limitations]]
+id = "language-evaluation"
+summary = "English is fully supported; other languages have not been evaluated."
+source_ids = ["gemini-guide"]
+
+[[limitations]]
+id = "asset-retention"
+summary = "Generated videos are retained for two days and must be downloaded before removal."
+source_ids = ["gemini-guide"]
+
+[[limitations]]
+id = "audio-processing-failures"
+summary = "Audio processing or safety issues can prevent video generation; blocked generations are not charged."
+source_ids = ["gemini-guide", "gemini-pricing"]
 
 [pricing]
-state = "unknown"
-source_ids = ["pricing"]
+state = "partial"
+source_ids = ["gemini-pricing", "agent-pricing"]
+
+[[pricing.charges]]
+id = "gemini-audio-720p"
+state = "known"
+kind = "metered"
+amount = 0.05
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["service=gemini_developer", "native_audio=true", "size=720p"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "gemini-audio-1080p"
+state = "known"
+kind = "metered"
+amount = 0.08
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["service=gemini_developer", "native_audio=true", "size=1080p"]
+source_ids = ["gemini-pricing"]
+
+[[pricing.charges]]
+id = "agent-audio-720p"
+state = "known"
+kind = "metered"
+amount = 0.05
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["service=agent_platform", "native_audio=true", "size=720p"]
+source_ids = ["agent-pricing"]
+
+[[pricing.charges]]
+id = "agent-audio-1080p"
+state = "known"
+kind = "metered"
+amount = 0.08
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["service=agent_platform", "native_audio=true", "size=1080p"]
+source_ids = ["agent-pricing"]
+
+[[pricing.charges]]
+id = "agent-silent-720p"
+state = "known"
+kind = "metered"
+amount = 0.03
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["service=agent_platform", "native_audio=false", "size=720p"]
+source_ids = ["agent-pricing"]
+
+[[pricing.charges]]
+id = "agent-silent-1080p"
+state = "known"
+kind = "metered"
+amount = 0.05
+denomination = "USD"
+per = 1
+unit = "output_second"
+applies_when = ["service=agent_platform", "native_audio=false", "size=1080p"]
+source_ids = ["agent-pricing"]
 
 [[conflicts]]
-path = "api_identifiers"
-summary = "The Vertex service publishes a -001 identifier while the Gemini API publishes a -preview identifier for Veo 3.1 Lite."
-handling = "Omit the API identifier until a human selects how cross-service identifiers should be represented."
-source_ids = ["vertex-docs", "gemini-docs"]
+path = "api_identifiers,capability_profiles.*.controls.output_count"
+summary = "Gemini Developer publishes a Preview identifier and one output per request, while Agent Platform publishes a -001 identifier and up to four outputs."
+handling = "Preserve separate service identifiers and capability profiles rather than selecting one service contract as universal."
+source_ids = ["gemini-model", "gemini-guide", "agent-model"]
+
+[[conflicts]]
+path = "capability_profiles.video_extension"
+summary = "The Gemini model page and guide say Veo 3.1 Lite does not support extension, while the Agent Platform model table labels extension supported even though that same table marks video input unsupported."
+handling = "Do not record an extension profile until Google publishes a consistent callable contract for the Lite model."
+source_ids = ["gemini-model", "gemini-guide", "agent-model"]
+
+[[conflicts]]
+path = "capability_profiles.*.native_audio"
+summary = "Gemini Developer says native audio is always on, while Agent Platform says sound generation is supported and publishes both audio and silent rates without documenting a default."
+handling = "Keep the always-on default only on Gemini Developer profiles and omit a default on Agent Platform profiles."
+source_ids = ["gemini-guide", "agent-model", "agent-pricing"]
+
+[[conflicts]]
+path = "pricing.charges.*"
+summary = "Agent Platform publishes per-second Lite rates while its model page says pay-as-you-go is not supported and fixed quota is supported."
+handling = "Retain the published rate card as pricing metadata without implying that pay-as-you-go access is available."
+source_ids = ["agent-model", "agent-pricing"]
 
 [[sources]]
-id = "vertex-docs"
+id = "gemini-model"
 kind = "documentation"
-url = "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/veo/3-1-generate"
-retrieved_on = 2026-08-09
+url = "https://ai.google.dev/gemini-api/docs/models/veo-3.1-lite-generate-preview"
+retrieved_on = 2026-08-11
 
 [[sources]]
-id = "gemini-docs"
-kind = "documentation"
-url = "https://ai.google.dev/gemini-api/docs/video"
-retrieved_on = 2026-08-09
+id = "gemini-guide"
+kind = "api_reference"
+url = "https://ai.google.dev/gemini-api/docs/veo"
+retrieved_on = 2026-08-11
 
 [[sources]]
-id = "pricing"
+id = "gemini-pricing"
 kind = "pricing"
-url = "https://cloud.google.com/vertex-ai/generative-ai/pricing"
-retrieved_on = 2026-08-09
+url = "https://ai.google.dev/gemini-api/docs/pricing"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "gemini-changelog"
+kind = "changelog"
+url = "https://ai.google.dev/gemini-api/docs/changelog"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "agent-model"
+kind = "documentation"
+url = "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/veo/3-1-generate"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "agent-pricing"
+kind = "pricing"
+url = "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "cloud-release"
+kind = "release_note"
+url = "https://cloud.google.com/blog/products/ai-machine-learning/veo-3-1-lite-and-a-new-veo-upscaling-capability-on-vertex-ai"
+retrieved_on = 2026-08-11

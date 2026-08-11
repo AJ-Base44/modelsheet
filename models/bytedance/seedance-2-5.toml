@@ -1,13 +1,14 @@
 schema_version = 1
 
 documentation_state = "indexed"
+
 [model]
 id = "bytedance/seedance-2-5"
 name = "Seedance 2.5"
 lab = "ByteDance"
 modality = "video"
 status = "unknown"
-source_ids = ["docs"]
+source_ids = ["model-page"]
 
 [verification]
 state = "unverified"
@@ -15,14 +16,26 @@ state = "unverified"
 [[capability_profiles]]
 id = "text-to-video"
 task = "text_to_video"
-source_ids = ["docs"]
+source_ids = ["model-page"]
 
 [pricing]
 state = "unknown"
-source_ids = ["docs"]
+source_ids = ["pricing"]
+
+[[pricing.charges]]
+id = "lab-price-not-published"
+state = "unknown"
+qualifier = "The current BytePlus ModelArk pricing table does not publish a Seedance 2.5 charge."
+source_ids = ["pricing"]
 
 [[sources]]
-id = "docs"
+id = "model-page"
 kind = "documentation"
 url = "https://seed.bytedance.com/en/seedance2_5"
-retrieved_on = 2026-08-10
+retrieved_on = 2026-08-11
+
+[[sources]]
+id = "pricing"
+kind = "pricing"
+url = "https://docs.byteplus.com/en/docs/ModelArk/1544106"
+retrieved_on = 2026-08-11
